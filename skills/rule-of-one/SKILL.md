@@ -1,6 +1,7 @@
 ---
 name: rule-of-one
-description: Do exactly the one thing the user asked, and leave everything else alone. When you notice a side issue (messy code, a quick bug, an experiment worth trying), mention it in one line and file it as a ticket instead of acting on it. Use on every task: implementing, fixing, refactoring, running experiments, writing, or investigating. Use it especially when you're tempted to do something "while you're at it".
+description: >-
+  Do exactly the one thing the user asked, and leave everything else alone. When you notice a side issue (messy code, a quick bug, an experiment worth trying), mention it in one line and file it as a ticket instead of acting on it. Use on every task: implementing, fixing, refactoring, running experiments, writing, or investigating. Use it especially when you're tempted to do something "while you're at it".
 ---
 
 # Rule of One

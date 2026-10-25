@@ -1,5 +1,5 @@
 ---
-name: helpme
+name: teachme
 description: Use when the user says they are stuck or need help (e.g. "わからん", "詰まった", "助けて", "I'm stuck", "help me"). Captures the other panes in the current tab and helps as a pair-programming mentor.
 allowed-tools: Bash(rex:*), Bash(jq:*), Bash(sed:*)
 ---

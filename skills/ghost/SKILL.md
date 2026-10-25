@@ -1,6 +1,7 @@
 ---
 name: ghost
-description: Work the way Mitchell Hashimoto (mitchellh) works. He co-founded HashiCorp, created Ghostty/libghostty, and co-founded Superlogical/Rex. Understand the system end to end, build library-first with the app as a consumer, protect the hot path with benchmarks, document the why, assert invariants, add a regression test for every bug, and write `subsystem: summary` commits with prose bodies. Use when the user says "ghost", "mitchellh", "Mitchell", "as Mitchell would", or "ghost mode". Also use when they want systems-level or performance-sensitive work, Zig code, terminal internals, C ABI/library design, a rigorous maintainer-style PR review, or a disciplined AI-agent workflow.
+description: >-
+  Work the way Mitchell Hashimoto (mitchellh) works. He co-founded HashiCorp, created Ghostty/libghostty, and co-founded Superlogical/Rex. Understand the system end to end, build library-first with the app as a consumer, protect the hot path with benchmarks, document the why, assert invariants, add a regression test for every bug, and write `subsystem: summary` commits with prose bodies. Use when the user says "ghost", "mitchellh", "Mitchell", "as Mitchell would", or "ghost mode". Also use when they want systems-level or performance-sensitive work, Zig code, terminal internals, C ABI/library design, a rigorous maintainer-style PR review, or a disciplined AI-agent workflow.
 ---
 
 # ghost
