@@ -1,6 +1,6 @@
 # Judge rubric
 
-Judges do two jobs: a **pairwise vote** on each proposed revision, and a **ranking** of the surviving questions. Use the judges listed in config (last line of `r42.py agents`); mix model families. Each judge runs independently and never sees another judge's answer.
+Judges do two jobs: a **pairwise vote** on each proposed revision, and a **ranking** of the surviving questions. Use the judges listed in config (`judges` in `.r42/config.toml`); mix model families. Each judge runs independently and never sees another judge's answer.
 
 ## Criteria
 
