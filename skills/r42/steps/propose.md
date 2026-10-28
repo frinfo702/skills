@@ -6,7 +6,7 @@ Needs `.r42/goal.md` and `.r42/pack/`. Produces `candidate` question files.
 
 One proposal is almost never enough; experts found 3% of single-pass proposals interesting (F1). Generate a pool several times the number of questions you want to develop (F6). Default: `batches × per_batch = 4 × 5` per run of this step; the user's budget overrides it.
 
-Submit one job per batch, step `propose`, each with a **different hint** from `references/proposer-hints.md` (rotate; F7). Reserve ids in advance so batches do not collide (batch 1 writes q001–q005, batch 2 q006–q010, ...).
+Run one job per batch, in parallel, step `propose`, each with a **different hint** from `references/proposer-hints.md` (rotate; F7). Reserve ids in advance so batches do not collide (batch 1 writes q001–q005, batch 2 q006–q010, ...).
 
 ```text
 You are proposing research questions toward this goal:
@@ -27,7 +27,7 @@ Development log saying what the short attempt found.
 
 ## Filter
 
-After all propose jobs succeed, submit one job, step `check`, using `steps/check.md` in **filter mode** with `--after` set to the propose job ids. It removes ill-posed, known, duplicate and too-easy candidates (F8).
+After all propose jobs succeed, run one job, step `check`, using `steps/check.md` in **filter mode**. It removes ill-posed, known, duplicate and too-easy candidates (F8).
 
 Then rank the survivors (`steps/judge.md`) and pick the top N for development (default N = 8; the user's budget overrides). After42 developed up to 16 in parallel (F37). Mark them `developing`; leave the rest as `candidate`.
 

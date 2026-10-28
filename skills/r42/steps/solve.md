@@ -2,7 +2,7 @@
 
 The core idea of the method: a question improves when someone tries to solve it (F9, F44). Solving is not the goal here; learning what the attempt reveals is.
 
-One job per question per round, step `solve` (a good step to route to a long-running agent). For two independent attempts per question, as in the published trajectories ("two attempts wrote out arguments", R§3.2), submit two jobs with different `<k>`.
+One job per question per round, step `solve` (a good step to route to a long-running agent). For two independent attempts per question, as in the published trajectories ("two attempts wrote out arguments", R§3.2), run two jobs with different `<k>`.
 
 ```text
 You are attempting to solve this research question. Your budget: <budget, e.g. "about 30 minutes

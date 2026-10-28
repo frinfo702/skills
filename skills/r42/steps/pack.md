@@ -24,7 +24,7 @@ Mention a caution in the goal reply only when it changes what the user should ex
 
 ## 2. The pack (worker job)
 
-The pack is the shared reference for every later agent (F5). Submit one job, step `pack` (the step most worth giving its own agent entry, e.g. `when = "long literature research"`):
+The pack is the shared reference for every later agent (F5). Run one job, step `pack` (the step most worth giving its own agent entry, e.g. `when = "long literature research"`):
 
 ```text
 You are building a research pack for this goal:
@@ -42,4 +42,4 @@ Search the literature (cito first, then web search and arXiv for surveys and rec
 Do not propose new questions. Finish by printing the three paths.
 ```
 
-When the job's event arrives, skim the three files and write `.r42/reports/<date>-pack.md`: size, main themes, apparent gaps, links you have not verified. Reply in two or three lines: the pack is ready, what it centres on, and one question: is anything central missing? Name the report file. Researchers can help build the pack (F5, F45); their additions go straight into these files.
+When the job finishes, skim the three files and write `.r42/reports/<date>-pack.md`: size, main themes, apparent gaps, links you have not verified. Reply in two or three lines: the pack is ready, what it centres on, and one question: is anything central missing? Name the report file. Researchers can help build the pack (F5, F45); their additions go straight into these files.

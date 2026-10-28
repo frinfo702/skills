@@ -2,15 +2,15 @@
 
 For each `developing` question, one round is: **solve → refine → judge vote → check**, then rank all survivors (F9–F13). Two rounds is the published default; most of the gain usually comes in round one (F18).
 
-Queue the whole round at once with dependencies so it runs unattended:
+Run the round without stopping. Start each job as soon as the jobs it needs have succeeded, and run the questions side by side (`references/jobs.md`):
 
 ```text
 for each question q:
-  S1, S2 = submit solve (step solve)                       # steps/solve.md
-  D      = submit refine (step develop, --after S1,S2)     # below
-  J1..Jn = submit vote, one per judge (step judge, --agent <judge>, --after D)   # judge-rubric.md, pairwise
-  C      = submit check (step check, --after J1..Jn)       # steps/check.md, round mode
-R = submit ranking per judge (--after all C)               # steps/judge.md
+  S1, S2 = solve (step solve)                              # steps/solve.md
+  D      = refine (step develop), after S1, S2             # below
+  J1..Jn = vote, one per judge (step judge), after D       # judge-rubric.md, pairwise
+  C      = check (step check), after J1..Jn                # steps/check.md, round mode
+R = ranking per judge, after every C                       # steps/judge.md
 ```
 
 The C job applies the vote: it reads the judge outputs first (see `steps/check.md`).
@@ -46,4 +46,4 @@ Run only if `.r42/questions/<id>.rev.md` exists (the job prompt says: "if the fi
 
 ## After the round
 
-When the round's events arrive, write `.r42/reports/<date>-round<r>.md`: per question, what solving found, revised or kept, the votes with rationales, the check result. Reply with one line per question: what changed and why, in plain words (e.g. "q007: revised; solving showed the jump comes from the 3-core, both judges agreed"). Then the report path. The full trajectory stays in the question files.
+When the round's jobs have finished, write `.r42/reports/<date>-round<r>.md`: per question, what solving found, revised or kept, the votes with rationales, the check result. Reply with one line per question: what changed and why, in plain words (e.g. "q007: revised; solving showed the jump comes from the 3-core, both judges agreed"). Then the report path. The full trajectory stays in the question files.
