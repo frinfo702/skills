@@ -84,7 +84,7 @@ thinking = "high"
 
 - **Choosing an entry per job:** `r42.py agents` lists entries with their `when`. For each job, use the entry whose `when` fits the step, else the default; pass it as `submit --agent <name>`. An explicit request in the user's words ("solve on pi this time", "use codex as a third judge") wins for that request; change config only if the user says "always" or "from now on". Add or edit entries when the user describes one in words ("long literature research on pi with max thinking").
 - **Judges** (`judges = [...]`, entry names, `default` allowed) should mix model families (F30, F31). If a judge's runtime is missing or keeps failing, tell the user and ask before judging with fewer.
-- **On first init,** check the configured runtimes exist (`opencode`, `claude`, `codex`, `pi`). If the default entry's runtime is missing, ask the user which to use (offer the one running you) rather than switching silently.
+- **On first init,** check the configured runtimes exist (`opencode`, `claude`, `codex`, `pi`). Also check each runtime has the cito MCP server (`claude mcp list`, `codex mcp list`, `pi mcp list`) and offer to add it where it is missing (`references/paper-search.md`). If the default entry's runtime is missing, ask the user which to use (offer the one running you) rather than switching silently.
 - Events and job records name the model that actually ran. `unavailable` means every model in the list failed: tell the user which models failed and why (log tail); do not change their model list without asking.
 
 ## Jobs
@@ -103,7 +103,7 @@ Start every worker prompt with:
 You are a worker in an r42 research run in <absolute repo path>. There is no human to ask:
 make reasonable choices and note them in your output. Work only on the files named below.
 <skill-dir> means <absolute path of this skill>.
-Search papers with cito first (see <skill-dir>/SKILL.md, "Paper search").
+Search papers with cito first, as in <skill-dir>/references/paper-search.md.
 ```
 
 **Waiting for completions:**
@@ -115,21 +115,7 @@ Search papers with cito first (see <skill-dir>/SKILL.md, "Paper search").
 
 ## Paper search
 
-Search papers with [cito](https://cito.fim.ai/), a search engine for agents over ~148M papers (Semantic Scholar). Use it first for every literature search, prior-art check and citation lookup, and fall back to web search or arXiv for what it lacks. Install the MCP server (streamable HTTP, `https://api.cito.fim.ai/mcp`) in each runtime the agents use:
-
-```bash
-claude mcp add --transport http cito https://api.cito.fim.ai/mcp   # Claude Code
-codex mcp add cito --url https://api.cito.fim.ai/mcp               # Codex
-pi mcp add cito --url https://api.cito.fim.ai/mcp                  # pi
-```
-
-No key is needed (15 requests/min per IP). With a key from https://cito.fim.ai/account/keys (100/min): Claude Code `--header "Authorization: Bearer sk_..."`, Codex and pi `--bearer-token-env-var CITO_API_KEY`.
-
-- MCP tools: `search_papers` (query, mode `hybrid` | `semantic` | `keyword`) and `get_paper` (by Semantic Scholar CorpusID).
-- Without MCP, call the API: `curl "https://api.cito.fim.ai/search?q=contrastive+learning&limit=5"` and `curl https://api.cito.fim.ai/paper/<corpusid>`.
-- `published_before=YYYY-MM-DD` keeps only earlier papers; use it to check whether a question was already open at some date.
-- The corpus is a weekly snapshot (`corpus_release` in each response). Check arXiv directly for papers from the last week or two.
-- Link each paper by the hit's `url` (or `doi`); every cito hit is a real paper.
+Search papers with cito first, in every step: its hits are real papers, which keeps invented citations out, and its date filter tests whether a question was open at a given time (F42). Install, usage and rate limits: `references/paper-search.md`.
 
 ## Full run
 
