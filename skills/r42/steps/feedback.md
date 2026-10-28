@@ -13,7 +13,7 @@ Append to `.r42/feedback.md` (create it with a `# Researcher feedback` heading) 
 - question version: round <n>
 ```
 
-Mirror the entry under the question file's `## Researcher feedback`.
+Mirror the entry under the question file's `## Researcher feedback`. Reply in one line that it is recorded; do not discuss it unless asked.
 
 Prompt for the expert's own questions, not criteria (F14): "Is this genuinely interesting? Would you pursue it, or suggest it to a student? Why?" Do not paraphrase the user's comment into rubric language; the specific reasons are what carry their taste.
 

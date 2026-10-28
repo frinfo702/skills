@@ -11,14 +11,23 @@ Questions shape where research effort goes, and novel, difficult questions are e
 
 `F<n>` cites `references/findings.md`, which links each finding to its source on after42.org.
 
-Talk to the user in their language. Keep the machinery out of the conversation: report questions, findings and decisions, not job ids.
+## Replying to the user
+
+Every reply, in every step, follows this contract. Its purpose is to keep the user on what they asked and to make complex agent reasoning easy to take in.
+
+- **Answer the actual question or request first, directly, in plain words**, in the user's language. Include what that answer needs, including the reasoning it depends on, and nothing else.
+- **No tangents.** No "by the way", side observations, unrequested caveats, tours of possible next steps, or menus of options.
+- **Simple means direct and understandable, not merely short.** Keep the reasoning the answer needs; drop everything else.
+- **Details go to files, not chat.** Evidence, judge rationales, logs, side findings, caveats and alternatives go to `.r42/`: per-question material in the question file, everything else from a step in `.r42/reports/<date>-<step>.md`. When details exist, name the file in one line (`詳細: .r42/reports/2026-10-28-pack.md`).
+- **Ask only what is needed to proceed:** at most one or two questions, no option menus unless the user asks for options. When a request is ambiguous, confirming your understanding is the needed question.
+- Report questions, findings and decisions, not job ids or machinery.
 
 ## Every time /r42 starts
 
 1. `S=<this skill's directory>`; the script is `python3 $S/scripts/r42.py`. Run it from the research repo.
-2. If `.r42/` exists, run `r42.py events`. **Present every unacknowledged event in your reply to the user** (not only in intermediate output), one line each in plain words (which question or step finished, succeeded / failed / crashed / skipped, where the output is). For failures and crashes, read the log tail and say what went wrong. Act on what finished (next step of the loop, report to the user), then `r42.py ack <highest seq presented>`. Never ack an event you have not shown.
+2. If `.r42/` exists, run `r42.py events`. **Present every unacknowledged event in your reply to the user** (not only in intermediate output), one line each in plain words (what finished, and its result or what went wrong, read from the log tail for failures). Act on what finished (next step of the loop, report to the user), then `r42.py ack <highest seq presented>`. Never ack an event you have not shown.
 3. Read the state: `goal.md`, `pack/`, `questions/*.md` frontmatter (status, round), latest `rankings/`, `feedback.md`, `r42.py status`.
-4. Route the user's words (below). With no words, give a three-line state summary and suggest the next step as a question.
+4. Route the user's words (below). With no words, say where things stand in two or three lines and ask one question about what to do next.
 
 ## Routing
 
@@ -40,7 +49,7 @@ Read the step file before doing the step. Prompts and rubrics live in `reference
 
 **Clear request → just do it.** **Ambiguous → confirm understanding first**: restate your interpretation in one or two sentences and ask whether that is right ("You want to develop your own question about X, two rounds, rather than generate new ones. Right?"). Do not announce "next I will do X" and proceed; ask. Feedback the user gives in passing (any reaction to a specific question) is always recorded, without asking.
 
-**Expensive runs** (full run, propose with several batches, multi-round deep-dive, anything starting more than ~4 jobs): before starting, confirm which agents each step will use, the parallelism, and the size (batches, questions developed, rounds). Give a rough scale: one After42 math run of 70 final questions took about a day, ~260 agent-hours and ~2.6 B tokens (F37); scale from that.
+**Expensive runs** (full run, propose with several batches, multi-round deep-dive, anything starting more than ~4 jobs): before starting, confirm which agents each step will use, the parallelism, and the size (batches, questions developed, rounds). Include a rough scale in one line, scaled from one After42 math run: 70 final questions in about a day, ~260 agent-hours, ~2.6 B tokens (F37).
 
 ## Agents
 
@@ -98,7 +107,7 @@ make reasonable choices and note them in your output. Work only on the files nam
 
 **Waiting for completions:**
 
-- **Claude Code:** after submitting, start `python3 $S/scripts/r42.py wait` as a background command (Bash `run_in_background`). It blocks until an unacknowledged event exists, then exits, which wakes you. Handle and present the events, ack, and if jobs remain queued or running, start `wait` again. Exit 3 means idle (nothing running, nothing unread); exit 2 means its timeout passed; restart it. Do not poll in a loop yourself.
+- **Claude Code:** after submitting, start `python3 $S/scripts/r42.py wait` as a background command (Bash `run_in_background`). It blocks until an unacknowledged event exists, then exits, which wakes you. Present the events (one line each), ack, and if jobs remain queued or running, start `wait` again. Intermediate events of a queued round need only their one line; the step's full reply comes when the round is done. Exit 3 means idle (nothing running, nothing unread); exit 2 means its timeout passed; restart it. Do not poll in a loop yourself.
 - **Runtimes that cannot wake you (pi, codex, opencode):** set `notify = true` in config so each completion raises an OS notification, and tell the user to come back with `/r42` (or `/skill:r42` on pi). Unread events are presented on every start, so nothing is lost.
 
 `r42.py status` lists jobs. Logs are in `.r42/jobs/<id>.log`.
@@ -108,13 +117,13 @@ make reasonable choices and note them in your output. Work only on the files nam
 Confirm first (see Expensive runs). Then, pausing for the user where marked:
 
 1. Goal (`steps/pack.md` §1). **User confirms the goal.**
-2. Pack (`steps/pack.md` §2). Show the themes; **ask if anything central is missing.**
-3. Propose in batches, then filter, then rank (`steps/propose.md`). Report counts by removal reason and the composition mix.
-4. Develop round 1, then round 2 (`steps/develop.md`). Report each question's trajectory after each round.
+2. Pack (`steps/pack.md` §2). **Ask if anything central is missing.**
+3. Propose in batches, then filter, then rank (`steps/propose.md`).
+4. Develop round 1, then round 2 (`steps/develop.md`).
 5. Final ranking (`steps/judge.md`); mark the top questions `final`.
 6. Review (`steps/review.md`) and **ask for the user's verdict on the top few**; record it (`steps/feedback.md`).
 
-Between steps, submit the next step as soon as the previous events arrive; the pauses above are the only stops.
+Between steps, submit the next step as soon as the previous events arrive; the pauses above are the only stops. Each step's reply and report file follow the step file.
 
 ## State
 
@@ -128,6 +137,7 @@ All state is in `.r42/` of the research repo:
 .r42/solves/<id>/        solve records per round
 .r42/rankings/           per-judge and averaged rankings
 .r42/feedback.md         the researcher's reactions (the most valuable file, F35)
+.r42/reports/            per-step reports: the details behind each chat reply
 .r42/review-<date>.md    portfolio reviews
 .r42/jobs/, events.jsonl, events.ack   the job queue (managed by r42.py)
 ```

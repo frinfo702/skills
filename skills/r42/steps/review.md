@@ -11,6 +11,4 @@ The user wants an overall picture: what is in `.r42/`, what is strong, what to d
    - Recurring weaknesses from Check notes, by checklist item (F24, F25, F29).
    - Questions where development stalled (kept twice with the same obstacle) and questions whose first step is ready to work on now.
    - Suggested next actions, each a concrete /r42 request (e.g. "deep-dive q007, 2 rounds", "propose with hints 6, 9 and 14").
-4. **Ask for feedback** on the top few and the single-judge picks (`steps/feedback.md`). This is the input that most improves later rankings (F35).
-
-Present the summary in chat and link the file.
+4. **Reply** with the direct answer to what the user asked: where things stand in one or two sentences, the top one to three questions (one line each), and the one next step you recommend. Name the review file. If the review was asked for to decide what to pursue, ask one question: their verdict on the top question (`steps/feedback.md`; this is the input that most improves later rankings, F35).

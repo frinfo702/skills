@@ -304,7 +304,7 @@ def main():
 
     if a.cmd == "init":
         r = Path.cwd() / ".r42"
-        for d in ("jobs", "pack", "questions", "solves", "rankings"):
+        for d in ("jobs", "pack", "questions", "solves", "rankings", "reports"):
             (r / d).mkdir(parents=True, exist_ok=True)
         if not (r / "config.toml").exists():
             (r / "config.toml").write_text(DEFAULT_CONFIG)

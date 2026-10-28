@@ -46,4 +46,4 @@ Run only if `.r42/questions/<id>.rev.md` exists (the job prompt says: "if the fi
 
 ## After the round
 
-When the round's events arrive, report per question: what solving found, revised or kept, the votes, check result. Ask the user for feedback on anything that surprised them (`steps/feedback.md`); that feedback is what later improves the judges (F35).
+When the round's events arrive, write `.r42/reports/<date>-round<r>.md`: per question, what solving found, revised or kept, the votes with rationales, the check result. Reply with one line per question: what changed and why, in plain words (e.g. "q007: revised; solving showed the jump comes from the 3-core, both judges agreed"). Then the report path. The full trajectory stays in the question files.

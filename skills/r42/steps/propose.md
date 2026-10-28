@@ -31,4 +31,4 @@ After all propose jobs succeed, submit one job, step `check`, using `steps/check
 
 Then rank the survivors (`steps/judge.md`) and pick the top N for development (default N = 8; the user's budget overrides). After42 developed up to 16 in parallel (F37). Mark them `developing`; leave the rest as `candidate`.
 
-Report to the user: how many proposed, removed (by reason), kept, and the composition mix (F22).
+Write `.r42/reports/<date>-propose.md`: how many proposed, removed by reason, kept, the composition mix (F22), and the ranking. Reply with how many survived and which questions go into development, one line each, plus the report path.
