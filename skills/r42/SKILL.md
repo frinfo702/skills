@@ -84,7 +84,7 @@ thinking = "high"
 
 - **Choosing an entry per job:** `r42.py agents` lists entries with their `when`. For each job, use the entry whose `when` fits the step, else the default; pass it as `submit --agent <name>`. An explicit request in the user's words ("solve on pi this time", "use codex as a third judge") wins for that request; change config only if the user says "always" or "from now on". Add or edit entries when the user describes one in words ("long literature research on pi with max thinking").
 - **Judges** (`judges = [...]`, entry names, `default` allowed) should mix model families (F30, F31). If a judge's runtime is missing or keeps failing, tell the user and ask before judging with fewer.
-- **On first init,** check the configured runtimes exist (`opencode`, `claude`, `codex`, `pi`). If the default entry's runtime is missing, ask the user which to use (offer the one running you) rather than switching silently.
+- **On first init,** check the configured runtimes exist (`opencode`, `claude`, `codex`, `pi`). Also check each runtime has the cito MCP server (`claude mcp list`, `codex mcp list`, `pi mcp list`) and offer to add it where it is missing (`references/paper-search.md`). If the default entry's runtime is missing, ask the user which to use (offer the one running you) rather than switching silently.
 - Events and job records name the model that actually ran. `unavailable` means every model in the list failed: tell the user which models failed and why (log tail); do not change their model list without asking.
 
 ## Jobs
@@ -103,6 +103,7 @@ Start every worker prompt with:
 You are a worker in an r42 research run in <absolute repo path>. There is no human to ask:
 make reasonable choices and note them in your output. Work only on the files named below.
 <skill-dir> means <absolute path of this skill>.
+Search papers with cito first, as in <skill-dir>/references/paper-search.md.
 ```
 
 **Waiting for completions:**
@@ -113,6 +114,10 @@ make reasonable choices and note them in your output. Work only on the files nam
 `r42.py status` lists jobs. Logs are in `.r42/jobs/<id>.log`.
 
 **Rex tabs** (`rex = true`, when running inside [Rex](https://www.superlogical.com/rex/docs/automate/cli)): each job opens its own tab named `r42 <job name>` without taking focus. The pane shows the job header, the agent's live output, and a final line with the result and the log path; the tab reports working/done/error through the [Program Status Protocol](https://www.superlogical.com/rex/docs/build/program-status), so unfocused tabs show a spinner or a result mark. Tabs stay open after the job ends so the user can read the result; nothing closes them automatically. Close them with `r42.py close <id>...` (a running job is stopped and ends as `failed`) or `r42.py close` (every finished job), only when the user asks or after you have reported the results and the user agrees. The log stays the source of truth for events and fallback. For anything else about Rex (reading a pane with `rex capture`, layouts, sessions), load the `rex` skill, or run `rex skill show` if it is not installed.
+
+## Paper search
+
+Search papers with cito first, in every step: its hits are real papers, which keeps invented citations out, and its date filter tests whether a question was open at a given time (F42). Install, usage and rate limits: `references/paper-search.md`.
 
 ## Full run
 

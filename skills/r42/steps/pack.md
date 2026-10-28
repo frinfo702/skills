@@ -31,7 +31,7 @@ You are building a research pack for this goal:
 <.r42/goal.md>
 <optional: seed papers or authors the user named>
 
-Search the literature (web search, arXiv, surveys, recent papers) and write three files:
+Search the literature (cito first, then web search and arXiv for surveys and recent papers) and write three files:
 1. .r42/pack/summary.md   A literature summary: the main lines of work, the central objects,
    the known results and the main techniques, organized by theme. 1500-3000 words.
 2. .r42/pack/papers.md    An index: one entry per relevant paper:
