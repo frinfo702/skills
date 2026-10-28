@@ -53,7 +53,7 @@ Read the step file before doing the step. Prompts and rubrics live in `reference
 
 ## Agents
 
-`.r42/config.toml` (created by `r42.py init`) holds `judges`, `max_parallel`, `notify`, and **agent entries**. Each entry has:
+`.r42/config.toml` (created by `r42.py init`) holds `judges`, `max_parallel`, `notify`, `rex` (default `false`; see Rex tabs below), and **agent entries**. Each entry has:
 
 | Field | Meaning |
 |---|---|
@@ -112,6 +112,8 @@ Search papers with cito first, as in <skill-dir>/references/paper-search.md.
 - **Runtimes that cannot wake you (pi, codex, opencode):** set `notify = true` in config so each completion raises an OS notification, and tell the user to come back with `/r42` (or `/skill:r42` on pi). Unread events are presented on every start, so nothing is lost.
 
 `r42.py status` lists jobs. Logs are in `.r42/jobs/<id>.log`.
+
+**Rex tabs** (`rex = true`, when running inside [Rex](https://www.superlogical.com/rex/docs/automate/cli)): each job opens its own tab named `r42 <job name>` without taking focus. The pane shows the job header, the agent's live output, and a final line with the result and the log path; the tab reports working/done/error through the [Program Status Protocol](https://www.superlogical.com/rex/docs/build/program-status), so unfocused tabs show a spinner or a result mark. Tabs stay open after the job ends so the user can read the result; nothing closes them automatically. Close them with `r42.py close <id>...` (a running job is stopped and ends as `failed`) or `r42.py close` (every finished job), only when the user asks or after you have reported the results and the user agrees. The log stays the source of truth for events and fallback. For anything else about Rex (reading a pane with `rex capture`, layouts, sessions), load the `rex` skill, or run `rex skill show` if it is not installed.
 
 ## Paper search
 
