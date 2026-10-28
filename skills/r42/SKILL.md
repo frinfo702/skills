@@ -103,6 +103,7 @@ Start every worker prompt with:
 You are a worker in an r42 research run in <absolute repo path>. There is no human to ask:
 make reasonable choices and note them in your output. Work only on the files named below.
 <skill-dir> means <absolute path of this skill>.
+Search papers with cito first (see <skill-dir>/SKILL.md, "Paper search").
 ```
 
 **Waiting for completions:**
@@ -111,6 +112,24 @@ make reasonable choices and note them in your output. Work only on the files nam
 - **Runtimes that cannot wake you (pi, codex, opencode):** set `notify = true` in config so each completion raises an OS notification, and tell the user to come back with `/r42` (or `/skill:r42` on pi). Unread events are presented on every start, so nothing is lost.
 
 `r42.py status` lists jobs. Logs are in `.r42/jobs/<id>.log`.
+
+## Paper search
+
+Search papers with [cito](https://cito.fim.ai/), a search engine for agents over ~148M papers (Semantic Scholar). Use it first for every literature search, prior-art check and citation lookup, and fall back to web search or arXiv for what it lacks. Install the MCP server (streamable HTTP, `https://api.cito.fim.ai/mcp`) in each runtime the agents use:
+
+```bash
+claude mcp add --transport http cito https://api.cito.fim.ai/mcp   # Claude Code
+codex mcp add cito --url https://api.cito.fim.ai/mcp               # Codex
+pi mcp add cito --url https://api.cito.fim.ai/mcp                  # pi
+```
+
+No key is needed (15 requests/min per IP). With a key from https://cito.fim.ai/account/keys (100/min): Claude Code `--header "Authorization: Bearer sk_..."`, Codex and pi `--bearer-token-env-var CITO_API_KEY`.
+
+- MCP tools: `search_papers` (query, mode `hybrid` | `semantic` | `keyword`) and `get_paper` (by Semantic Scholar CorpusID).
+- Without MCP, call the API: `curl "https://api.cito.fim.ai/search?q=contrastive+learning&limit=5"` and `curl https://api.cito.fim.ai/paper/<corpusid>`.
+- `published_before=YYYY-MM-DD` keeps only earlier papers; use it to check whether a question was already open at some date.
+- The corpus is a weekly snapshot (`corpus_release` in each response). Check arXiv directly for papers from the last week or two.
+- Link each paper by the hit's `url` (or `doi`); every cito hit is a real paper.
 
 ## Full run
 
