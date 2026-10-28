@@ -137,8 +137,7 @@ All state is in `.r42/` of the research repo:
 .r42/solves/<id>/        solve records per round
 .r42/rankings/           per-judge and averaged rankings
 .r42/feedback.md         the researcher's reactions (the most valuable file, F35)
-.r42/reports/            per-step reports: the details behind each chat reply
-.r42/review-<date>.md    portfolio reviews
+.r42/reports/            per-step reports and portfolio reviews: the details behind each chat reply
 .r42/jobs/, events.jsonl, events.ack   the job queue (managed by r42.py)
 ```
 

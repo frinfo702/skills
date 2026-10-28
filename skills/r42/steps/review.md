@@ -4,7 +4,7 @@ The user wants an overall picture: what is in `.r42/`, what is strong, what to d
 
 1. **Inventory.** Count questions by status and round; list jobs still queued or running (`r42.py status`); note the last ranking date and whether questions changed since.
 2. **Rank if stale.** If no ranking covers the current versions, run `steps/judge.md` (ask first if it would start more than a couple of jobs).
-3. **Write `.r42/review-<date>.md`:**
+3. **Write `.r42/reports/<date>-review.md`:**
    - Top questions by averaged rank, each with its one-line plain statement and Concrete first step.
    - Single-judge picks and largest-spread questions (F32), as candidates for the user's own judgment.
    - Composition mix of the portfolio (A+B / A−B / A+1 / other) and whether any question goes beyond composition (F22, F23).
