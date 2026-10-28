@@ -47,6 +47,8 @@ assert cmd("x", provider="opencode") == ["opencode", "run", "--auto", "-m", "x",
 assert cmd(provider="opencode", thinking="high") == ["opencode", "run", "--auto", "P"]
 assert cmd("gpt", provider="codex", thinking="high")[-5:] == ["-m", "gpt", "-c", "model_reasoning_effort=high", "P"]
 assert cmd(provider="codex")[-3:] == ["-s", "workspace-write", "P"]
+rx = m.rex_cmd(["claude", "-p", "P"], {"cwd": "/w", "name": "q1", "step": "solve"}, "/l", "opus")
+assert rx[:2] == ["rex", "run"] and {"--wait", "--keep-open", "--json"} <= set(rx) and rx[-6:] == ["_tab", "/l", "solve: q1 (opus)", "claude", "-p", "P"], rx
 assert cmd("m", provider="pi", thinking="max") == ["pi", "-p", "--no-session", "--model", "m", "--thinking", "max", "P"]
 # availability errors seen from real runtimes fall back; worker tracebacks and prose do not
 unav = lambda text: bool(m.re.search(m.UNAVAILABLE, text, m.re.I))

@@ -19,13 +19,14 @@ unavailable (every model failed for availability), crashed (wrapper vanished), o
 skipped (a dependency did not succeed). Events and job records name the model that ran.
 Python 3.11+, stdlib only.
 """
-import argparse, fcntl, json, os, re, shutil, subprocess, sys, time, tomllib
+import argparse, base64, fcntl, json, os, re, shutil, subprocess, sys, time, tomllib
 from contextlib import contextmanager
 from pathlib import Path
 
 DEFAULT_CONFIG = '''\
 max_parallel = 4
 notify = false          # OS notification per finished job (for harnesses that cannot be woken)
+rex = false             # run each job in its own Rex tab (rex run) to watch agents live; needs `rex`
 # Judges for revision votes and rankings: entry names ("default" = the entry without when).
 # Mix model families.
 judges = ["default", "codex"]
@@ -234,6 +235,71 @@ def command(entry, model, prompt, prompt_file):
     return out
 
 
+def rex_sess(j):
+    return ["-s", j["rex_session"]] if j.get("rex_session") else []
+
+
+def rex_cmd(cmd, j, logp, model):
+    """The `rex run` command that runs cmd through `_tab` in a new tab that stays open after
+    it exits, so the user can read the result; `r42.py close` closes it. The login shell's
+    environment gives the agent CLIs their PATH."""
+    return ["rex", "run", *rex_sess(j), "--json", "--wait", "--keep-open", "--focus=false",
+            "-c", j["cwd"], "--label", j["name"], "--", sys.executable, os.path.abspath(__file__), "_tab",
+            str(logp), f"{j['step']}: {j['name']} ({model or 'default'})", *cmd]
+
+
+def in_rex(r, j, cmd, logp, model, log):
+    """Run cmd in a Rex tab named after the job, recording the tab on the job. Returns cmd's
+    exit code, or None when Rex opened no tab (the caller then runs cmd directly)."""
+    p = subprocess.Popen(rex_cmd(cmd, j, logp, model), cwd=j["cwd"], stdin=subprocess.DEVNULL,
+                         stdout=subprocess.PIPE, stderr=log, text=True)
+    out, w = "", None
+    for line in p.stdout:  # --json prints the new tab before --wait blocks
+        out += line
+        try:
+            w = json.JSONDecoder().raw_decode(out.lstrip())[0].get("window_id")
+            break
+        except ValueError:
+            continue
+    if w:
+        subprocess.run(["rex", "window", "rename", *rex_sess(j), w, f"r42 {j['name']}"], capture_output=True)
+        with lock(r):
+            jj = load(r, j["id"])
+            jj.setdefault("tabs", []).append(w)
+            save(r, jj)
+    p.stdout.read()
+    code = p.wait()
+    return code if w else None
+
+
+def tab(logp, msg, cmd):
+    """Inside a Rex tab: run cmd, copy its output to the tab and the job log, and report
+    working/done/error through the Program Status Protocol (OSC 7501)."""
+    def status(state, text):
+        text = "".join(ch for ch in text if ch.isprintable())  # the protocol refuses control chars
+        sys.stdout.write(f"\033]7501;state={state}:app=r42:msg={base64.b64encode(text.encode()).decode()}\033\\")
+        sys.stdout.flush()
+    jid = Path(logp).stem
+    print(f"== r42 {msg}  job {jid} ==\n", flush=True)
+    status("working", msg)
+    with open(logp, "ab") as log:
+        try:
+            p = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            for chunk in iter(lambda: p.stdout.read1(4096), b""):
+                sys.stdout.buffer.write(chunk)
+                sys.stdout.flush()
+                log.write(chunk)
+                log.flush()
+            code = p.wait()
+        except OSError as e:
+            log.write(f"r42: cannot start {cmd[0]}: {e}\n".encode())
+            code = 127
+    status("done", msg) if code == 0 else status("error", f"{msg}: exit {code}")
+    print(f"\n== r42 {'succeeded' if code == 0 else f'failed (exit {code})'}  log {logp} ==\n"
+          f"== close this tab: {sys.executable} {os.path.abspath(__file__)} close {jid} ==", flush=True)
+    return code
+
+
 def run(r, jid):
     """Wrapper: run the entry, falling back through its models on availability errors,
     then record the outcome as an event."""
@@ -244,12 +310,18 @@ def run(r, jid):
     logp = r / "jobs" / f"{jid}.log"
     attempts = []
     for model in entry.get("model") or [None]:
+        if load(r, jid).get("closed"):  # stopped by `close`: no fallback to the next model
+            break
         cmd = command(entry, model, pf.read_text(), str(pf))
         with open(logp, "a") as log:
             log.write(f"== r42: {entry.get('provider', 'cmd')} model={model or 'default'} thinking={entry.get('thinking') or 'default'} ==\n")
             log.flush()
             try:
-                code = subprocess.run(cmd, cwd=j["cwd"], stdin=subprocess.DEVNULL, stdout=log, stderr=log).returncode
+                code = None
+                if config(r).get("rex") and j.get("rex_session") and shutil.which("rex"):
+                    code = in_rex(r, j, cmd, logp, model, log)
+                if code is None:
+                    code = subprocess.run(cmd, cwd=j["cwd"], stdin=subprocess.DEVNULL, stdout=log, stderr=log).returncode
             except OSError as e:
                 log.write(f"r42: cannot start {cmd[0]}: {e}\n")
                 code = 127
@@ -298,8 +370,14 @@ def main():
     s = sub.add_parser("wait", help="block until an unacknowledged event exists")
     s.add_argument("--timeout", type=float, default=3600)
     sub.add_parser("reconcile")
+    s = sub.add_parser("close", help="close the Rex tabs of these jobs (a running job stops); no ids: every finished job")
+    s.add_argument("ids", nargs="*")
     s = sub.add_parser("_run")
     s.add_argument("id")
+    s = sub.add_parser("_tab")
+    s.add_argument("log")
+    s.add_argument("msg")
+    s.add_argument("argv", nargs=argparse.REMAINDER)
     a = ap.parse_args()
 
     if a.cmd == "init":
@@ -310,6 +388,8 @@ def main():
             (r / "config.toml").write_text(DEFAULT_CONFIG)
         print(r)
         return
+    if a.cmd == "_tab":
+        sys.exit(tab(a.log, a.msg, a.argv))
     r = root()
     if a.cmd == "_run":
         return run(r, a.id)
@@ -335,7 +415,8 @@ def main():
             save(r, {"id": jid, "name": a.name, "step": a.step, "agent": agent,
                      "after": [x for x in a.after.split(",") if x], "cwd": str(r.parent),
                      "status": "queued", "pid": None, "code": None, "model": None,
-                     "created": time.time(), "started": None, "ended": None})
+                     "created": time.time(), "started": None, "ended": None,
+                     "rex_session": os.environ.get("REX_SESSION")})
             schedule(r)
         return print(jid)
     with lock(r):
@@ -343,9 +424,25 @@ def main():
         schedule(r)
     if a.cmd == "status":
         for j in jobs(r):
-            print(f"{j['id']} {j['status']:11} {j['agent']:8} {j['step']:8} {j['name']} model={j.get('model') or '-'} after={','.join(j['after']) or '-'}")
+            print(f"{j['id']} {j['status']:11} {j['agent']:8} {j['step']:8} {j['name']} model={j.get('model') or '-'} after={','.join(j['after']) or '-'}"
+                  + (f" tabs={len(j['tabs'])}" if j.get("tabs") else ""))
     elif a.cmd == "events":
         show(unread(r))
+    elif a.cmd == "close":
+        for j in jobs(r):
+            if not (j["id"] in a.ids if a.ids else j["status"] in TERMINAL):
+                continue
+            with lock(r):  # mark first so run() does not fall back into a new tab
+                j = load(r, j["id"])
+                j["closed"] = True
+                save(r, j)
+            if j.get("tabs"):
+                subprocess.run(["rex", "window", "close", *rex_sess(j), *j["tabs"]], capture_output=True)
+                with lock(r):
+                    jj = load(r, j["id"])
+                    jj["tabs"] = [t for t in jj.get("tabs", []) if t not in j["tabs"]]
+                    save(r, jj)
+                print(f"closed {j['id']} {j['name']}")
     elif a.cmd == "ack":
         with lock(r):
             (r / "events.ack").write_text(str(max(a.seq, acked(r))))
