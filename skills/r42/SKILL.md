@@ -1,148 +1,127 @@
 ---
 name: r42
 description: >-
-  Find and develop research questions worth pursuing, using the After42 method (after42.org): build a literature pack toward a researcher-written goal, oversample candidate questions, develop them by attempting to solve them, accept revisions only when all model judges agree, audit them with a fresh checker, and rank them with mixed-model judges that learn from the researcher's feedback. One entry point for everything: a full run, a portfolio review, a deep-dive on the user's own question, or recording feedback. State lives in .r42/ of the research repo; long steps run as parallel jobs through the harness's own subagents or background commands, on configurable agents (provider, ordered model list with fallback, thinking level, and a plain-language when) on opencode, Claude Code, Codex or pi. No scripts. Use when the user says "/r42", "r42", "after42", or asks to find, propose, sharpen, develop, rank or review research questions or directions, e.g. "研究の問いを出して", "このリサーチクエスチョンを深掘りして", "問いを磨いて", "what should I research next".
+  A toolkit for empirical ML research: systematic procedures for the actions research keeps needing. Find and verify papers and prior art; review an approach before running experiments; implement experiments cleanly and reproducibly; interpret results; help write the paper; and find and develop research questions with the After42 method (after42.org) adapted to ML (oversample, develop by decisive experiments, unanimous judges, fresh-agent audit, mixed-model ranking). Stateless: keeps nothing between sessions; writes plans or results only to the tool the user names. Use for "/r42", "after42", or requests like "関連論文を探して", "このアプローチ妥当？", "実験を実装して", "この結果どう解釈する？", "論文を書くのを手伝って", "研究の問いを出して", "実験が進まない".
 compatibility: Agent CLIs as configured (opencode, claude, codex, pi) for entries that run on a runtime other than the current one.
 ---
 
 # r42
 
-Questions shape where research effort goes, and novel, difficult questions are easy to produce while interesting ones are rare: before development, experts judged 3% of single-pass AI proposals interesting; after solve-driven development, about a third (F1, F16). This skill runs that development process for the user's own field. The researcher sets the goal and decides what is worth pursuing; the agents explore many more candidates than one person could (F36, F44).
+r42 is a toolkit for empirical ML research. Each action below is a systematic procedure for something research keeps needing, built from what tends to go wrong (E1–E16) and from the After42 study of how good research questions are developed (F1–F45). The researcher decides; r42 does the requested action thoroughly and reports what it found.
 
-`F<n>` cites `references/findings.md`, which links each finding to its source on after42.org.
+Citations: `F<n>` → `references/findings.md` (After42). `E<n>` → `references/ml-evidence.md`. `C<n>` → `references/ml-cards.md`.
 
-## Replying to the user
+## Actions
 
-Every reply, in every step, follows this contract. Its purpose is to keep the user on what they asked and to make complex agent reasoning easy to take in.
+| The user wants | Action file |
+|---|---|
+| Find papers, check prior art, verify citations, "has anyone done X" | `steps/papers.md` |
+| Review an approach or experiment plan before running it, "is this sound" | `steps/approach.md` |
+| Implement an experiment, a baseline or a method; review experiment code | `steps/implement.md` |
+| Interpret results, "why did this happen", "what can I claim" | `steps/interpret.md` |
+| Help write or review the paper | `steps/write.md` |
+| Stuck, "what should I try next" | `steps/interpret.md` (from the evidence so far), then `references/ml-cards.md` as in "Getting unstuck" |
+| Find new research questions | `steps/pack.md` → `steps/propose.md` |
+| Develop one question or hypothesis | `steps/deepdive.md` |
+| Develop / rank / audit a pool of questions | `steps/develop.md`, `steps/judge.md`, `steps/check.md` |
+| The whole question pipeline | Full run (below) |
+| Overview of a set of questions | `steps/review.md` |
+| Reactions to questions ("q3 is boring") | `steps/feedback.md` |
 
-- **Answer the actual question or request first, directly, in plain words**, in the user's language. Include what that answer needs, including the reasoning it depends on, and nothing else.
-- **No tangents.** No "by the way", side observations, unrequested caveats, tours of possible next steps, or menus of options.
-- **Simple means direct and understandable, not merely short.** Keep the reasoning the answer needs; drop everything else.
-- **Details go to files, not chat.** Evidence, judge rationales, logs, side findings, caveats and alternatives go to `.r42/`: per-question material in the question file, everything else from a step in `.r42/reports/<date>-<step>.md`. When details exist, name the file in one line (`詳細: .r42/reports/2026-10-28-pack.md`).
-- **Ask only what is needed to proceed:** at most one or two questions, no option menus unless the user asks for options. When a request is ambiguous, confirming your understanding is the needed question.
-- Report questions, findings and decisions, not job ids or machinery.
+Read the action file before doing the action. **Clear request → just do it.** **Ambiguous → restate your understanding in one or two sentences and ask.** Several actions often chain (review an approach, implement it, interpret the result); do the one asked and name the natural next one in a line, without starting it.
 
-## Every time /r42 starts
+## How r42 behaves
 
-1. Work from the research repo. `<skill-dir>` is this skill's directory.
-2. If `.r42/jobs.md` exists, settle it as in `references/jobs.md` (On every start). **Present every unreported job in your reply to the user** (not only in intermediate output), one line each in plain words (what finished, and its result or what went wrong, read from the log tail for failures). Act on what finished (next step of the loop, report to the user), then mark those jobs `reported`. Never mark a job you have not shown.
-3. Read the state: `goal.md`, `pack/`, `questions/*.md` frontmatter (status, round), latest `rankings/`, `feedback.md`, `jobs.md`.
-4. Route the user's words (below). With no words, say where things stand in two or three lines and ask one question about what to do next.
+- **A tool, not a decision maker.** Do what was asked, thoroughly. Do not change the user's plan, question or code beyond the request. Where you see a problem outside the request (a bug, prior art, a flaw in the plan), report it in a line; the user decides.
+- **Answer first, in plain words,** in the user's language, with the reasoning the answer depends on. Then anything else the user needs to know about the request. No padding, option tours or generic caveats.
+- **Ask only what is needed to proceed:** at most one or two questions.
+- **Report what was found, not machinery.** No job ids or logs in the reply.
+- **Never present** a heuristic as shown, an invented citation as real, a proxy result as a full result, or a question as open without a prior-art search (F42).
 
-## Routing
+## Stateless
 
-| The user wants | State needed | Do |
-|---|---|---|
-| Start, set or change the research goal | none | create `.r42/` if needed (State, below), then `steps/pack.md` §1 |
-| Literature pack | goal | `steps/pack.md` §2 |
-| New candidate questions | goal, pack | `steps/propose.md` |
-| Develop / sharpen the pool ("next round") | developing questions | `steps/develop.md` |
-| The whole pipeline | none | Full run (below) |
-| Develop **their own** question / one question | the question | `steps/deepdive.md` |
-| Rank / "which are best" | questions | `steps/judge.md` |
-| Audit / "is this open, well posed" | questions | `steps/check.md` |
-| Overall picture / "where are we" / review | `.r42/` | `steps/review.md` |
-| Reactions to questions ("q3 is boring", "I like q7") | questions | `steps/feedback.md` |
-| Change agents, limits, judges | none | edit `.r42/config.toml` |
+r42 keeps nothing between sessions and creates no directory in the research repo.
 
-Read the step file before doing the step. Prompts and rubrics live in `references/`.
+- **Inputs** come from the user: the request, the goal and constraints they state, files and links they give, or a note or tool they point to (an issue, a Linear or Notion page, MLflow runs). Read what they point to; do not go looking for state of your own.
+- **Outputs** go in the reply by default. Plans, experiment cards, question write-ups and summaries are written to an external tool **only when the user names one** for that output (`references/records.md`). Write there briefly: the conclusion first, then links.
+- **Working material** (worker prompts, logs, drafts, votes) lives in `<work>`, a temporary directory: the harness's scratchpad directory if it has one, otherwise `${TMPDIR:-/tmp}/r42/<repo name>/`. It is discarded; never rely on it across sessions.
 
-**Clear request → just do it.** **Ambiguous → confirm understanding first**: restate your interpretation in one or two sentences and ask whether that is right ("You want to develop your own question about X, two rounds, rather than generate new ones. Right?"). Do not announce "next I will do X" and proceed; ask. Feedback the user gives in passing (any reaction to a specific question) is always recorded, without asking.
+Steps that need the goal and constraints (deadline, compute per experiment, code repo and how to run it, which experiments agents may run) ask for them if the user has not given them in this session or pointed to where they are, and write them to `<work>/goal.md` for workers.
 
-**Expensive runs** (full run, propose with several batches, multi-round deep-dive, anything starting more than ~4 jobs): before starting, confirm which agents each step will use, the parallelism, and the size (batches, questions developed, rounds). Include a rough scale in one line, scaled from one After42 math run: 70 final questions in about a day, ~260 agent-hours, ~2.6 B tokens (F37).
+## Experiments
+
+When an action involves running experiments:
+
+- Run only what the user allowed (none / small / up to a budget). Anything larger is handed to the user as an experiment card.
+- Every experiment has an **experiment card** (`references/question-schema.md`): the prediction and the readings are written **before** the run (E7). Readings say, for each qualitatively different outcome (direction of the effect, whether it exceeds seed noise, which hypothesis it leaves standing), what it would mean and what would be done next. They are not numeric pass/fail thresholds. Departing from them later is fine with a stated reason. An experiment whose possible outcomes would all lead to the same next action is not worth running.
+- Start from a reproduced baseline on a fixed small split (E3, E4). Prefer a fast proxy, and check once that it ranks methods like the full setting (E5, C13).
+- When a result is unexpected, attribute it before acting: hypothesis wrong, design wrong, or implementation bug (E8).
+- If the project logs runs to MLflow, DagsHub or W&B, log there too, tagged `r42.card=<name>`.
+
+## Getting unstuck
+
+`references/ml-cards.md` is a deck of general, field-tested moves (diagnosis, experiment craft, sources of ideas, process). It is a **floor to return to, not a recipe**: reading it first pulls every answer toward the cards and crowds out the better, problem-specific idea.
+
+- Think from the problem first. Read the cards only when a procedure finds no direction it believes in, an experiment failed and attribution is unclear, or the user says they are stuck.
+- Write your own candidate moves first, then scan the cards for blind spots. Use a card only when you can say why it fits; cite it as `C<n>`. Never list cards to the user as a menu.
+- Proposers and judges do not read the cards. Checkers and approach reviews use them only as a blind-spot list.
 
 ## Agents
 
-`.r42/config.toml` (template in `references/jobs.md`) holds `judges`, `max_parallel`, and **agent entries**. Each entry has:
+Long or parallel work runs as jobs on agent entries. The defaults are the config in `references/jobs.md`. The user changes them in the request ("solve on pi this time") or, for a lasting change, in a toml block under an "r42 agents" heading in their repo's `AGENTS.md` or `CLAUDE.md`, which they own. Each entry has:
 
 | Field | Meaning |
 |---|---|
-| `when` | Natural-language condition for the steps or situations it serves ("long literature research", "judging"). The one entry **without** `when` is the default for everything else. |
-| `provider` | The runtime: `claude-code`, `opencode`, `codex`, or `pi`. |
-| `model` | An **ordered list**. On an availability error (model not found, 401/402/403/404/429/5xx, quota, auth, provider unreachable) the job reruns on the next model. A working model that fails the task does not fall back. Omit for the provider's default. |
-| `thinking` | Thinking/effort level, mapped per runtime: claude-code `--effort` (low–max), opencode model variant (`model#high`; deepseek-v4.1-flash: low, high, max), codex `model_reasoning_effort`, pi `--thinking` (off–max). |
+| `when` | Natural-language condition for the steps it serves. The one entry **without** `when` is the default. |
+| `provider` | `claude-code`, `opencode`, `codex`, or `pi`. |
+| `model` | An **ordered list**; on an availability error the job reruns on the next model. A working model that fails the task does not fall back. |
+| `thinking` | Thinking/effort level, mapped per runtime. |
 | `limit` | Max jobs of this entry at once. |
 
-The shipped config:
-
-```toml
-judges = ["default", "codex"]
-
-[agents.deepseek]                       # no when: the default
-provider = "opencode"
-model = ["opencode-go/deepseek-v4.1-flash", "opencode-go/glm-5.3", "opencode-go/kimi-k3"]
-thinking = "high"
-
-[agents.opus]
-when = "checking questions for prior answers and validity (a fresh agent from another model family)"
-provider = "claude-code"
-model = ["claude-opus-5-5", "claude-sonnet-5-5"]
-thinking = "high"
-```
-
-(plus `codex` for judging and `pi` on request).
-
-- **Choosing an entry per job:** read the entries and their `when` in config. For each job, use the entry whose `when` fits the step, else the default. An explicit request in the user's words ("solve on pi this time", "use codex as a third judge") wins for that request; change config only if the user says "always" or "from now on". Add or edit entries when the user describes one in words ("long literature research on pi with max thinking").
-- **Judges** (`judges = [...]`, entry names, `default` allowed) should mix model families (F30, F31). If a judge's runtime is missing or keeps failing, tell the user and ask before judging with fewer.
-- **On first init,** check the configured runtimes exist (`opencode`, `claude`, `codex`, `pi`). Also check each runtime has the cito MCP server (`claude mcp list`, `codex mcp list`, `pi mcp list`) and offer to add it where it is missing (`references/paper-search.md`). If the default entry's runtime is missing, ask the user which to use (offer the one running you) rather than switching silently.
-- `jobs.md` names the model that actually ran. `unavailable` means every model in the list failed: tell the user which models failed and why (log tail); do not change their model list without asking.
+- Use the entry whose `when` fits the step, else the default. **Judges** (`judges = [...]`) should mix model families (F30, F31); if one is missing, ask before judging with fewer.
+- Check that configured runtimes exist and have the cito MCP server (`references/paper-search.md`); offer to add it where missing.
+- If every model of an entry is unavailable, tell the user which and why; do not change their model list without asking.
 
 ## Jobs
 
-Anything slow or parallel runs as a job. Small inline work (recording feedback, combining rankings, writing a review) you do directly.
-
-Run jobs the way your harness already runs parallel and background work: subagents for entries on your own runtime, the entry's CLI command as a background command for any other runtime, and plain foreground runs where the harness has neither. Do not build a queue of your own on top of it. **Read `references/jobs.md` before starting the first job of a session**: it covers how to run a job, ordering, deciding success, model fallback, the record in `.r42/jobs.md`, and the commands per provider.
+Anything slow or parallel runs as a job; small inline work you do directly. Run jobs the way your harness already runs parallel and background work. **Read `references/jobs.md` before starting the first job of a session.** Write what each worker needs (goal, question files, pack) into `<work>` first.
 
 Start every worker prompt with:
 
 ```text
 You are a worker in an r42 research run in <absolute repo path>. There is no human to ask:
-make reasonable choices and note them in your output. Work only on the files named below.
+make reasonable choices and note them in your output. Write only under <work path>.
 <skill-dir> means <absolute path of this skill>.
 Search papers with cito first, as in <skill-dir>/references/paper-search.md.
+If you find something the researcher should know beyond your task (a bug, prior art,
+a flaw in the plan), list it under a "## Notable" heading in your output.
 ```
+
+Relay "Notable" items to the user in a line each.
+
+**Expensive runs** (the full question pipeline, propose with several batches, multi-round deep-dives, more than ~4 jobs, or experiments above the user's budget): confirm agents, parallelism, size and compute first. Scale reference: one After42 math run made 70 final questions in about a day, ~260 agent-hours, ~2.6 B tokens (F37); ML experiments add their own compute.
+
+## Full run (question pipeline)
+
+Confirm first. Then, pausing where marked:
+
+1. Goal and constraints (`steps/pack.md` §1). **User confirms.**
+2. Pack (`steps/pack.md` §2). **Ask if anything central is missing.**
+3. Propose in batches, filter, rank (`steps/propose.md`).
+4. Develop round 1, then round 2 (`steps/develop.md`).
+5. Final ranking (`steps/judge.md`); mark the top questions `final`.
+6. Review (`steps/review.md`) and **ask for the user's verdict on the top few** (`steps/feedback.md`).
 
 ## Paper search
 
-Search papers with cito first, in every step: its hits are real papers, which keeps invented citations out, and its date filter tests whether a question was open at a given time (F42). Install, usage and rate limits: `references/paper-search.md`.
-
-## Full run
-
-Confirm first (see Expensive runs). Then, pausing for the user where marked:
-
-1. Goal (`steps/pack.md` §1). **User confirms the goal.**
-2. Pack (`steps/pack.md` §2). **Ask if anything central is missing.**
-3. Propose in batches, then filter, then rank (`steps/propose.md`).
-4. Develop round 1, then round 2 (`steps/develop.md`).
-5. Final ranking (`steps/judge.md`); mark the top questions `final`.
-6. Review (`steps/review.md`) and **ask for the user's verdict on the top few**; record it (`steps/feedback.md`).
-
-Between steps, start the next step as soon as the previous step's jobs finish; the pauses above are the only stops. Each step's reply and report file follow the step file.
-
-## State
-
-All state is in `.r42/` of the research repo. To create it, make the directories below and write `config.toml` from the template in `references/jobs.md`:
-
-```text
-.r42/config.toml         agents and limits
-.r42/goal.md             the researcher's goal (F4)
-.r42/pack/               summary.md, papers.md, open-questions.md (F5)
-.r42/questions/<id>.md   one file per question (references/question-schema.md)
-.r42/solves/<id>/        solve records per round
-.r42/rankings/           per-judge and averaged rankings
-.r42/feedback.md         the researcher's reactions (the most valuable file, F35)
-.r42/reports/            per-step reports and portfolio reviews: the details behind each chat reply
-.r42/jobs.md             one line per job: status, agent, model, reported (references/jobs.md)
-.r42/jobs/               each job's prompt and log
-```
+Search papers with cito first in every action: its hits are real papers, and its date filter tests whether something was open at a given time (F42). Install, usage and rate limits: `references/paper-search.md`.
 
 ## Ground rules
 
-- The researcher decides what is interesting; model rankings are a prioritization aid (F36). Show single-judge picks, not only consensus (F32).
-- Report only what was found. Never present a heuristic as proved, an invented citation as real, or a question as open without a prior-art search (F42).
-- When questions or results leave `.r42/`, credit After42 for the method and disclose AI assistance (F43).
+- The researcher decides what is interesting and what to do; model rankings are a prioritization aid (F36). Show single-judge picks, not only consensus (F32).
+- When questions or results are shared beyond the researcher, credit After42 for the method and disclose AI assistance (F43).
 
 ## Install
 
 - **Claude Code** and other Agent Skills hosts: `npx skills@latest add frinfo702/skills` (or copy `skills/r42` into `~/.claude/skills/`). Invoke with `/r42`.
-- **pi**: `pi install git:github.com/frinfo702/skills` (pi discovers the repo's `skills/` directory), or copy `skills/r42` into `~/.pi/agent/skills/`, `~/.agents/skills/`, or a project's `.pi/skills/`. Invoke with `/skill:r42`.
+- **pi**: `pi install git:github.com/frinfo702/skills`, or copy `skills/r42` into `~/.pi/agent/skills/`, `~/.agents/skills/`, or a project's `.pi/skills/`. Invoke with `/skill:r42`.

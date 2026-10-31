@@ -1,22 +1,21 @@
-# Record researcher feedback
+# Use researcher feedback
 
-The researcher's reactions to concrete questions are the most valuable input in `.r42/`: feedback on earlier questions improved a judge's agreement with an expert; a stated-preferences description did not (F35). Record every reaction, even a one-word one.
+The researcher's reactions to concrete questions are the most valuable input the judges get: feedback on earlier questions improved a judge's agreement with an expert; a stated-preferences description did not (F35).
 
-Append to `.r42/feedback.md` (create it with a `# Researcher feedback` heading) one entry per question:
+When the user reacts to a question, add an entry to `<work>/feedback.md` (it lasts for the session):
 
 ```markdown
 ## <date> <id>: <title>
 - verdict: interesting | not interesting | unsure
 - would pursue / suggest to a student: yes | no | maybe
-- rank: <position, if the user ranked a set>
 - comment: <the user's words, verbatim where possible>
 - question version: round <n>
 ```
 
-Mirror the entry under the question file's `## Researcher feedback`. Reply in one line that it is recorded; do not discuss it unless asked.
+Reply in one line that it will be used; do not discuss it unless asked. If the user named a destination for questions, also post the entry there as a comment on the question (`references/records.md`).
 
-Prompt for the expert's own questions, not criteria (F14): "Is this genuinely interesting? Would you pursue it, or suggest it to a student? Why?" Do not paraphrase the user's comment into rubric language; the specific reasons are what carry their taste.
+Ask with the expert's own questions, not criteria (F14): "Is this genuinely interesting? Would you pursue it, or suggest it to a student? Why?" Do not paraphrase the comment into rubric language; the specific reasons carry the taste.
 
-If the user flags prior art or an error, record it here and in the question's Check notes, and re-run the check for that question (F42, F45).
+If the user flags prior art or an error, re-run the check for that question (F42, F45).
 
-These entries are passed verbatim to every judge prompt (`references/judge-rubric.md`, Personalization).
+In a later session, feedback exists only where the user keeps it. If they point to it (comments on question issues, a page), collect it into `<work>/feedback.md` before judging; the entries are passed verbatim to every judge prompt (`references/judge-rubric.md`, Personalization).
