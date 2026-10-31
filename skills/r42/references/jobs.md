@@ -1,15 +1,14 @@
 # Jobs
 
-A job is one worker prompt run by one agent entry. There is no queue program: you run jobs with whatever your harness already has for parallel and background work, and you keep the record in `.r42/jobs.md`. Each harness has its own way of doing this, and that way is the one to use.
+A job is one worker prompt run by one agent entry. There is no queue program: you run jobs with whatever your harness already has for parallel and background work, and the harness keeps track of them. Prompts and logs are working material in `<work>/jobs/`; nothing about jobs is recorded beyond the session.
 
 ## Running a job
 
-1. Write the prompt to `.r42/jobs/<job>.prompt.md` with your file-writing tool, not a shell heredoc (long nested heredocs tend to hang the shell). `<job>` is a short slug of the job name, e.g. `solve-q007-r1-1`.
-2. Add the job to `.r42/jobs.md` as `running` (format below).
-3. Start it in one of two ways:
+1. Write the prompt to `<work>/jobs/<job>.prompt.md` with your file-writing tool, not a shell heredoc (long nested heredocs tend to hang the shell). `<job>` is a short slug of the job name, e.g. `solve-q007-r1-1`.
+2. Start it in one of two ways:
    - **Your own runtime.** If the entry's provider is the runtime you are running in, and your harness can run a fresh subagent with the entry's model (or the entry gives no model), give the prompt to a subagent. A fresh subagent counts as a fresh agent; the checker needs one (F12).
-   - **Another runtime**, or a model or thinking level your subagents cannot set: run the entry's command (below) from the research repo root, with stdin from `/dev/null` and stdout and stderr written to `.r42/jobs/<job>.log`. Run it as a background command if your harness has them; otherwise in the foreground.
-4. When it ends, decide the result (below), update `.r42/jobs.md`, and continue with the step.
+   - **Another runtime**, or a model or thinking level your subagents cannot set: run the entry's command (below) from the research repo root, with stdin from `/dev/null` and stdout and stderr written to `<work>/jobs/<job>.log`. Run it as a background command if your harness has them; otherwise in the foreground.
+3. When it ends, decide the result (below), tell the user in one line if it matters, and continue with the step.
 
 **Parallel.** Start independent jobs together, using your harness's own mechanism for that (several subagents or background commands in one turn). Keep to `max_parallel` running jobs in total and to each entry's `limit`. Start more as running jobs finish.
 
@@ -29,26 +28,16 @@ A job **succeeded** when it exited cleanly *and* wrote the files its prompt name
 
 A worker's output that merely quotes an error (e.g. a paper that mentions "HTTP 503") is not an availability failure. Judge from where the run stopped.
 
-## `.r42/jobs.md`
+## Interrupted sessions
 
-One line per job. You update it in place, and it is the only record that survives a closed session:
-
-```text
-- 2026-10-28 14:05 | solve q007 r1 #1 | step=solve agent=deepseek model=opencode-go/deepseek-v4.1-flash | succeeded | reported | log=jobs/solve-q007-r1-1.log
-```
-
-- Status: `running`, `succeeded`, `failed`, `unavailable`, `skipped`, or `interrupted`.
-- `model` is the model that actually ran (after fallback).
-- `unreported` until the result has appeared in a reply to the user, then `reported`.
-
-**On every start**, read `jobs.md`. A job still `running` from an earlier session that your harness no longer tracks is either finished (its output files exist and its log ends cleanly: mark it `succeeded`) or lost (mark it `interrupted` and offer to rerun it). Then present every `unreported` job, one line each, and mark it `reported`.
+If a session ends while jobs run, their results are lost with `<work>`. On the next start, compare the records with what the last step should have produced (a round comment missing on a question issue, for example) and offer to rerun that step. Do not try to recover worker output.
 
 ## Commands per provider
 
 Fill `<model>` and `<thinking>` from the entry. When an entry has no value for a placeholder, drop that argument and the flag right before it. An entry's `cmd = "..."` replaces the template, with the same placeholders plus `<prompt_file>`.
 
 ```bash
-P="$(cat .r42/jobs/<job>.prompt.md)"
+P="$(cat <work>/jobs/<job>.prompt.md)"
 
 # claude-code   (keep "$P" right after -p: --allowedTools takes several values and would swallow it)
 claude -p "$P" --model <model> --effort <thinking> --permission-mode acceptEdits \
@@ -64,13 +53,13 @@ codex exec --skip-git-repo-check -s workspace-write -m <model> -c model_reasonin
 pi -p --no-session --model <model> --thinking <thinking> "$P"
 ```
 
-Each one runs as `<command> < /dev/null > .r42/jobs/<job>.log 2>&1` from the repo root.
+Each one runs as `<command> < /dev/null > <work>/jobs/<job>.log 2>&1` from the repo root.
 
 **Watching jobs live in Rex.** If you run inside [Rex](https://www.superlogical.com/rex/docs/automate/cli) and the user wants to watch, run each command in its own unfocused tab named `r42 <job name>` with `rex run`, still writing the log. Load the `rex` skill for the commands (or run `rex skill show`). Close tabs only when the user asks.
 
-## `.r42/config.toml`
+## Default agent configuration
 
-Write this on first setup, then adjust it to the runtimes the user has:
+These are the defaults. A repo overrides them only with a toml block under an "r42 agents" heading in its `AGENTS.md` or `CLAUDE.md`, written when the user asks for a lasting change ("always solve on pi"). Overrides replace only the keys they set:
 
 ```toml
 max_parallel = 4

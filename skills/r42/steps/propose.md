@@ -1,6 +1,6 @@
 # Propose and filter
 
-Needs `.r42/goal.md` and `.r42/pack/`. Produces `candidate` question files.
+Needs the notebook's Goal and the pack (rebuilt into `<work>/pack/`). Produces candidate question files in `<work>/questions/`; only the ones chosen for development become records.
 
 ## Oversample
 
@@ -10,17 +10,17 @@ Run one job per batch, in parallel, step `propose`, each with a **different hint
 
 ```text
 You are proposing research questions toward this goal:
-<.r42/goal.md>
-Read the literature summary .r42/pack/summary.md now; consult .r42/pack/papers.md and
-.r42/pack/open-questions.md as needed, and search the literature yourself.
+<the notebook's Goal and Constraints>
+Read the literature summary <work>/pack/summary.md and <work>/notebook.md now; consult
+<work>/pack/papers.md, mechanisms.md, baselines.md and open-questions.md as needed, and search the literature yourself.
 Read <skill-dir>/references/proposer-hints.md ("Always" section) and follow it.
 Your diversity hint: <hint number and text>.
 Avoid duplicating existing questions: <list of existing ids and titles>.
 
-Propose <per_batch> questions. For each, make a short solution attempt (a few steps of the
-argument, a small computation, or a literature check) to test whether it is well posed,
-non-trivial and still open; repair or replace it if not.
-Write each to .r42/questions/<id>.md using <skill-dir>/references/question-schema.md,
+Propose <per_batch> questions. For each, make a short attempt (a literature check for an
+existing answer or known fix, a short argument, a sketch of the decisive first experiment) to
+test whether it is well posed, non-trivial, still open and affordable; repair or replace it if not.
+Write each to <work>/questions/<id>.md using <skill-dir>/references/question-schema.md,
 ids <range>, status: candidate, hint: <n>, and a one-paragraph Round 0 entry in the
 Development log saying what the short attempt found.
 ```
@@ -29,6 +29,6 @@ Development log saying what the short attempt found.
 
 After all propose jobs succeed, run one job, step `check`, using `steps/check.md` in **filter mode**. It removes ill-posed, known, duplicate and too-easy candidates (F8).
 
-Then rank the survivors (`steps/judge.md`) and pick the top N for development (default N = 8; the user's budget overrides). After42 developed up to 16 in parallel (F37). Mark them `developing`; leave the rest as `candidate`.
+Then rank the survivors (`steps/judge.md`) and pick the top N for development (default N = 8; the user's budget overrides). After42 developed up to 16 in parallel (F37). Mark them `developing` and create one issue per developing question (`references/records.md`; body = the question in the schema, label `r42:developing`). Candidates not chosen are not filed; list their titles in one collapsed block in the notebook comment below, so they can be revived.
 
-Write `.r42/reports/<date>-propose.md`: how many proposed, removed by reason, kept, the composition mix (F22), and the ranking. Reply with how many survived and which questions go into development, one line each, plus the report path.
+Post one short comment on the notebook: how many proposed, removed by reason, kept, the composition mix (F22), and links to the new question issues. Reply with how many survived and which questions go into development, one line each with links. If a removed or low-ranked candidate struck you as interesting anyway, say so: single-taste picks are worth the user's look (F32).

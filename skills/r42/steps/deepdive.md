@@ -1,11 +1,12 @@
 # Deep-dive on one question
 
-The user brings their own research question (or picks one from `.r42/questions/`) and wants it developed. This is the solve-refine-critique loop applied to a single question (F9–F12), without the propose stage.
+The user brings their own research question or hypothesis (or picks an existing question issue), or says they are stuck, and wants it developed. This is the attempt-refine-critique loop applied to a single question (F9–F12), without the propose stage. It is also where most of the coworking happens: one question, discussed closely.
 
-1. **Capture it.** If it is new, write it to `.r42/questions/<id>.md` in the schema with `status: user`, `hint: user`. Fill Motivation, Intuition and Related work from what the user said; leave unknown sections marked `TODO` rather than inventing content. Restate the question in one plain sentence and confirm it with the user before spending budget.
-2. **Goal and pack.** If `.r42/goal.md` is missing, ask the user for the goal this question serves (one or two sentences is enough here). A full pack is optional: for a single question, a focused related-work search inside the first solve job is enough.
-3. **Rounds.** Run `steps/develop.md` for this one question. Default 2 rounds, 2 solve attempts per round. Rounds are sequential (round 2 depends on round 1's check).
-4. **Report each round** directly: what solving found and how the question changed, or why it was kept (F17), in a few plain sentences; the current question in one sentence and its first step in one sentence. Votes, rationales and the check go in the question file; name it.
-5. **The user decides.** If the user disagrees with a judge outcome, their call wins; record it with `steps/feedback.md`.
+1. **Capture it.** If it is new, draft it in the schema with `status: user`, `hint: user`, and after the user confirms it, file it as a question issue labelled `r42:user`. Fill Motivation, Diagnosis, Intuition and Related work from what the user said; leave unknown sections marked `TODO` rather than inventing content. Restate the question in one plain sentence and confirm it with the user before spending budget.
+2. **If the user is stuck,** start from the stall rather than from the question. Read the experiment cards, the notebook and recent results, and say plainly what you think is happening: which experiments changed no decision, which belief everything rests on, and where the evidence is weakest. Ask the user for their own reading of the failure cases. Only then, if neither of you has a direction, scan `references/ml-cards.md` for blind spots (SKILL.md, Getting unstuck).
+3. **Goal and constraints.** If the notebook has no Goal, ask for the goal and the constraints (one or two sentences and the compute budget are enough here). A full pack is optional: for a single question, a focused related-work search inside the first attempt is enough.
+4. **Rounds.** Run `steps/develop.md` for this one question. Default 2 rounds, 2 attempts per round. Rounds are sequential (round 2 depends on round 1's check). Between rounds, show the user the experiment results and ask what they make of them before the refine job runs; their reading goes into the refine prompt.
+5. **Report each round** directly: what the attempts found and how the question changed, or why it was kept (F17), in a few plain sentences; the current question in one sentence and its first experiment in one sentence. The outcome goes on the question's issue as one short comment; link it.
+6. **The user decides.** If the user disagrees with a judge outcome, their call wins; record it with `steps/feedback.md` and in the notebook's Decisions.
 
-Multi-round deep-dives are expensive runs: confirm rounds, attempts per round, agents and parallelism before starting.
+Multi-round deep-dives are expensive runs: confirm rounds, attempts per round, agents, parallelism and compute before starting.
