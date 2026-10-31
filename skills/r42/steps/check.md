@@ -6,7 +6,7 @@ A **fresh agent** (never the proposer or developer of the question) audits quest
 
 ```text
 You are a critic filtering candidate research questions. You did not write them.
-Goal: <the notebook's Goal and Constraints>
+Goal: <the goal and constraints from <work>/goal.md>
 Questions: every <work>/questions/*.md with status: candidate.
 Read <skill-dir>/references/checker-checklist.md and apply sections A, B, C and D to each.
 For section A, search the literature for prior answers and known fixes, and make a short attempt
@@ -34,8 +34,6 @@ You are checking one research question after a development round. You did not wr
 Print: id, accepted/rejected, check result.
 ```
 
-## Recording
+## Reporting
 
-After each check job, write back to the records (`references/records.md`): update the question issue's body to the selected version; post one comment with the outcome ("revision accepted (unanimous)" or "rejected (codex preferred A)", what the check repaired or flagged, prior-art links); close the issue with the reason when a question is removed. Keep it to a few lines.
-
-Questions with `status: user` are never removed; failures are flagged in Check notes and reported to the user.
+After each check job, tell the user per question in one line: revision accepted (unanimous) or rejected (who dissented), what the check repaired or flagged, and prior-art links found. If the user named a destination for questions (`references/records.md`), update the question there: the body to the selected version, one short comment with the same line, closed with the reason if removed.

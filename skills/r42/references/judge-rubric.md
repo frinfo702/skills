@@ -60,13 +60,13 @@ naming what makes it interesting or weak (cite the criterion). Output a markdown
 <feedback examples as above>
 ```
 
-Combine judges by **averaging ranks** (F31). Write the result to `<work>/rankings/<date>-<label>.md` (the record is the short notebook comment in `steps/judge.md`) with: the averaged order, each judge's rank per question, and the rationales.
+Combine judges by **averaging ranks** (F31). Write the result to `<work>/rankings/<date>-<label>.md` with: the averaged order, each judge's rank per question, and the rationales.
 
 Then flag, separately from the averaged order, the questions with the **largest rank spread** across judges and any question a single judge placed in its top quarter while the average did not. Model judges are mode seekers: they find consensus picks and miss single-taste picks, which are sometimes the ones that open new directions (F32). The researcher should see these, not just the consensus.
 
 ## Personalization
 
-Condition judges on the researcher's **feedback on concrete earlier questions** (collected from the question records), not on a stated-preferences profile. Feedback raised agreement with one expert's ranking from 0.26 to 0.42; stated preferences gave no gain, alone or on top of feedback (F35). If the user offers a preferences description, record it, but ask them to react to a few questions instead; that is what helps.
+Condition judges on the researcher's **feedback on concrete earlier questions** (`<work>/feedback.md`), not on a stated-preferences profile. Feedback raised agreement with one expert's ranking from 0.26 to 0.42; stated preferences gave no gain, alone or on top of feedback (F35). If the user offers a preferences description, record it, but ask them to react to a few questions instead; that is what helps.
 
 ## Limits
 

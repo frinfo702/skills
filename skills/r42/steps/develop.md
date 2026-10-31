@@ -15,7 +15,7 @@ R = ranking per judge, after every C                       # steps/judge.md
 
 The C job applies the vote: it reads the judge outputs first (see `steps/check.md`).
 
-While the round runs, share each result that meets the bar in SKILL.md ("Share as you go"), and hand experiment cards meant for the researcher to the user as soon as they exist.
+While the round runs, hand experiment cards meant for the researcher to the user as soon as they exist.
 
 ## Stall rule
 
@@ -25,7 +25,7 @@ If a question has had **two rounds in a row whose experiments changed no decisio
 
 ```text
 You are developing one ML research question from what the attempts revealed.
-Goal and constraints: <the notebook's Goal and Constraints>
+Goal and constraints: <the goal and constraints from <work>/goal.md>
 Question: <work>/questions/<id>.md (including its experiment cards)
 This round's attempt records: <paths>. Literature record: <work>/pack/ and the Related work section.
 <if the stall rule applies: "Stall rule: two rounds changed no decision. Choose between a method or
@@ -48,7 +48,6 @@ intervention question with a decisive first experiment, and recommending removal
    If you keep: do not create that file.
 5. Append to the Development log of <work>/questions/<id>.md a "### Round <r>" entry:
    what the attempts found, the directions considered, and the chosen change or why it was kept.
-6. End your output with "## For the notebook": beliefs this round should change.
 If the attempts fully answered the question, say so in the log and propose a harder, natural
 successor as the revision, or recommend removal.
 ```
@@ -59,4 +58,4 @@ Run only if `<work>/questions/<id>.rev.md` exists (the job prompt says: "if the 
 
 ## After the round
 
-When the round's jobs have finished, merge "For the notebook" items into the notebook record. Per question, the record is the check's comment (`steps/check.md`, Recording) plus, if useful, one line on what the attempts found; the attempt write-ups stay in `<work>`. Post one comment on the notebook summarizing the round, one line per question. Reply with one line per question: what changed and why, in plain words (e.g. "q007: revised; the 2 GPU-h proxy showed the error disappears when relations are required by the labels, both judges agreed"). Then any experiment cards waiting for the user, the notebook changes that matter, and the link to the round comment.
+When the round's jobs have finished, reply with one line per question: what changed and why, in plain words (e.g. "q007: revised; the 2 GPU-h proxy showed the error disappears when relations are required by the labels, both judges agreed"), then any experiment cards waiting for the user and any "Notable" items from workers. If the user named a destination for questions, the per-question record is the check's update (`steps/check.md`, Reporting). Attempt write-ups stay in `<work>`.

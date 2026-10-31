@@ -6,7 +6,7 @@ Hints are for coverage. They are not the improvement cards (`ml-cards.md`); prop
 
 ## Always
 
-- Propose toward the goal in `<work>/notebook.md` (Goal), within its constraints (deadline, compute); each question is an intermediate step toward the goal (F4).
+- Propose toward the goal in `<work>/goal.md`, within its constraints (deadline, compute); each question is an intermediate step toward the goal (F4).
 - Ground every question in the pack: name the closest prior result and say what the question adds (F5, F24).
 - Tie the question to a **diagnosis**: what bottleneck it targets and the evidence it is a cause, not a symptom. If there is no evidence yet, say so and make finding it the first experiment.
 - Make a **short attempt** on each question (literature check, a short argument, a sketch of the decisive experiment) to check and repair it before submitting; drop questions it settles or that stay ill posed (F7, F8).

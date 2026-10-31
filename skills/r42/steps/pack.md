@@ -1,10 +1,10 @@
 # Goal and research pack
 
-Runs when the notebook has no Goal or there is no pack record, or when the user wants to change the goal or refresh the pack.
+Runs when the user wants new questions and has not given a goal or pointed to a pack, or wants to change the goal or refresh the pack.
 
 ## 1. The goal (with the user, never by a worker)
 
-The goal is written by the researcher; it sets the direction every question serves (F4). Draft it with the user in conversation and save it as the Goal and Constraints sections of the notebook record (creating the notebook if this is the first use; `references/records.md`). It has two parts.
+The goal is written by the researcher; it sets the direction every question serves (F4). Draft it with the user in conversation and write it to `<work>/goal.md`. It has two parts.
 
 **Goal.** One short paragraph:
 
@@ -24,7 +24,7 @@ After42's example sets the size and tone (F4): "The goal of the theory of phase 
 - Data available: <datasets and splits>
 ```
 
-If the user gives only a topic word, reply with a draft in this shape and one question: is it right? Ask about constraints you cannot infer. Do not proceed on a goal the user has not confirmed. Record the goal and constraints as a Decision in the notebook.
+If the user gives only a topic word, reply with a draft in this shape and one question: is it right? Ask about constraints you cannot infer. Do not proceed on a goal the user has not confirmed.
 
 Expectations to share when setting the goal, in one sentence, only if they change what the user should expect: After42 was validated on theoretical fields, and yields fall as fields depend more on experiments (F19–F21). r42 compensates by tying every question to cheap, decisive experiments; the yield still depends on how fast experiments run, so a fast proxy is worth setting up early (C13).
 
@@ -34,7 +34,7 @@ The pack is the shared reference for every later agent (F5). In ML it also recor
 
 ```text
 You are building a research pack for this goal:
-<the notebook's Goal and Constraints>
+<the goal and constraints from <work>/goal.md>
 <optional: seed papers, authors or repos the user named>
 
 Search the literature (cito first, then web search and arXiv for surveys and recent papers, and
@@ -56,4 +56,4 @@ OpenReview for reviews) and write five files under <work>/pack/:
 Do not propose new questions. Finish by printing the five paths.
 ```
 
-When the job finishes, skim the files and publish them as the pack record (one document with five sections, `references/records.md`). Post one short comment on the notebook: size, main themes, apparent gaps, links not verified. Reply in a few lines: the pack is ready, what it centres on, which baseline it suggests reproducing first, anything in it that surprised you, and one question: is anything central missing? Link the pack. The user's additions go straight into the pack record; rebuild `<work>/pack/` from it before later steps.
+When the job finishes, skim the files. Reply in a few lines: the pack is ready, what it centres on, which baseline it suggests reproducing first, apparent gaps, links not verified, and one question: is anything central missing? If the user named a destination for the pack, publish it there as one document with five sections (`references/records.md`); otherwise offer once, in a line, since `<work>` does not survive the session.

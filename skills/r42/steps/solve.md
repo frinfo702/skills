@@ -8,7 +8,7 @@ One job per question per round, step `solve`. For two independent attempts per q
 You are attempting to answer this ML research question. Your budget: <time budget>, and
 <compute: "no experiments" | "experiments up to <budget> each, in <code repo>, run as <how to run">>.
 The point is to learn what the attempt reveals about the question, not only to finish.
-Goal and constraints: <the notebook's Goal and Constraints>
+Goal and constraints: <the goal and constraints from <work>/goal.md>
 Question: <work>/questions/<id>.md  (read all of it, including its experiment cards and Development log)
 Earlier attempts: <list of <work>/solves/<id>/*.md, or "none">. Build on them or try a new approach.
 Literature: <work>/pack/ (mechanisms.md and baselines.md especially) and your own search.
@@ -40,10 +40,9 @@ Write <work>/solves/<id>/r<round>-<k>.md with these sections:
                          a simpler setting that shows the phenomenon, a wrong intuition in the question
 ## If answered           the answer and how confident you are
 ## Suggested changes     how the question could be sharpened, redirected or corrected (do not edit the question file)
-## For the notebook      beliefs that this attempt should change, with evidence
 ```
 
-When the job finishes, the coordinator records its experiment cards on the question's issue (`references/records.md`): a card for an experiment still to run is posted before the run; a card the worker already ran is posted with its pre-run Prediction and Readings as written, and the result as a reply with the run link. Numbered in order. Cards marked "for the researcher" are shown to the user with the prediction and readings; their results are filled in when the user reports them.
+When the job finishes, the coordinator copies its experiment cards into `<work>/questions/<id>.md`, numbered in order, and shows cards marked "for the researcher" to the user with the prediction and readings. If the user named a destination for questions, a card is posted there before its run, and its result as a reply with the run link (`references/records.md`).
 
 A full answer is a finding too: the question was too easy, or a known trick already fixes it (F8). The develop step decides what to do with it.
 

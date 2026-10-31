@@ -30,7 +30,7 @@ A worker's output that merely quotes an error (e.g. a paper that mentions "HTTP 
 
 ## Interrupted sessions
 
-If a session ends while jobs run, their results are lost with `<work>`. On the next start, compare the records with what the last step should have produced (a round comment missing on a question issue, for example) and offer to rerun that step. Do not try to recover worker output.
+If a session ends while jobs run, their results are lost with `<work>`. Nothing is recovered; if the user wants the step again, rerun it.
 
 ## Commands per provider
 

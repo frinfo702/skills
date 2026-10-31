@@ -1,6 +1,6 @@
 # Question file schema
 
-A question's record is an issue (`references/records.md`): the body holds the frontmatter fields as a short list and the sections from Question to First experiment; experiment cards, the development log, check notes and feedback are comments on it. For workers, the coordinator assembles the body and those comments into one file, `<work>/questions/<id>.md`, in the form below. IDs are short and stable (`q001`, `q002`, ...; a revision keeps its id). The sections follow After42's published cards (F15), adapted to empirical ML: a question is tied to a diagnosis and to the experiment that would decide it. Readers judge from the whole file: the question, the goal, and related work (F14).
+One file per question during a session: `<work>/questions/<id>.md`. If the user keeps questions in a tool (`references/records.md`), the body there holds the sections from Question to First experiment, and experiment cards, the development log, check notes and feedback are comments; the coordinator rebuilds the file from them when the user points to it. IDs are short and stable (`q001`, `q002`, ...; a revision keeps its id). The sections follow After42's published cards (F15), adapted to empirical ML: a question is tied to a diagnosis and to the experiment that would decide it. Readers judge from the whole file: the question, the goal, and related work (F14).
 
 ```markdown
 ---
@@ -70,12 +70,12 @@ prediction, readings ("if the gain vanishes when X is removed, then ...; if it p
 - <date> <checker agent>: items failed and what was done; prior-art links found.
 
 ## Researcher feedback
-- <date>: the researcher's verdict and comments (a comment on the issue).
+- <date>: the researcher's verdict and comments.
 ```
 
 Rules:
 
 - The Question section changes only through an accepted revision (unanimous judges, F11) or the checker's minimal, target-preserving repair (F12).
-- Keep earlier versions: an accepted revision replaces the issue body; the issue's edit history keeps the old one, and the round comment says what changed.
+- Keep earlier versions: before applying an accepted revision, copy the old Question section into the Development log entry.
 - In an experiment card, Decides, Prediction and Readings are never edited after the run (E7). A mistaken card is corrected by a new card that cites it. Acting differently from the Readings is allowed; the result comment says why.
 - `status: user` marks a question the researcher brought; it is never removed by the filter, only flagged.
