@@ -50,7 +50,7 @@ When: differences are within a point or two. Move: run several seeds, report spr
 When: one run takes too long to iterate. Move: shrink data, resolution, schedule or model until a run takes minutes; then check once that the proxy ranks a few known methods like the full setting. Gives: many more iterations. Trap: trusting a proxy whose ranking was never checked.
 
 **C14. Predict before you run.**
-When: before every experiment. Move: write the expected result and what you will do for each outcome. If every outcome leads to the same action, skip the run. Gives: experiments that move the project; surprises become visible. Trap: post-hoc stories for any result. — Schulman, [An Opinionated Guide to ML Research](http://joschu.net/blog/opinionated-guide-ml-research.html).
+When: before every experiment. Move: write the expected result and how you would read each qualitatively different outcome (which hypothesis it supports or rules out, what you would do next). If every outcome leads to the same action, skip the run. Gives: experiments that move the project; surprises and changes of interpretation become visible. Trap: post-hoc stories for any result; or the opposite, a numeric cutoff applied mechanically (29.9% vs 30%). — Platt, *Strong Inference*, Science 1964 (crucial experiments between alternative hypotheses); Howard, *Information Value Theory*, 1966 (information is worth gathering only if it can change a decision); Nosek et al., *The preregistration revolution*, PNAS 2018 (predictions fixed before seeing data).
 
 **C15. Learning rate and schedule before anything clever.**
 When: a new setup underperforms. Move: sweep learning rate (log scale) and warmup first. Gives: removes the most common cause of a "bad idea". Trap: ablations at a badly tuned learning rate. — Bengio, *Practical Recommendations for Gradient-Based Training*, 2012; Tuning Playbook.
@@ -87,7 +87,7 @@ When: the full task is hard to move. Move: split into stages or an easier specia
 When: experiments are piling up without direction. Move: write the abstract's main sentence and the first figure as if it worked; list the experiments that sentence needs. Gives: a test of which experiments matter. Trap: not revising the claim when evidence says otherwise. — Huang, [steady progress](https://github.com/jbhuang0604/awesome-tips/blob/main/steady-progress.md); Schulman (goal-driven).
 
 **C25. Timebox and kill criteria.**
-When: an idea has had "one more try" several times. Move: before continuing, set a date and a result that would end it. Gives: freed time; dropped ideas recorded with why. Trap: switching too often; give an idea a fair test first (E13).
+When: an idea has had "one more try" several times. Move: before continuing, set a date and say what kind of evidence would end it (not a numeric cutoff). Gives: freed time; dropped ideas recorded with why. Trap: switching too often; give an idea a fair test first (E13).
 
 **C26. Explain it to someone.**
 When: you cannot say in two sentences why the current direction should work. Move: explain the problem and the bet to a colleague (or the user, or r42) and collect their first objection. Gives: the hidden assumption. Trap: explaining the method instead of the reason.

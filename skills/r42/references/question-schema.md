@@ -46,13 +46,14 @@ Mark heuristics as heuristics.
 
 ## First experiment
 The smallest experiment whose result would change what we do next: setup, proxy, budget,
-prediction, decision rule ("if A, then ...; if B, then ..."), and the kill criterion for the question.
+prediction, readings ("if the gain vanishes when X is removed, then ...; if it persists, then ..."), and what evidence would make us drop the question.
 
 ## Experiment cards
 ### E1 <date> <short name>
 - Decides: <which decision this experiment informs>
 - Prediction: <written before running>
-- Decision rule: <what we do for each outcome, written before running>
+- Readings: <for each qualitatively different outcome (direction, size relative to seed noise,
+  which hypothesis survives): what it would mean and what we do next. Not a numeric cutoff.>
 - Setup: data/split, model, baseline (reproduced? numbers), seeds, budget, proxy or full
 - Ran by: r42 job <id> | user
 - Result: <filled after the run, with links to logs and figures>
@@ -76,5 +77,5 @@ Rules:
 
 - The Question section changes only through an accepted revision (unanimous judges, F11) or the checker's minimal, target-preserving repair (F12).
 - Keep earlier versions: an accepted revision replaces the issue body; the issue's edit history keeps the old one, and the round comment says what changed.
-- In an experiment card, Decides, Prediction and Decision rule are never edited after the run (E7). A mistaken card is corrected by a new card that cites it.
+- In an experiment card, Decides, Prediction and Readings are never edited after the run (E7). A mistaken card is corrected by a new card that cites it. Acting differently from the Readings is allowed; the result comment says why.
 - `status: user` marks a question the researcher brought; it is never removed by the filter, only flagged.

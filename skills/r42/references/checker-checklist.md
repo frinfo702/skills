@@ -44,7 +44,7 @@ For ML questions and their experiment cards. Use `ml-cards.md` here as a blind-s
 
 - [ ] **Known fix.** A standard trick or a scale increase already removes the effect (search for it; C20). If so, it is "too easy" under A.
 - [ ] **Symptom, not cause.** The Diagnosis names evidence that the target is a cause; if it only describes a failure, flag it and make the first experiment the one that would find the cause.
-- [ ] **Decision-relevant experiment.** The first experiment's outcomes lead to different actions, and its prediction and decision rule are written (C14).
+- [ ] **Decision-relevant experiment.** The first experiment's outcomes lead to different actions, and its prediction and readings are written (C14). Flag readings that are bare numeric thresholds without an interpretation.
 - [ ] **Baseline.** The comparison is against a reproduced, equally tuned baseline, not numbers copied from a paper (C10).
 - [ ] **Confounds.** Only the scientific variable changes; nuisance settings are re-tuned or held fixed (C11).
 - [ ] **Variance.** Expected differences are larger than seed variance, or several seeds are planned (C12).
@@ -52,7 +52,7 @@ For ML questions and their experiment cards. Use `ml-cards.md` here as a blind-s
 - [ ] **Metric and leakage.** The metric measures the claim; train–test overlap and label errors are considered (C9).
 - [ ] **Presence vs use.** Claims about what a model relies on rest on interventions, not only probes (C6, C7).
 - [ ] **Within constraints.** The first experiment fits the compute and deadline in `goal.md`.
-- [ ] **Card integrity.** No experiment card had its prediction or decision rule changed after the run (E7).
+- [ ] **Card integrity.** No experiment card had its prediction or readings changed after the run (E7).
 
 ## Output
 

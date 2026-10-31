@@ -17,7 +17,8 @@ Literature: <work>/pack/ (mechanisms.md and baselines.md especially) and your ow
    the weakest link? Is the stated diagnosis a cause or a symptom?
 2. Check the literature for an existing answer, a partial answer, or a known fix.
 3. Design the smallest experiment whose outcome would change what we do next. Write its
-   prediction and decision rule before running. If every outcome would lead to the same action,
+   prediction and readings (what each qualitatively different outcome would mean and
+   what we would do; not a numeric cutoff) before running. If every outcome would lead to the same action,
    design a different one. Prefer a reproduced baseline on a fixed small split and a fast proxy.
 4. If experiments are allowed and it fits the budget, run it. If the project logs runs to
    MLflow, DagsHub or W&B, log this run there too, tagged r42.question=<id> and
@@ -42,7 +43,7 @@ Write <work>/solves/<id>/r<round>-<k>.md with these sections:
 ## For the notebook      beliefs that this attempt should change, with evidence
 ```
 
-When the job finishes, the coordinator records its experiment cards on the question's issue (`references/records.md`): a card for an experiment still to run is posted before the run; a card the worker already ran is posted with its pre-run Prediction and Decision rule as written, and the result as a reply with the run link. Numbered in order. Cards marked "for the researcher" are shown to the user with the prediction and decision rule; their results are filled in when the user reports them.
+When the job finishes, the coordinator records its experiment cards on the question's issue (`references/records.md`): a card for an experiment still to run is posted before the run; a card the worker already ran is posted with its pre-run Prediction and Readings as written, and the result as a reply with the run link. Numbered in order. Cards marked "for the researcher" are shown to the user with the prediction and readings; their results are filled in when the user reports them.
 
 A full answer is a finding too: the question was too easy, or a known trick already fixes it (F8). The develop step decides what to do with it.
 
