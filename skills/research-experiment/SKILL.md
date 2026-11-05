@@ -48,7 +48,7 @@ If the project doesn't use Hydra yet, tell the user and ask before introducing i
 
 ## Experiment PR structure
 
-If the `make-pr-easy-to-review` skill is installed, this report goes in the Linear issue, numbers stay in MLflow, and the PR itself follows that skill's format.
+If the `ml-experiment-pr` skill is installed, this report goes in the Linear issue, numbers stay in MLflow, and the PR itself follows that skill's format.
 
 Use these four sections, in this order:
 

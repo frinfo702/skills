@@ -1,5 +1,5 @@
 ---
-name: make-pr-easy-to-review
+name: ml-experiment-pr
 description: >-
   Make an ML experiment pull request easy to review: put each fact in the one
   tool that owns it (numbers in MLflow, the question and interpretation in
@@ -12,7 +12,7 @@ description: >-
   or "write the PR description", even if they don't mention reviewability.
 ---
 
-# Make a PR Easy to Review
+# ML Experiment PR
 
 An ML experiment PR is hard to review when one page tries to be the lab notebook, the results database and the code change at once. AI-written PRs make this worse: one diff bundles a refactor, a new method and ten config tweaks, and the description narrates the process and pastes every metric. The reviewer cannot tell what changed, whether the comparison is fair, or where the numbers came from.
 
