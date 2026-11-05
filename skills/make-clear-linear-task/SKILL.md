@@ -22,7 +22,7 @@ Mature OSS projects solved this with templates that have very few fields, each w
 3. **Use only the template's fields, and drop empty ones.** Never write "N/A" or "None". A missing section is clearer than a filled-in placeholder.
 4. **Problem before solution.** Describe what is broken or missing in terms of behavior. Name a solution only if it has already been decided.
 5. **Keep the human part short.** Aim for under 150 words above the agent notes. Plain sentences, not nested bullets.
-6. **Put agent detail in a collapsed section.** Implementation plans, file lists, logs, and reproduction scripts go at the end in Linear's collapsible block, so they don't crowd the readable part:
+6. **Put agent detail in a collapsed section.** Implementation plans, file lists, logs, and reproduction scripts go at the end in Linear's collapsible block, so they stay hidden until someone opens them. A `## Agent notes` heading is not enough, because it is always expanded and pushes the readable part off the screen.
 
    ```
    +++ Agent notes
@@ -32,8 +32,21 @@ Mature OSS projects solved this with templates that have very few fields, each w
    +++
    ```
 
-7. **Don't invent facts.** Versions, error messages, owners, and deadlines come from the user or the codebase. If one is needed and unknown, ask, or leave `[?]` in place.
-8. **Write in the language the team uses.** Match the existing issue or the user's prompt.
+7. **Use Linear's relations and links, not text.** Don't write "Related: ISSUE-123", "Depends on #45", or a list of URLs in the description. Linear shows relations and links in the sidebar, keeps them in sync when issues are closed or moved, and lets people filter by them. Text in the description does none of that and goes stale. Set them as `save_issue` fields:
+
+   | Instead of writing | Set |
+   |---|---|
+   | Related to ISSUE-12 | `relatedTo: ["ISSUE-12"]` |
+   | Blocked by / depends on ISSUE-12 | `blockedBy: ["ISSUE-12"]` |
+   | Blocks ISSUE-12 | `blocks: ["ISSUE-12"]` |
+   | Duplicate of ISSUE-12 | `duplicateOf: "ISSUE-12"` |
+   | Part of / sub-task of ISSUE-12 | `parentId: "ISSUE-12"` |
+   | A PR, Slack thread, doc, dashboard, or other URL | `links: [{url, title}]` |
+
+   Give each link a title that says what it is ("Slack report from #support", "Grafana: API p99"), not the raw URL. These fields only add relations. To drop a stale one, use `removeRelatedTo`, `removeBlocks`, or `removeBlockedBy`.
+
+8. **Don't invent facts.** Versions, error messages, owners, and deadlines come from the user or the codebase. If one is needed and unknown, ask, or leave `[?]` in place.
+9. **Write in the language the team uses.** Match the existing issue or the user's prompt.
 
 ## Templates
 
@@ -98,9 +111,9 @@ an API call, or a before/after.>
 ## Procedure
 
 1. **Read before writing.** When rewriting, fetch the issue and its comments (`get_issue`, `list_comments`). When creating, search for duplicates with `list_issues` first.
-2. **Choose the type** and fill only its fields from what the user said, the old issue, and the code. Move everything else into Agent notes or delete it.
+2. **Choose the type** and fill only its fields from what the user said, the old issue, and the code. Pull every issue reference and URL out of the text and into relations and links (rule 7). Move the remaining detail into Agent notes or delete it.
 3. **Do the ten-second test.** Read only the title and first sentence. If they don't say what is wrong or wanted, rewrite them before anything else.
-4. **Show the draft and save after the user agrees**, unless they already asked you to save it. Use `save_issue`; for long descriptions, a full replacement is fine, since the structure usually changes.
+4. **Show the draft and save after the user agrees**, unless they already asked you to save it. Show the relations and links alongside the description so the user can check them too. Save everything in one `save_issue` call: description, relations, and links together. For long descriptions, a full replacement is fine, since the structure usually changes.
 
 ## Example
 
@@ -113,8 +126,11 @@ Before (agent-written):
 > ## Implementation Plan
 > 1. Investigate `auth/redirect.ts`
 > 2. ...
+> ## Related
+> - Related to ISSUE-1201 (SSO rollout)
+> - Slack thread: https://acme.slack.com/archives/C01/p123
 
-After:
+After, saved with `relatedTo: ["ISSUE-1201"]` and `links: [{url: "https://acme.slack.com/archives/C01/p123", title: "Slack report from #support"}]`:
 
 > **Title:** Login redirects to 404 after SSO
 >
