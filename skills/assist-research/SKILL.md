@@ -1,13 +1,13 @@
 ---
-name: r42
+name: assist-research
 description: >-
-  A toolkit for empirical ML research: systematic procedures for the actions research keeps needing. Find and verify papers and prior art; review an approach before running experiments; implement experiments cleanly and reproducibly; interpret results; help write the paper; and find and develop research questions with the After42 method (after42.org) adapted to ML (oversample, develop by decisive experiments, unanimous judges, fresh-agent audit, mixed-model ranking). Stateless: keeps nothing between sessions; writes plans or results only to the tool the user names. Use for "/r42", "after42", or requests like "関連論文を探して", "このアプローチ妥当？", "実験を実装して", "この結果どう解釈する？", "論文を書くのを手伝って", "研究の問いを出して", "実験が進まない".
+  Research assistant for empirical ML. Use for any research work: surveying papers and checking prior art, judging whether an approach or experiment plan is sound, implementing ML methods, baselines and experiments (one variable at a time, Hydra configs, reproducible runs), reading and interpreting experiment results, writing up results as reports, PRs or paper sections, and finding or developing research questions with the After42 method. Trigger broadly on research tasks even when the skill is not named, e.g. "関連論文を探して", "先行研究ある？", "このアプローチ妥当？", "実験して", "実験を実装して", "ablationしたい", "この結果どう解釈する？", "結果まとめて", "実験PR書いて", "論文を書くのを手伝って", "研究の問いを出して", "実験が進まない", "/assist-research", "after42".
 compatibility: Agent CLIs as configured (opencode, claude, codex, pi) for entries that run on a runtime other than the current one.
 ---
 
-# r42
+# assist-research
 
-r42 is a toolkit for empirical ML research. Each action below is a systematic procedure for something research keeps needing, built from what tends to go wrong (E1–E16) and from the After42 study of how good research questions are developed (F1–F45). The researcher decides; r42 does the requested action thoroughly and reports what it found.
+assist-research is a toolkit for empirical ML research. Each action below is a systematic procedure for something research keeps needing, built from what tends to go wrong (E1–E16) and from the After42 study of how good research questions are developed (F1–F45). The researcher decides; assist-research does the requested action thoroughly and reports what it found.
 
 Citations: `F<n>` → `references/findings.md` (After42). `E<n>` → `references/ml-evidence.md`. `C<n>` → `references/ml-cards.md`.
 
@@ -19,6 +19,7 @@ Citations: `F<n>` → `references/findings.md` (After42). `E<n>` → `references
 | Review an approach or experiment plan before running it, "is this sound" | `steps/approach.md` |
 | Implement an experiment, a baseline or a method; review experiment code | `steps/implement.md` |
 | Interpret results, "why did this happen", "what can I claim" | `steps/interpret.md` |
+| Write up an experiment (report, experiment PR, results section) | `references/experiment-report.md` |
 | Help write or review the paper | `steps/write.md` |
 | Stuck, "what should I try next" | `steps/interpret.md` (from the evidence so far), then `references/ml-cards.md` as in "Getting unstuck" |
 | Find new research questions | `steps/pack.md` → `steps/propose.md` |
@@ -30,7 +31,7 @@ Citations: `F<n>` → `references/findings.md` (After42). `E<n>` → `references
 
 Read the action file before doing the action. **Clear request → just do it.** **Ambiguous → restate your understanding in one or two sentences and ask.** Several actions often chain (review an approach, implement it, interpret the result); do the one asked and name the natural next one in a line, without starting it.
 
-## How r42 behaves
+## How assist-research behaves
 
 - **A tool, not a decision maker.** Do what was asked, thoroughly. Do not change the user's plan, question or code beyond the request. Where you see a problem outside the request (a bug, prior art, a flaw in the plan), report it in a line; the user decides.
 - **Answer first, in plain words,** in the user's language, with the reasoning the answer depends on. Then anything else the user needs to know about the request. No padding, option tours or generic caveats.
@@ -40,11 +41,11 @@ Read the action file before doing the action. **Clear request → just do it.** 
 
 ## Stateless
 
-r42 keeps nothing between sessions and creates no directory in the research repo.
+assist-research keeps nothing between sessions and creates no directory in the research repo.
 
 - **Inputs** come from the user: the request, the goal and constraints they state, files and links they give, or a note or tool they point to (an issue, a Linear or Notion page, MLflow runs). Read what they point to; do not go looking for state of your own.
 - **Outputs** go in the reply by default. Plans, experiment cards, question write-ups and summaries are written to an external tool **only when the user names one** for that output (`references/records.md`). Write there briefly: the conclusion first, then links.
-- **Working material** (worker prompts, logs, drafts, votes) lives in `<work>`, a temporary directory: the harness's scratchpad directory if it has one, otherwise `${TMPDIR:-/tmp}/r42/<repo name>/`. It is discarded; never rely on it across sessions.
+- **Working material** (worker prompts, logs, drafts, votes) lives in `<work>`, a temporary directory: the harness's scratchpad directory if it has one, otherwise `${TMPDIR:-/tmp}/assist-research/<repo name>/`. It is discarded; never rely on it across sessions.
 
 Steps that need the goal and constraints (deadline, compute per experiment, code repo and how to run it, which experiments agents may run) ask for them if the user has not given them in this session or pointed to where they are, and write them to `<work>/goal.md` for workers.
 
@@ -56,7 +57,7 @@ When an action involves running experiments:
 - Every experiment has an **experiment card** (`references/question-schema.md`): the prediction and the readings are written **before** the run (E7). Readings say, for each qualitatively different outcome (direction of the effect, whether it exceeds seed noise, which hypothesis it leaves standing), what it would mean and what would be done next. They are not numeric pass/fail thresholds. Departing from them later is fine with a stated reason. An experiment whose possible outcomes would all lead to the same next action is not worth running.
 - Start from a reproduced baseline on a fixed small split (E3, E4). Prefer a fast proxy, and check once that it ranks methods like the full setting (E5, C13).
 - When a result is unexpected, attribute it before acting: hypothesis wrong, design wrong, or implementation bug (E8).
-- If the project logs runs to MLflow, DagsHub or W&B, log there too, tagged `r42.card=<name>`.
+- If the project logs runs to MLflow, DagsHub or W&B, log there too, tagged `assist-research.card=<name>`.
 
 ## Getting unstuck
 
@@ -68,7 +69,7 @@ When an action involves running experiments:
 
 ## Agents
 
-Long or parallel work runs as jobs on agent entries. The defaults are the config in `references/jobs.md`. The user changes them in the request ("solve on pi this time") or, for a lasting change, in a toml block under an "r42 agents" heading in their repo's `AGENTS.md` or `CLAUDE.md`, which they own. Each entry has:
+Long or parallel work runs as jobs on agent entries. The defaults are the config in `references/jobs.md`. The user changes them in the request ("solve on pi this time") or, for a lasting change, in a toml block under an "assist-research agents" heading in their repo's `AGENTS.md` or `CLAUDE.md`, which they own. Each entry has:
 
 | Field | Meaning |
 |---|---|
@@ -89,7 +90,7 @@ Anything slow or parallel runs as a job; small inline work you do directly. Run 
 Start every worker prompt with:
 
 ```text
-You are a worker in an r42 research run in <absolute repo path>. There is no human to ask:
+You are a worker in an assist-research research run in <absolute repo path>. There is no human to ask:
 make reasonable choices and note them in your output. Write only under <work path>.
 <skill-dir> means <absolute path of this skill>.
 Search papers with cito first, as in <skill-dir>/references/paper-search.md.
@@ -123,5 +124,5 @@ Search papers with cito first in every action: its hits are real papers, and its
 
 ## Install
 
-- **Claude Code** and other Agent Skills hosts: `npx skills@latest add frinfo702/skills` (or copy `skills/r42` into `~/.claude/skills/`). Invoke with `/r42`.
-- **pi**: `pi install git:github.com/frinfo702/skills`, or copy `skills/r42` into `~/.pi/agent/skills/`, `~/.agents/skills/`, or a project's `.pi/skills/`. Invoke with `/skill:r42`.
+- **Claude Code** and other Agent Skills hosts: `npx skills@latest add frinfo702/skills` (or copy `skills/assist-research` into `~/.claude/skills/`). Invoke with `/assist-research`.
+- **pi**: `pi install git:github.com/frinfo702/skills`, or copy `skills/assist-research` into `~/.pi/agent/skills/`, `~/.agents/skills/`, or a project's `.pi/skills/`. Invoke with `/skill:assist-research`.

@@ -90,7 +90,7 @@ When: experiments are piling up without direction. Move: write the abstract's ma
 When: an idea has had "one more try" several times. Move: before continuing, set a date and say what kind of evidence would end it (not a numeric cutoff). Gives: freed time; dropped ideas recorded with why. Trap: switching too often; give an idea a fair test first (E13).
 
 **C26. Explain it to someone.**
-When: you cannot say in two sentences why the current direction should work. Move: explain the problem and the bet to a colleague (or the user, or r42) and collect their first objection. Gives: the hidden assumption. Trap: explaining the method instead of the reason.
+When: you cannot say in two sentences why the current direction should work. Move: explain the problem and the bet to a colleague (or the user, or assist-research) and collect their first objection. Gives: the hidden assumption. Trap: explaining the method instead of the reason.
 
 **C27. Read the limitations sections and reviews.**
 When: looking for problems worth solving near a known line of work. Move: read the limitations sections, rebuttals and OpenReview comments of the closest papers. Gives: problems the authors and reviewers already know are open. Trap: picking a limitation nobody cares about.

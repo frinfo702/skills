@@ -26,7 +26,7 @@ After42's example sets the size and tone (F4): "The goal of the theory of phase 
 
 If the user gives only a topic word, reply with a draft in this shape and one question: is it right? Ask about constraints you cannot infer. Do not proceed on a goal the user has not confirmed.
 
-Expectations to share when setting the goal, in one sentence, only if they change what the user should expect: After42 was validated on theoretical fields, and yields fall as fields depend more on experiments (F19–F21). r42 compensates by tying every question to cheap, decisive experiments; the yield still depends on how fast experiments run, so a fast proxy is worth setting up early (C13).
+Expectations to share when setting the goal, in one sentence, only if they change what the user should expect: After42 was validated on theoretical fields, and yields fall as fields depend more on experiments (F19–F21). assist-research compensates by tying every question to cheap, decisive experiments; the yield still depends on how fast experiments run, so a fast proxy is worth setting up early (C13).
 
 ## 2. The pack (worker job)
 

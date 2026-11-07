@@ -12,5 +12,5 @@ The user wants an overall picture of the questions in this session (or the ones 
    - Recurring weaknesses from Check notes, by checklist item (F24, F25, F29).
    - Questions where development stalled (kept twice with the same obstacle, or under the stall rule) and questions whose first experiment is ready to run now.
    - Time left to the deadline against the compute and steps the top questions need.
-   - Suggested next actions, each a concrete /r42 request.
+   - Suggested next actions, each a concrete /assist-research request.
 4. **Reply** with the direct answer: where things stand in one or two sentences, the top one to three questions (one line each), and the one next step you recommend. If the review was asked for to decide what to pursue, ask for their verdict on the top question (`steps/feedback.md`; this most improves later rankings, F35). Write the overview to the user's tool only if they named one.

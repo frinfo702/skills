@@ -1,6 +1,6 @@
 # Help write the paper
 
-Helps draft, restructure or review an ML paper. The user owns the claims and the voice; r42 makes the argument clear and every statement supported. If a dedicated paper-writing skill is installed (for venue templates and LaTeX), use it for those parts.
+Helps draft, restructure or review an ML paper. The user owns the claims and the voice; assist-research makes the argument clear and every statement supported. If a dedicated paper-writing skill is installed (for venue templates and LaTeX), use it for those parts.
 
 ## Procedure
 

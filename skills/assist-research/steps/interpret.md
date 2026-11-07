@@ -18,4 +18,4 @@ The results (numbers, logs, runs in a tracker the user points to, figures, failu
 
 ## Output
 
-Lead with the plain-words reading ("The gain is real but comes from X, not the relation module"). Then: confidence and why; the competing explanations still open; the supportable claim and its scope; the next experiments as cards. If the user names a destination, write the result as a reply to the experiment card there, conclusion first (`references/records.md`).
+Lead with the plain-words reading ("The gain is real but comes from X, not the relation module"). Then: confidence and why; the competing explanations still open; the supportable claim and its scope; the next experiments as cards. If the user wants a write-up (report, PR, results section), use `references/experiment-report.md`. If the user names a destination, write the result as a reply to the experiment card there, conclusion first (`references/records.md`).

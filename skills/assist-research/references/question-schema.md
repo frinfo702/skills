@@ -55,7 +55,7 @@ prediction, readings ("if the gain vanishes when X is removed, then ...; if it p
 - Readings: <for each qualitatively different outcome (direction, size relative to seed noise,
   which hypothesis survives): what it would mean and what we do next. Not a numeric cutoff.>
 - Setup: data/split, model, baseline (reproduced? numbers), seeds, budget, proxy or full
-- Ran by: r42 job <id> | user
+- Ran by: assist-research job <id> | user
 - Result: <filled after the run, with links to logs and figures>
 - If unexpected: hypothesis | design | implementation, and the evidence for that attribution
 - Decision taken: <what changed>

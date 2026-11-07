@@ -55,11 +55,11 @@ pi -p --no-session --model <model> --thinking <thinking> "$P"
 
 Each one runs as `<command> < /dev/null > <work>/jobs/<job>.log 2>&1` from the repo root.
 
-**Watching jobs live in Rex.** If you run inside [Rex](https://www.superlogical.com/rex/docs/automate/cli) and the user wants to watch, run each command in its own unfocused tab named `r42 <job name>` with `rex run`, still writing the log. Load the `rex` skill for the commands (or run `rex skill show`). Close tabs only when the user asks.
+**Watching jobs live in Rex.** If you run inside [Rex](https://www.superlogical.com/rex/docs/automate/cli) and the user wants to watch, run each command in its own unfocused tab named `assist-research <job name>` with `rex run`, still writing the log. Load the `rex` skill for the commands (or run `rex skill show`). Close tabs only when the user asks.
 
 ## Default agent configuration
 
-These are the defaults. A repo overrides them only with a toml block under an "r42 agents" heading in its `AGENTS.md` or `CLAUDE.md`, written when the user asks for a lasting change ("always solve on pi"). Overrides replace only the keys they set:
+These are the defaults. A repo overrides them only with a toml block under an "assist-research agents" heading in its `AGENTS.md` or `CLAUDE.md`, written when the user asks for a lasting change ("always solve on pi"). Overrides replace only the keys they set:
 
 ```toml
 max_parallel = 4

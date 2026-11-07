@@ -21,8 +21,8 @@ Literature: <work>/pack/ (mechanisms.md and baselines.md especially) and your ow
    what we would do; not a numeric cutoff) before running. If every outcome would lead to the same action,
    design a different one. Prefer a reproduced baseline on a fixed small split and a fast proxy.
 4. If experiments are allowed and it fits the budget, run it. If the project logs runs to
-   MLflow, DagsHub or W&B, log this run there too, tagged r42.question=<id> and
-   r42.card=<card name>, with the prediction in the run description. Before trusting a negative result,
+   MLflow, DagsHub or W&B, log this run there too, tagged assist-research.question=<id> and
+   assist-research.card=<card name>, with the prediction in the run description. Before trusting a negative result,
    rule out an implementation bug (overfit a tiny set, check the baseline number).
    If not allowed or too expensive, leave it as a card for the researcher.
 5. If a result is unexpected, list competing explanations (hypothesis wrong / design wrong /

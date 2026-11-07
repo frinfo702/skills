@@ -1,6 +1,6 @@
 # Writing to external tools
 
-r42 is stateless. It writes outside the reply only when the user names a destination for an output ("put the plan in Linear", "post the card on issue #12", "log it to MLflow"). There is no default destination and no mapping kept anywhere.
+assist-research is stateless. It writes outside the reply only when the user names a destination for an output ("put the plan in Linear", "post the card on issue #12", "log it to MLflow"). There is no default destination and no mapping kept anywhere.
 
 ## Writing
 
@@ -17,7 +17,7 @@ Use these when the user picks the tool; follow the user's own conventions where 
 |---|---|---|---|
 | Plan or approach review | an issue or a comment on one | an issue, document or page | — |
 | Question | one issue per question; body = the question in the schema; comments = rounds, checks, feedback | one issue per question | — |
-| Experiment card | a comment posted **before** the run (Decides, Prediction, Readings); the result as a reply with the run link. Comment edit history shows the card was not rewritten | a comment on the issue, same order | the run tagged `r42.card=<name>`, prediction in the run description |
+| Experiment card | a comment posted **before** the run (Decides, Prediction, Readings); the result as a reply with the run link. Comment edit history shows the card was not rewritten | a comment on the issue, same order | the run tagged `assist-research.card=<name>`, prediction in the run description |
 | Experiment code | a branch and PR, linked from the card | linked from the issue | the run's git commit |
 | Results summary, ranking | one comment | one comment | — |
 
