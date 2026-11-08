@@ -70,6 +70,7 @@ curl -s https://packages.typst.org/preview/index.json | python3 -c "import json,
 - `[+ text]`, `[- text]`, `[1. text]` at the start of content are list markup. Write `[\+ text]` or rephrase.
 - `#` in text needs escaping: `vllm\#56492`.
 - Dictionary keys must be strings; `(1: ...)` is an error.
+- `str(62.0)` is `"62"`: a whole float loses its decimals, so a column of values shows uneven digits. Format to a fixed precision: `str(calc.round(v, digits: 1)) + if calc.fract(v) == 0 { ".0" } else { "" }`.
 - `context` is a keyword: a color or variable cannot be named `context`.
 - Math uses a math font (New Computer Modern Math by default). Keep math to symbols that need it ($c_t$); write words as text.
 - A missing font falls back with only a warning. Check `typst fonts` for the theme's font.
