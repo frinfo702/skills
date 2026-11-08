@@ -41,7 +41,7 @@ Every content slide is a title (noun phrase), a lead (one sentence: what was don
 #title-slide[Context Language Models][Name · Lab seminar · 2026-11-15]
 
 #slide([3 つのベンチマークでの精度と計算量],
-  [CLM と要約ベースの手法を同じ質問集合で走らせ、正答率と 1 問あたりの FLOPs を測った],
+  [CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している],
   fig: "fig-bench.pdf")
 ```
 

@@ -43,7 +43,7 @@ The last slide restates the takeaway; it stays on screen during questions, so it
 ## Slide rules
 
 - **Title, lead, evidence.** The title is a noun phrase naming what the slide is about. Directly under it, one sentence, the lead, says what was done to produce the evidence: what was run or measured, on what data, compared against what, under which condition. The body is visual evidence, not bullets.
-- **The lead says how the figure came about, not what it shows.** "表を見ると BrowseComp-Plus でスコアが 11.4% 上がっている" only repeats what the audience can read off the table. What they cannot see is where the numbers came from: "CLM と要約ベースの手法を同じ 3 つのベンチマークで走らせ、正答率と 1 問あたりの FLOPs を測った". The reading of the result, and which number matters, is said by the speaker; the opening and closing slides state the takeaway in words.
+- **The lead says how the figure came about, not what it shows.** "表を見ると BrowseComp-Plus でスコアが 11.4% 上がっている" only repeats what the audience can read off the table. What they cannot see is where the numbers came from: "CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している". The reading of the result, and which number matters, is said by the speaker; the opening and closing slides state the takeaway in words.
 - **One idea per slide** (Naegle 2021). Split complex ideas across slides and build them up step by step.
 - **Distracted-viewer test.** Someone who looks up for three seconds knows what the figure is from the title and the lead, and sees the point in the highlighted part of the figure.
 - **Numbers stay where they are.** Data values live in the figure or table; no annotations or highlighted numbers are added to the image, and slide text does not read them back.
@@ -59,7 +59,7 @@ Slide text follows the same density rules as prose (mitigate-prose-density), com
 - **Open with the conclusion.** Right after the title slide, one slide states the whole talk in a few sentences: the problem, what was done, what it shows. The audience gets the shape of the talk there, and every later slide is evidence for it. No agenda slide listing section names.
 - **Titles are specific noun phrases.** A title names what the slide is about, specifically enough to tell slides apart: "3 つのベンチマークでの精度と計算量", "SCR による編集後の KV 再利用". Not a sentence (the lead does that), and not a bare label such as "背景", "提案手法", "結果 1", "まとめ". No label prefixes ("結果：…") and no slides that carry only a name, such as section dividers or a "Backup" page.
 - **One register.** Leads and other slide sentences in plain form (だ・である), as full sentences. Titles are noun phrases. Do not mix です・ます and だ・である in one deck.
-- **One-sentence lead.** The lead is one sentence: what was done, on what, compared with what. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
+- **One-sentence lead.** The lead is one sentence describing the figure by the conditions that produced it, in the form "<what> を <condition> で実行した際の <quantity> を示している": what was run, on what, compared with what, and which quantity is shown. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
 - **No parenthetical asides.** "+11.4%（相対）" becomes "相対で 11.4% 高い". Needed information goes into the sentence; the rest is dropped or said aloud.
 - **Name concepts, not chunks.** Name what the field names (prefix caching, SCR) and define it once in a sentence. Do not invent names for parts of the talk ("3 つの方法", "結果 2").
 
@@ -69,7 +69,7 @@ Bad:
 
 Good:
 > 3 つのベンチマークでの精度と計算量
-> CLM と要約ベースの手法を同じ質問集合で走らせ、正答率と 1 問あたりの FLOPs を測った
+> CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している
 
 ## Reviewing a deck
 
