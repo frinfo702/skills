@@ -6,13 +6,13 @@ description: >-
 
 # make-research-slides
 
-A talk moves one idea from the speaker to the audience. Each slide names its topic in the title, says in the sentence right under it what was done to get the evidence, and shows that evidence; the speaker supplies the rest. Templates are in `references/templates.md`.
+A talk moves one idea from the speaker to the audience. Each slide names its topic in the title, says in the sentence right under it what the figure is, and shows the evidence; the speaker supplies the rest. Templates are in `references/templates.md`.
 
 ## Division of labor
 
 | Where | What goes there |
 |---|---|
-| **Slide text** (title, lead line) | what was done to get the evidence on the slide, definitions, the takeaway. Not a reading of numbers the figure already shows. Written in the talk's language; edited in the deck. |
+| **Slide text** (title, lead line) | what each figure is and how its evidence was obtained, definitions, the takeaway. Not a reading of numbers the figure already shows. Written in the talk's language; edited in the deck. |
 | **Figure image and tables** | only what is needed to read them: names, axis labels, legends, data, table headers and cells. English. No title, caption, notes or highlighted numbers (make-research-figure). |
 | **Speaker** | explanations, caveats, the story between slides. |
 | **Backup slides** | details for Q&A: full tables, setups, ablations. |
@@ -42,8 +42,8 @@ The last slide restates the takeaway; it stays on screen during questions, so it
 
 ## Slide rules
 
-- **Title, lead, evidence.** The title is a noun phrase naming what the slide is about. Directly under it, one sentence, the lead, says what was done to produce the evidence: what was run or measured, on what data, compared against what, under which condition. The body is visual evidence, not bullets.
-- **The lead says how the figure came about, not what it shows.** "表を見ると BrowseComp-Plus でスコアが 11.4% 上がっている" only repeats what the audience can read off the table. What they cannot see is where the numbers came from: "CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している". The reading of the result, and which number matters, is said by the speaker; the opening and closing slides state the takeaway in words.
+- **Title, lead, evidence.** The title is a noun phrase naming what the slide is about. Directly under it, one sentence, the lead, says what the figure is. The body is visual evidence, not bullets.
+- **The lead says what the figure is.** It first names the kind of figure (a training or inference pipeline, a data flow, an experimental comparison, an example) and then what it depicts. For a result: what was run, on what, compared with what, and which quantity is shown. For a diagram: the system as a whole, then which highlighted part is new or changed. A lead that states only the change leaves the audience unsure what the picture as a whole is; a lead that reads values off the figure repeats what they can already see. How to read the result, and which number matters, is said by the speaker; the opening and closing slides state the takeaway in words.
 - **One idea per slide** (Naegle 2021). Split complex ideas across slides and build them up step by step.
 - **Distracted-viewer test.** Someone who looks up for three seconds knows what the figure is from the title and the lead, and sees the point in the highlighted part of the figure.
 - **Numbers stay where they are.** Data values live in the figure or table; no annotations or highlighted numbers are added to the image, and slide text does not read them back.
@@ -59,29 +59,21 @@ Slide text follows the same density rules as prose (mitigate-prose-density), com
 - **Open with the conclusion.** Right after the title slide, one slide states the whole talk in a few sentences: the problem, what was done, what it shows. The audience gets the shape of the talk there, and every later slide is evidence for it. No agenda slide listing section names.
 - **Titles are specific noun phrases.** A title names what the slide is about, specifically enough to tell slides apart: "3 つのベンチマークでの精度と計算量", "SCR による編集後の KV 再利用". Not a sentence (the lead does that), and not a bare label such as "背景", "提案手法", "結果 1", "まとめ". No label prefixes ("結果：…") and no slides that carry only a name, such as section dividers or a "Backup" page.
 - **One register.** Leads and other slide sentences in plain form (だ・である), as full sentences. Titles are noun phrases. Do not mix です・ます and だ・である in one deck.
-- **One-sentence lead.** The lead is one sentence describing the figure by the conditions that produced it, in the form "<what> を <condition> で実行した際の <quantity> を示している": what was run, on what, compared with what, and which quantity is shown. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
+- **One-sentence lead.** The lead is one sentence; side remarks and caveats are said aloud. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
 - **No parenthetical asides.** "+11.4%（相対）" becomes "相対で 11.4% 高い". Needed information goes into the sentence; the rest is dropped or said aloud.
 - **Name concepts, not chunks.** Name what the field names (prefix caching, SCR) and define it once in a sentence. Do not invent names for parts of the talk ("3 つの方法", "結果 2").
-
-Bad:
-> 結果 1：要約より高精度かつ安い
-> 表を見ると BrowseComp-Plus で精度が 11.4% 上がり、FLOPs が 21.5% 減っている
-
-Good:
-> 3 つのベンチマークでの精度と計算量
-> CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している
 
 ## Reviewing a deck
 
 Render the slides and read them. Report:
 1. The story the deck tells, in two or three sentences. If it does not hold together, that is the first finding.
-2. Per slide, only where something is wrong, by impact: a title that is a bare label or a sentence, a missing or vague lead, a lead that reads numbers off the figure instead of saying how they were obtained, a slide with two ideas or no evidence, explanatory text or numbers inside figures, Japanese inside figures or tables, label-prefixed bullets or parenthetical asides, unreadable sizes, colors that break their meaning. Each with a concrete fix.
+2. Per slide, only where something is wrong, by impact: a title that is a bare label or a sentence, a missing or vague lead, a lead that names only the change or reads values off the figure instead of saying what the figure is, a slide with two ideas or no evidence, explanatory text or numbers inside figures, Japanese inside figures or tables, label-prefixed bullets or parenthetical asides, unreadable sizes, colors that break their meaning. Each with a concrete fix.
 
 ## Checklist
 
 - [ ] Title slide: a noun-phrase title plus speaker, venue, date; no subtitle or decoration
 - [ ] One takeaway sentence; the slide after the title and the last slide state it
-- [ ] Every slide: a specific noun-phrase title and a one-sentence lead saying what was done to get the evidence; no bare labels, dividers or agenda slides
+- [ ] Every slide: a specific noun-phrase title and a one-sentence lead saying what the figure is; no bare labels, dividers or agenda slides
 - [ ] One idea and one piece of evidence per slide
 - [ ] No numbers read back from the figure; explanations in slide text or speech, without label prefixes or parenthetical asides; figures and tables are English and hold no titles, captions or notes
 - [ ] Calm palette: black on white plus one focus color with fixed meanings; no gray fills; no red emphasis

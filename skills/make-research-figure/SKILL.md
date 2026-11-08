@@ -16,7 +16,7 @@ A figure is an argument: one claim, the evidence for it, and nothing that compet
 
 ## Workflow
 
-1. **Claim first.** Write the one sentence the figure must make the reader believe ("Our method matches the baseline at 1/4 of the compute"). It becomes the caption's first sentence in a paper; on a slide the speaker says it, and the line under the title says what was done to get the figure. If the user cannot state it, ask; a figure without a claim is a data dump.
+1. **Claim first.** Write the one sentence the figure must make the reader believe ("Our method matches the baseline at 1/4 of the compute"). It becomes the caption's first sentence in a paper; on a slide the speaker says it, and the line under the title says what the figure is. If the user cannot state it, ask; a figure without a claim is a data dump.
 2. **Medium.** Paper and slide are different designs: a paper is read up close at the reader's pace, a slide is seen from far away for a few seconds while someone talks (Rougier et al. 2014, rules 2–3). Never paste a paper figure onto a slide unchanged; re-render it.
 3. **Form.** Pick the form from the comparison the claim makes (table below).
 4. **Build at final size.** Set the figure size to the exact width it will be printed or projected (`references/specs.md`) and never scale it in LaTeX or PowerPoint. Font sizes are then what they say.

@@ -2,7 +2,7 @@
 
 ## Typst deck
 
-Every content slide is a title (noun phrase), a lead (one sentence: what was done to get the evidence) and the evidence. Figures are compiled separately (draw-typst-figure) at the slot size, 12.33 × 4.9 in, and placed as PDFs. Titles and leads stay here, editable.
+Every content slide is a title (noun phrase), a lead (one sentence: what the figure is) and the evidence. Figures are compiled separately (draw-typst-figure) at the slot size, 12.33 × 4.9 in, and placed as PDFs. Titles and leads stay here, editable.
 
 ```typst
 #let ink = rgb("#22272E")
@@ -40,8 +40,8 @@ Every content slide is a title (noun phrase), a lead (one sentence: what was don
 
 #title-slide[Context Language Models][Name · Lab seminar · 2026-11-15]
 
-#slide([3 つのベンチマークでの精度と計算量],
-  [CLM と要約ベースの手法を同じ質問群で実行した際の正答率と 1 問あたりの FLOPs を示している],
+#slide([<title: noun phrase>],
+  [<lead: what the figure is>],
   fig: "fig-bench.pdf")
 ```
 
@@ -60,7 +60,7 @@ A lead that wraps to more than two lines pushes the slide onto an extra page; sh
 Talk: <setting>, <length> min, audience: <who>
 Takeaway: <one sentence>
 
-1. <title (noun phrase)> | <lead: what was done> | <point (said aloud)> | evidence = <figure / table / example>
+1. <title (noun phrase)> | <lead: what the figure is> | <point (said aloud)> | evidence = <figure / table / example>
 2. ...
 Backup: <expected questions → slide>
 ```
