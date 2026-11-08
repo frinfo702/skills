@@ -1,5 +1,5 @@
 ---
-name: prose-density
+name: mitigate-prose-density
 description: Control information density when writing Japanese prose documents — lead with a short abstract summary, put each paragraph's point in its first sentence, use ## headings sparingly as nouns, and avoid label-prefixed sentences and parenthetical asides. Use whenever drafting, rewriting, or reviewing a document, report, README, research note, experiment write-up, or blog post, especially when the user says 「文章を書いて」「文書にまとめて」「レポートを書いて」「書き直して」「読みやすくして」, even if they don't mention density or style.
 ---
 

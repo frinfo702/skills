@@ -1,5 +1,5 @@
 ---
-name: ml-experiment-pr
+name: create-ml-experiment-pr
 description: >-
   Make an ML experiment pull request easy to review: put each fact in the one
   tool that owns it (numbers in MLflow, the question and interpretation in
@@ -49,7 +49,7 @@ Read the full diff yourself first, as the reviewer would. Remove:
 - Run outputs, checkpoints, `mlruns/`, `wandb/`, `outputs/`, data files, notebooks with cell outputs.
 - Debug prints, commented-out code, scratch scripts, unused helpers left from abandoned attempts.
 - Unrelated formatting or renames (separate PR if wanted).
-- Hyperparameters changed "while I was there". Only the variable under study changes (see `research-experiment` if installed).
+- Hyperparameters changed "while I was there". Only the variable under study changes (see `assist-research` if installed).
 
 ## Make MLflow complete before linking it
 
@@ -57,7 +57,7 @@ Every run the PR cites must carry: the resolved config as a param set or artifac
 
 ## Write the Linear update
 
-The experiment report goes in the Linear issue as a comment or description section: question and one-line answer, setup at architecture level, headline numbers linked to MLflow, interpretation, threats to validity, next step. If `research-experiment` is installed, its Overview / Method / Results / Discussion structure is this report. Link the PR. Lead with the conclusion.
+The experiment report goes in the Linear issue as a comment or description section: question and one-line answer, setup at architecture level, headline numbers linked to MLflow, interpretation, threats to validity, next step. If `assist-research` is installed, its experiment report (Overview / Method / Results / Discussion structure) is this report. Link the PR. Lead with the conclusion.
 
 ## Write the PR description
 
@@ -99,4 +99,4 @@ When reviewing someone else's ML PR, apply the same checks and report which ones
 - Linux kernel, "Submitting patches": describe the problem first, one logical change per patch, imperative mood.
 - Kubernetes PR template: what this PR does, which issue it fixes, special notes for your reviewer.
 - Hugging Face transformers PR template: "What does this PR do?", "Fixes #", "Who can review?".
-- ML-specific rules (one variable per comparison, uncherry-picked runs, config diff as fairness evidence) come from common reproducibility practice and the `research-experiment` skill in this repo.
+- ML-specific rules (one variable per comparison, uncherry-picked runs, config diff as fairness evidence) come from common reproducibility practice and the `assist-research` skill in this repo.
