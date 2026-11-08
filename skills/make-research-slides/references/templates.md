@@ -2,7 +2,7 @@
 
 ## Typst deck
 
-Every content slide is a title (noun phrase), a lead (one sentence: what the figure is) and the evidence. Figures are compiled separately (draw-typst-figure) at the slot size, 12.33 × 4.9 in, and placed as PDFs. Titles and leads stay here, editable.
+Every content slide is a title (noun phrase), a lead (noun phrase: what the figure is) and the evidence. Figures are compiled separately (draw-typst-figure) at the slot size, 12.33 × 4.9 in, and placed as PDFs. Titles and leads stay here, editable.
 
 ```typst
 #let ink = rgb("#22272E")
@@ -20,7 +20,7 @@ Every content slide is a title (noun phrase), a lead (one sentence: what the fig
 #let lead(body) = block(height: 0.7in, width: 100%, spacing: 0pt,
   align(left + top, text(size: 24pt, body)))
 
-// Title (noun phrase) + lead (one sentence) + evidence in the 12.33 x 4.9 in slot.
+// Title (noun phrase) + lead (noun phrase) + evidence in the 12.33 x 4.9 in slot.
 #let slide(head, line, fig: none, body: none) = {
   title(head)
   lead(line)
