@@ -27,7 +27,7 @@ curl -s https://packages.typst.org/preview/index.json | python3 -c "import json,
 ## Workflow
 
 1. **One file per figure** (`fig-<name>.typ`), importing a shared `theme.typ` (palette, fonts, page setup). Change the look there, never per figure.
-2. **Page = final slot.** The figure's page size is exactly the size it will occupy: `\linewidth` of the paper, or the slide's figure slot below the title and claim line (12.33 × 4.9 in). Then it is placed at 100% and font sizes are what they say.
+2. **Page = final slot.** The figure's page size is exactly the size it will occupy: `\linewidth` of the paper, or the slide's figure slot below the title and lead line (12.33 × 4.9 in). Then it is placed at 100% and font sizes are what they say.
 3. **Compile and look, every iteration:**
    ```sh
    typst compile fig-x.typ 'fig-x-{p}.png' --ppi 100   # {p}: overflow shows up as a second page

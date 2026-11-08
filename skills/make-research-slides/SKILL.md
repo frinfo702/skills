@@ -1,18 +1,18 @@
 ---
 name: make-research-slides
 description: >-
-  Plan, build and review slide decks for research and development talks: lab seminars, conference talks, paper reading sessions, progress reports, and design or PR walkthroughs. Covers the storyline, a noun-phrase title and a one-sentence claim per slide, how to write slide text, the evidence on each slide, where numbers and explanations go, text sizes, and assembling the deck in Typst. Use together with make-research-figure (what each figure shows) and draw-typst-figure (drawing it). Trigger even when the skill is not named, e.g. "スライド作って", "発表資料", "ゼミ発表", "輪読の資料", "進捗報告のスライド", "学会発表", "このスライドどう？", "/make-research-slides".
+  Plan, build and review slide decks for research and development talks: lab seminars, conference talks, paper reading sessions, progress reports, and design or PR walkthroughs. Covers the storyline, a noun-phrase title and a one-sentence lead per slide, how to write slide text, the evidence on each slide, where numbers and explanations go, text sizes, and assembling the deck in Typst. Use together with make-research-figure (what each figure shows) and draw-typst-figure (drawing it). Trigger even when the skill is not named, e.g. "スライド作って", "発表資料", "ゼミ発表", "輪読の資料", "進捗報告のスライド", "学会発表", "このスライドどう？", "/make-research-slides".
 ---
 
 # make-research-slides
 
-A talk moves one idea from the speaker to the audience. Each slide names its topic in the title, states one claim in the sentence right under it, and shows the evidence for that claim; the speaker supplies the rest. Templates are in `references/templates.md`.
+A talk moves one idea from the speaker to the audience. Each slide names its topic in the title, says in the sentence right under it what was done to get the evidence, and shows that evidence; the speaker supplies the rest. Templates are in `references/templates.md`.
 
 ## Division of labor
 
 | Where | What goes there |
 |---|---|
-| **Slide text** (title, claim line) | the claim, the numbers to remember (+11.4%, 0.6× FLOPs), definitions, the takeaway. Written in the talk's language; edited in the deck. |
+| **Slide text** (title, lead line) | what was done to get the evidence on the slide, definitions, the takeaway. Not a reading of numbers the figure already shows. Written in the talk's language; edited in the deck. |
 | **Figure image and tables** | only what is needed to read them: names, axis labels, legends, data, table headers and cells. English. No title, caption, notes or highlighted numbers (make-research-figure). |
 | **Speaker** | explanations, caveats, the story between slides. |
 | **Backup slides** | details for Q&A: full tables, setups, ablations. |
@@ -22,7 +22,7 @@ When a figure needs a sentence to be understood, the sentence goes in the slide 
 ## Workflow
 
 1. **Frame.** Ask for (or infer) the audience, the length, the setting (seminar, conference, progress report) and the one takeaway sentence. Everything else serves that sentence.
-2. **Claim outline first.** Write the deck as a list of slides, each a title and a one-sentence claim, and check that reading the claim lines alone tells the whole story. Show this outline before building anything; restructuring a list is cheap, restructuring slides is not. Rough budget: one slide per minute, fewer when slides carry dense figures.
+2. **Outline first.** Write the deck as a list of slides, each a title, a one-sentence lead and the point the slide makes, and check that the points alone tell the whole story. Show this outline before building anything; restructuring a list is cheap, restructuring slides is not. Rough budget: one slide per minute, fewer when slides carry dense figures.
 3. **Evidence per slide.** For each claim, pick what proves it: a diagram, a plot, a small table, an example, a demo. A slide without evidence is a speaker note; a slide with two pieces of evidence for two claims is two slides.
 4. **Figures.** Make them with make-research-figure and draw-typst-figure, at the slot size of the deck (`references/templates.md`), so they are placed at 100%.
 5. **Assemble** in Typst (default) or hand the user the outline, the slide text and the figure files for Keynote, PowerPoint or Google Slides (figures as SVG, or PNG at 200+ ppi).
@@ -42,11 +42,12 @@ The last slide restates the takeaway; it stays on screen during questions, so it
 
 ## Slide rules
 
-- **Title, claim, evidence.** The title is a noun phrase naming what the slide is about. Directly under it, one sentence states the claim. The body is visual evidence for that claim, not bullets. This keeps the assertion–evidence structure (Alley; Garner et al. found a stated claim with visual evidence beats topic titles with bullets), with the claim in its own line instead of in the title.
+- **Title, lead, evidence.** The title is a noun phrase naming what the slide is about. Directly under it, one sentence, the lead, says what was done to produce the evidence: what was run or measured, on what data, compared against what, under which condition. The body is visual evidence, not bullets.
+- **The lead says how the figure came about, not what it shows.** "表を見ると BrowseComp-Plus でスコアが 11.4% 上がっている" only repeats what the audience can read off the table. What they cannot see is where the numbers came from: "CLM と要約ベースの手法を同じ 3 つのベンチマークで走らせ、正答率と 1 問あたりの FLOPs を測った". The reading of the result, and which number matters, is said by the speaker; the opening and closing slides state the takeaway in words.
 - **One idea per slide** (Naegle 2021). Split complex ideas across slides and build them up step by step.
-- **Distracted-viewer test.** Someone who looks up for three seconds gets the point from the claim line and the highlighted part of the figure.
-- **Numbers in text, not in figures.** The one or two numbers worth remembering go in the claim line, highlighted with the focus color, with what they compare against.
-- **Text.** Title about 30 pt, claim line 24 pt, nothing below 18 pt. A slide with a figure has no text besides the title and the claim line, or at most three short bullets instead of a figure.
+- **Distracted-viewer test.** Someone who looks up for three seconds knows what the figure is from the title and the lead, and sees the point in the highlighted part of the figure.
+- **Numbers stay where they are.** Data values live in the figure or table; no annotations or highlighted numbers are added to the image, and slide text does not read them back.
+- **Text.** Title about 30 pt, lead line 24 pt, nothing below 18 pt. A slide with a figure has no text besides the title and the lead line, or at most three short bullets instead of a figure.
 - **Calm color.** Black text and white, black-outlined boxes for everything that is not the point (not gray fills), one focus color (deep blue) for ours or the new thing, and the same meanings in figures, tables and text (palette in make-research-figure `references/specs.md`). No red for emphasis: next to blue or green it reads as "the bad one"; red means something bad.
 - **Practical.** 16:9, slide numbers, high contrast, the deck's font covers the talk's language (Latin font first, then a Japanese font).
 
@@ -56,33 +57,33 @@ Slide text follows the same density rules as prose (mitigate-prose-density), com
 
 - **The title slide is a name.** The talk title is a noun phrase: the paper's title, or the topic ("Context Language Models", "vLLM の KV cache 管理"), not a sentence. Under it only the speaker, the venue and the date. No subtitle, tagline or catchphrase ("LM が自分のコンテキストを「編集」する") and no decorative rules; the claim belongs on the next slide.
 - **Open with the conclusion.** Right after the title slide, one slide states the whole talk in a few sentences: the problem, what was done, what it shows. The audience gets the shape of the talk there, and every later slide is evidence for it. No agenda slide listing section names.
-- **Titles are specific noun phrases.** A title names what the slide is about, specifically enough to tell slides apart: "3 つのベンチマークでの精度と計算量", "SCR による編集後の KV 再利用". Not a sentence (the claim line does that), and not a bare label such as "背景", "提案手法", "結果 1", "まとめ". No label prefixes ("結果：…") and no slides that carry only a name, such as section dividers or a "Backup" page.
-- **One register.** Claim lines and other slide sentences in plain form (だ・である), as full sentences. Titles are noun phrases. Do not mix です・ます and だ・である in one deck.
-- **Point first.** The claim line is one sentence: the point, with its number and condition. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
+- **Titles are specific noun phrases.** A title names what the slide is about, specifically enough to tell slides apart: "3 つのベンチマークでの精度と計算量", "SCR による編集後の KV 再利用". Not a sentence (the lead does that), and not a bare label such as "背景", "提案手法", "結果 1", "まとめ". No label prefixes ("結果：…") and no slides that carry only a name, such as section dividers or a "Backup" page.
+- **One register.** Leads and other slide sentences in plain form (だ・である), as full sentences. Titles are noun phrases. Do not mix です・ます and だ・である in one deck.
+- **One-sentence lead.** The lead is one sentence: what was done, on what, compared with what. Bullets only for truly parallel items, at most three, each a sentence, never "**ラベル**：…".
 - **No parenthetical asides.** "+11.4%（相対）" becomes "相対で 11.4% 高い". Needed information goes into the sentence; the rest is dropped or said aloud.
 - **Name concepts, not chunks.** Name what the field names (prefix caching, SCR) and define it once in a sentence. Do not invent names for parts of the talk ("3 つの方法", "結果 2").
 
 Bad:
 > 結果 1：要約より高精度かつ安い
-> ■ **精度**：59.4%（要約比 +11.4%、相対）
+> 表を見ると BrowseComp-Plus で精度が 11.4% 上がり、FLOPs が 21.5% 減っている
 
 Good:
 > 3 つのベンチマークでの精度と計算量
-> CLM は要約より少ない計算で高い精度を出し、BrowseComp-Plus では精度が相対で 11.4% 高く FLOPs が 21.5% 少ない
+> CLM と要約ベースの手法を同じ質問集合で走らせ、正答率と 1 問あたりの FLOPs を測った
 
 ## Reviewing a deck
 
 Render the slides and read them. Report:
-1. The story told by the claim lines alone, in two or three sentences. If it does not hold together, that is the first finding.
-2. Per slide, only where something is wrong, by impact: a title that is a bare label or a sentence, a missing or vague claim line, a slide with two ideas or no evidence, explanatory text or numbers inside figures, Japanese inside figures or tables, label-prefixed bullets or parenthetical asides, unreadable sizes, colors that break their meaning. Each with a concrete fix.
+1. The story the deck tells, in two or three sentences. If it does not hold together, that is the first finding.
+2. Per slide, only where something is wrong, by impact: a title that is a bare label or a sentence, a missing or vague lead, a lead that reads numbers off the figure instead of saying how they were obtained, a slide with two ideas or no evidence, explanatory text or numbers inside figures, Japanese inside figures or tables, label-prefixed bullets or parenthetical asides, unreadable sizes, colors that break their meaning. Each with a concrete fix.
 
 ## Checklist
 
 - [ ] Title slide: a noun-phrase title plus speaker, venue, date; no subtitle or decoration
 - [ ] One takeaway sentence; the slide after the title and the last slide state it
-- [ ] Every slide: a specific noun-phrase title and a one-sentence claim line; the claim lines alone tell the story; no bare labels, dividers or agenda slides
+- [ ] Every slide: a specific noun-phrase title and a one-sentence lead saying what was done to get the evidence; no bare labels, dividers or agenda slides
 - [ ] One idea and one piece of evidence per slide
-- [ ] Numbers in the claim line and explanations in slide text or speech, without label prefixes or parenthetical asides; figures and tables are English and hold no titles, captions or notes
+- [ ] No numbers read back from the figure; explanations in slide text or speech, without label prefixes or parenthetical asides; figures and tables are English and hold no titles, captions or notes
 - [ ] Calm palette: black on white plus one focus color with fixed meanings; no gray fills; no red emphasis
 - [ ] Figures placed at 100% of the slot; nothing below 18 pt
 - [ ] Every slide rendered and checked; nothing overflows onto an extra page

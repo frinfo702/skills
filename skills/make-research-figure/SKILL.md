@@ -8,7 +8,7 @@ description: >-
 
 A figure is an argument: one claim, the evidence for it, and nothing that competes with it. Every rule below follows from that. Sizes, widths and plotting defaults are in `references/specs.md`.
 
-**The image holds no title, caption, claim or explanation.** The figure's title, caption, slide title and claim line, takeaway sentence, highlighted numbers ("+11% acc., −21% FLOPs") and explanatory notes ("OpenAI-compatible API" under "HTTP server") belong in the text of the paper or the slide, where they can be edited without redrawing. Inside the image goes only what is needed to read it: names of components and groups, axis labels and ticks, legends, panel labels such as the benchmark name, and data marks. When unsure whether a piece of text belongs in the image, it doesn't.
+**The image holds no title, caption, claim or explanation.** The figure's title, caption, slide title and lead line, takeaway sentence, highlighted numbers ("+11% acc., −21% FLOPs") and explanatory notes ("OpenAI-compatible API" under "HTTP server") belong in the text of the paper or the slide, where they can be edited without redrawing. Inside the image goes only what is needed to read it: names of components and groups, axis labels and ticks, legends, panel labels such as the benchmark name, and data marks. When unsure whether a piece of text belongs in the image, it doesn't.
 
 **All text in figures and tables is English**, whatever the language of the paper, the talk or the conversation: labels, legends, annotations, table headers and cells. Figures get reused across Japanese and English papers, talks and posters, and an English figure never has to be redrawn. Captions and slide text follow the document's language.
 
@@ -16,7 +16,7 @@ A figure is an argument: one claim, the evidence for it, and nothing that compet
 
 ## Workflow
 
-1. **Claim first.** Write the one sentence the figure must make the reader believe ("Our method matches the baseline at 1/4 of the compute"). It becomes the caption's first sentence in a paper and the claim line on a slide. If the user cannot state it, ask; a figure without a claim is a data dump.
+1. **Claim first.** Write the one sentence the figure must make the reader believe ("Our method matches the baseline at 1/4 of the compute"). It becomes the caption's first sentence in a paper; on a slide the speaker says it, and the line under the title says what was done to get the figure. If the user cannot state it, ask; a figure without a claim is a data dump.
 2. **Medium.** Paper and slide are different designs: a paper is read up close at the reader's pace, a slide is seen from far away for a few seconds while someone talks (Rougier et al. 2014, rules 2–3). Never paste a paper figure onto a slide unchanged; re-render it.
 3. **Form.** Pick the form from the comparison the claim makes (table below).
 4. **Build at final size.** Set the figure size to the exact width it will be printed or projected (`references/specs.md`) and never scale it in LaTeX or PowerPoint. Font sizes are then what they say.
@@ -70,9 +70,9 @@ Bars encode length, so their axis must start at zero (proportional ink, Wilke ch
 
 ## Figures for slides
 
-The deck itself (structure, titles and claim lines, one idea per slide) is the `make-research-slides` skill. For the figure on a slide:
+The deck itself (structure, titles and lead lines, one idea per slide) is the `make-research-slides` skill. For the figure on a slide:
 
-- **Size it to the slot** under the title and claim line (12.33 × 4.9 in on a 13.33 × 7.5 in slide, see make-research-slides) so it is placed at 100%.
+- **Size it to the slot** under the title and lead line (12.33 × 4.9 in on a 13.33 × 7.5 in slide, see make-research-slides) so it is placed at 100%.
 - **Readable from the back.** Nothing below 18 pt at displayed size, including tick labels; lines 2–3 pt. Peyton Jones's test: readable when printed and laid on the floor.
 - **Re-render, don't paste.** Fewer series, bigger fonts, highlight the one series that matters and gray the rest. For a build-up, export one image per step.
 - **Tables.** Never paste a full paper table. Show the few rows that make the claim, with the key cell highlighted.
@@ -89,7 +89,7 @@ Do not list rules that already pass.
 
 ## Checklist
 
-- [ ] One-sentence claim, stated in the caption or the slide's claim line, not in the image
+- [ ] One-sentence claim, stated in the caption or by the speaker, not in the image
 - [ ] No title, caption, notes or highlighted numbers inside the image
 - [ ] Form fits the comparison; bars start at zero
 - [ ] Built at final width; text 7–9 pt (paper) or ≥ 18 pt (slide) at displayed size

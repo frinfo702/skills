@@ -18,7 +18,7 @@ Versions as of 2026-11; check for newer ones (SKILL.md) and keep cetz in step wi
 #let tint(c) = c.lighten(85%)
 #let font = "Inter"           // check `typst fonts`; for papers use the paper's family
 
-// Slide figure: the slot under the title and claim line of a 16:9 slide (make-research-slides).
+// Slide figure: the slot under the title and lead line of a 16:9 slide (make-research-slides).
 #let slide-fig(body, width: 12.33in, height: 4.9in) = {
   set page(width: width, height: height, margin: 0pt, fill: white)
   set text(font: font, size: 20pt, fill: ink)
