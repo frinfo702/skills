@@ -42,7 +42,7 @@ Before writing a description, look at `git diff <base>...HEAD`. Review cost grow
 3. **Experiment**: config files (one experiment config per arm) and little or no code. Often only YAML.
 4. **Fix**: a bug fix, with a note on which past runs it invalidates.
 
-Aim for under about 400 changed lines of hand-written code. If the diff mixes types, propose the split to the user with the list of PRs. Do the split only once they agree, or if they already asked for it.
+If the diff mixes types, propose the split to the user with the list of PRs. Do the split only once they agree, or if they already asked for it.
 
 ## Clean the diff before anyone sees it
 
