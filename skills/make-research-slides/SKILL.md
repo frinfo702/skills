@@ -38,7 +38,7 @@ When a figure needs a sentence to be understood, the sentence goes in the slide 
 
 **PR / design walkthrough.** The problem in the current system → before vs. after → the evidence (benchmarks, tests) → what is not covered and the follow-ups.
 
-The last slide restates the takeaway; it stays on screen during questions, so it is never only "Thank you" or "Questions?".
+The last slide of the talk restates the takeaway; it stays on screen during questions, so it is never only "Thank you" or "Questions?". Only the references slide (and backup slides) come after it.
 
 ## Slide rules
 
@@ -49,6 +49,7 @@ The last slide restates the takeaway; it stays on screen during questions, so it
 - **Numbers stay where they are.** Data values live in the figure or table; no annotations or highlighted numbers are added to the image, and slide text does not read them back.
 - **Text.** Title about 30 pt, lead line 24 pt, nothing below 18 pt. A slide with a figure has no text besides the title and the lead line, or at most three short bullets instead of a figure.
 - **Calm color.** Black text and white, black-outlined boxes for everything that is not the point (not gray fills), one focus color (deep blue) for ours or the new thing, and the same meanings in figures, tables and text (palette in make-research-figure `references/specs.md`). No red for emphasis: next to blue or green it reads as "the bad one"; red means something bad.
+- **References as numbers.** Cite papers, code, datasets and other sources in the text as `[n]`, numbered in order of first appearance, and list them all on one references slide at the very end of the deck, in that order. Do not write author names, years or URLs in the slide text or in figures; the number is enough on the slide, and the audience can look it up at the end. One source keeps one number throughout. The references slide is titled "References" (参考文献); it is the one slide allowed a bare label as its title, and it has no lead.
 - **Practical.** 16:9, slide numbers, high contrast, the deck's font covers the talk's language (Latin font first, then a Japanese font).
 
 ## Writing slide text
@@ -82,3 +83,4 @@ Render the slides and read them. Report:
 - [ ] Figures placed at 100% of the slot; nothing below 18 pt
 - [ ] Every slide rendered and checked; nothing overflows onto an extra page
 - [ ] Backup slides for expected questions
+- [ ] Sources cited as `[n]` in order of first appearance; all listed on a references slide at the end

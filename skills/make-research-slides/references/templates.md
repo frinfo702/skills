@@ -63,4 +63,5 @@ Takeaway: <one sentence>
 1. <title (noun phrase)> | <lead: what the figure is> | <point (said aloud)> | evidence = <figure / table / example>
 2. ...
 Backup: <expected questions → slide>
+References: [1] <source>, [2] <source>, ... (in order of first citation; last slide)
 ```
