@@ -1,0 +1,59 @@
+{
+  "skill_name": "papervizagent",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate a publication-ready vector method overview diagram for our NeurIPS paper (full-width 5.5in) from this methodology excerpt and caption. Save the Typst source (.typ), vector PDF (.pdf), SVG (.svg), and a PNG preview (.png) in the output directory.\n\nCaption (do NOT embed this text in the diagram): Overview of SpecRAG, our two-stage retrieval-augmented reasoning framework with confidence-gated iterative self-critique.\n\nMethodology: Given a user query q, a Frozen Dense Retriever queries an external Vector Knowledge Store to fetch the top-k evidence passages E. In Stage 1 (Retrieval & Grounding), q and E are combined into a grounded context. In Stage 2 (Draft & Verify Loop), a trainable Draft Generator (LLM_theta) synthesizes a candidate reasoning chain and answer y_hat, which is evaluated by a Lightweight Verifier that outputs a scalar confidence score c. A routing decision checks whether c >= tau: if accepted, y_hat is returned as the Final Verified Answer; otherwise, structured critique feedback is fed back to the Draft Generator (up to T rounds) to revise the answer.",
+      "expected_output": "Clean, single-page 5.5in NeurIPS vector diagram (.typ, .pdf, .svg, .png) built with Typst/Fletcher (optionally + CeTZ badges) showing Stage 1 and Stage 2 zones, zero border-label collisions, and no embedded caption.",
+      "files": [],
+      "expectations": [
+        "Produces specrag.typ, valid vector specrag.pdf, valid vector specrag.svg, and specrag.png compiling cleanly on a single page (page_count == 1) with zero font warnings.",
+        "Uses declarative @preview/fletcher (optionally hybrid with @preview/cetz for badges/mini-visuals) at 5.5in width on a white background with sans-serif labels and no embedded figure title or caption.",
+        "Faithfully includes all SpecRAG components and math: Query q, Frozen Dense Retriever, Vector Knowledge Store (distinct storage shape), Stage 1 & Stage 2 zones with non-colliding titles, Draft Generator (LLM_theta), Lightweight Verifier (c), confidence routing (c >= tau), Final Verified Answer (y_hat), and critique feedback loop.",
+        "Visually distinguishes forward data flow (solid) from critique feedback flow (dashed/curved) and distinguishes frozen vs. trainable module styling.",
+        "Rendered PNG has zero overlapping text, zero edge labels crossing or touching dashed zone borders, no clipped edges, and compact rectangular composition."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a vector architecture diagram for our ICML paper (full-width 6.75in) illustrating our Dual-Stream Cross-Modal Fusion architecture, including a macro overview on the left and a zoomed-in micro breakout of the Gated Cross-Attention block on the right. Export .typ, .pdf, .svg, and .png to the output directory.\n\nCaption (for scope only, do not render in image): Macro-micro architecture of DualFusion showing parallel vision and text encoders feeding into a Gated Cross-Attention fusion module.\n\nMethodology: Input image I and text prompt T are processed in parallel by a Frozen ViT Encoder (producing visual tokens H_v) and a Frozen Text Encoder (producing text tokens H_t). Both streams enter our novel Trainable Gated Cross-Attention module, whose output is combined with H_t via residual addition (plus) before passing to a Task Head to predict y_hat. Inside the Gated Cross-Attention micro breakout, H_t is linearly projected to queries Q while H_v is projected to keys K and values V; Scaled Dot-Product Attention computes cross-modal features A, which are modulated element-wise (multiply) by a sigmoid gate g = sigma(W_g [H_t; A]).",
+      "expected_output": "Clean, single-page 6.75in ICML vector diagram (.typ, .pdf, .svg, .png) using declarative Fletcher (optionally + CeTZ badges) with parallel Vision/Text streams, residual addition, and macro-micro breakout of Gated Cross-Attention.",
+      "files": [],
+      "expectations": [
+        "Produces dualfusion.typ, valid vector dualfusion.pdf, valid vector dualfusion.svg, and dualfusion.png compiling cleanly on a single page (page_count == 1) at 6.75in width with zero font warnings.",
+        "Uses declarative @preview/fletcher (optionally hybrid with @preview/cetz) with valid Typst math notation, white background, sans-serif labels, and no embedded figure title or caption.",
+        "Faithfully depicts both the macro architecture (I -> Frozen ViT -> H_v, T -> Frozen Text Encoder -> H_t, Trainable Gated Cross-Attention, residual addition with H_t, Task Head -> y_hat) and micro breakout (Q, K, V projections, Scaled Dot-Product Attention -> A, sigmoid gate g = sigma(W_g [H_t; A]), element-wise multiplication).",
+        "Visually connects the macro Gated Cross-Attention module to its micro breakout container and routes parallel/residual paths cleanly without edges cutting through unrelated nodes.",
+        "Rendered PNG has zero overlapping text/borders, legible font sizing at 6.75in print width, and balanced macro-micro layout."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Please polish the rough Typst diagram in skills/papervizagent/evals/files/draft_diagram.typ into a NeurIPS-quality publication-ready vector diagram (5.5in wide) while preserving every pipeline step and feedback connection. Save the polished .typ, .pdf, .svg, and .png to the output directory.\n\nContext / Caption (do not put in image): Multi-agent automated code repair pipeline with iterative test-trace feedback between Fault Localizer, Patch Generator, and Test Harness Executor.",
+      "expected_output": "Polished single-page 5.5in vector diagram (.typ, .pdf, .svg, .png) eliminating all Veto violations from draft_diagram.typ.",
+      "files": [
+        "evals/files/draft_diagram.typ"
+      ],
+      "expectations": [
+        "Produces code_repair.typ, valid vector code_repair.pdf, valid vector code_repair.svg, and code_repair.png compiling cleanly on a single page (page_count == 1) at 5.5in width with zero font warnings.",
+        "Eliminates structural Veto violations from draft_diagram.typ: removes embedded 'Figure 1' title, places 'Iterative Repair Loop' group label outside/above enclose without colliding with child nodes, and switches from Times New Roman to a clean sans-serif font.",
+        "Eliminates aesthetic and conciseness Veto violations: replaces harsh neon fills (yellow/lime/aqua/fuchsia/red) with a harmonious publication palette and shortens verbose prose inside boxes to concise labels while preserving all 4 pipeline stages and the feedback connection.",
+        "Visually differentiates the iterative error-trace feedback edge (dashed curved/routed) from forward solid arrows with a non-colliding label.",
+        "Rendered PNG has zero overlapping text/borders, no cramped vertical word wrapping, and clean compact proportions."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Generate an atypical, publication-ready vector conceptual figure for our NeurIPS paper (full-width 5.5in) illustrating our Attention-Guided KV-Cache Eviction mechanism (SinkHitter). Save the Typst source (.typ), vector PDF (.pdf), SVG (.svg), and PNG preview (.png) in the output directory.\n\nCaption (do NOT embed in the image): Attention-guided KV-cache compression in SinkHitter: (a) causal attention heatmap highlights the initial attention sink (t_0), heavy-hitter tokens (t_2, t_5), and recent window (t_6, t_7); (b) before-and-after KV-cache memory strips evict low-attention slots (t_1, t_3, t_4) into a compact 5-slot contiguous cache.\n\nMethodology: During autoregressive decoding over 8 cached token positions t_0..t_7, SinkHitter computes accumulated column-wise causal attention scores from the lower-triangular attention matrix A. Token t_0 acts as a permanent Attention Sink (warm amber). Tokens t_2 and t_5 exceed the heavy-hitter importance threshold and are retained (blue), alongside the 2-token Recent Window t_6, t_7 (teal). Low-scoring tokens t_1, t_3, t_4 are marked for eviction (dashed/faded) and pruned to yield a contiguous 5-slot compressed KV cache [t_0, t_2, t_5, t_6, t_7].",
+      "expected_output": "Clean, single-page 5.5in NeurIPS atypical vector figure built with @preview/cetz showing Panel (a) lower-triangular 8x8 causal attention heatmap with clear sink/heavy-hitter/recent columns and Panel (b) aligned Before -> After KV-cache memory strips with dashed evicted slots and compact 5-slot compressed cache, zero overlaps, and no embedded caption.",
+      "files": [],
+      "expectations": [
+        "Produces kvcache.typ, valid vector kvcache.pdf, valid vector kvcache.svg, and kvcache.png compiling cleanly on a single page (page_count == 1) at 5.5in width with zero font warnings.",
+        "Uses @preview/cetz to draw bespoke spatial vector primitives (not a plain box-and-arrow diagram) on a white background with sans-serif labels and no embedded figure title or caption.",
+        "Panel (a) faithfully renders an 8x8 lower-triangular causal attention heatmap over tokens t_0..t_7 (upper triangle masked/empty) with visibly high attention intensity on sink t_0, heavy hitters t_2 and t_5, and recent window t_6, t_7.",
+        "Panel (b) faithfully depicts the Before (8-slot full KV cache with t_1, t_3, t_4 visually marked as evicted/dashed) -> After (contiguous 5-slot compressed cache [t_0, t_2, t_5, t_6, t_7]) memory layout with consistent role colors (Sink, Heavy Hitter, Recent Window, Evicted).",
+        "Rendered PNG fits cleanly within 5.5in without left/right canvas clipping, zero overlapping text/cells, crisp alignment, and balanced two-panel composition."
+      ]
+    }
+  ]
+}

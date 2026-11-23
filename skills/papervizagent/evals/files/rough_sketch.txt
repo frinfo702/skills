@@ -1,0 +1,14 @@
+rough sketch of our retrieval-augmented agent (drawn in a meeting, please clean up)
+
+ [user query] --> [query encoder (frozen)] --> (vector DB, 2M docs) --top-k=8--> [reranker (trainable)]
+                                                                                   |
+                                                                                   v
+ [LLM planner] <------------- retrieved passages ----------------------------------+
+      |
+      +--> tool call? --yes--> [tool executor: python / web] --observation--> back to LLM planner
+      |
+      no
+      v
+ [answer generator] --> final answer
+                 \
+                  `- - - reward from verifier (dashed, training only) - - -> reranker
