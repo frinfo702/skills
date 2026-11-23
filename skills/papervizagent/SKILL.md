@@ -80,8 +80,8 @@ Translate the methodology and caption into a structured **Vector Blueprint** (`<
 ### Stage 3 — Stylist *(skip in `quick` mode)*
 Read `references/style-guide.md` and enrich `<work>/blueprint.md` into `<work>/styled_spec.md`:
 - Preserve semantics, topology, and notation verbatim; refine visual encoding only.
-- Apply the workspace `theme.typ` if present; otherwise enforce **calm scientific restraint** (white boxes with `#22272E` ink outlines for neutral components, `#F8F9FA`/white dashed-gray zones, **one deep-blue focus color `#004488`** reserved for the novel/key component, and at most 1–2 muted secondary hues only when categories cannot be distinguished by position or shape). Avoid rainbow multi-pastel boxes.
-- Lock exact Typst tokens: `rgb("#...")` hex palette, shape vocabulary, calm neutral pill headers / subtle CeTZ vector status badges, stroke weights (solid forward vs. dashed auxiliary/feedback), sans-serif label font vs. Typst math (`$x, theta, cal(L), plus.o, times.o, dot.o$`), and exact page width.
+- Apply the workspace `theme.typ` if present; otherwise apply the **calm warm palette** (Anthropic-inspired): one muted role hue per component role (`sky`, `olive`, `ochre`, `heather`; typically 2–4 per figure), warm `sand` fill for generic parts, `paper` zones with thin dashed borders, and `clay` reserved for the novel/key component. Avoid both rainbow boxes with no meaning and black-and-white wireframes.
+- Lock exact Typst tokens: `rgb("#...")` hex palette, shape vocabulary, tinted pill headers / subtle CeTZ vector status badges, stroke weights (solid forward vs. dashed auxiliary/feedback), sans-serif label font vs. Typst math (`$x, theta, cal(L), plus.o, times.o, dot.o$`), and exact page width.
 
 ### Stage 4 — Overridden Vector Visualizer ↔ Critic Loop
 

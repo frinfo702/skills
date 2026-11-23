@@ -66,15 +66,15 @@ This reference adapts Google Research's PaperVizAgent (PaperBanana) multi-agent 
 
 **Rules:**
 1. **Preserve semantic content:** Do not add, delete, or reorder nodes/edges. You may tighten verbose labels slightly while verifying against the methodology section.
-2. **Respect existing style:** If the Retriever found a workspace `theme.typ`, use its palette and font choices. Otherwise apply `references/style-guide.md` (**calm restraint by default**).
-3. **Enforce color restraint:** Keep standard/neutral components white with `#22272E` ink outlines and keep grouping zones neutral (`white` or `#F8F9FA` with muted dashed gray borders). Spend the **one primary focus hue (`#004488`)** strictly on the novel/key component, and add at most 1–2 muted secondary hues (`#C28A2E` ochre, `#3A8C80` teal) only when distinct categories genuinely require color encoding (e.g., heatmap roles). Reserve muted rose (`#B84A5B`) strictly for failure/loss/eviction. Never give every module its own color.
+2. **Respect existing style:** If the Retriever found a workspace `theme.typ`, use its palette and font choices. Otherwise apply `references/style-guide.md` (**calm warm palette by default**).
+3. **Color by role, calmly:** Give each component role one muted hue from the palette (`#4F7FAE` sky, `#6B7F4E` olive, `#B98A3E` ochre, `#7D76A8` heather; typically 2–4 per figure) with its light tint as fill, use warm `sand` (`#F0EEE6`) for generic parts and `paper` (`#FAF9F5`) zones with thin dashed `#CFCCC2` borders. Spend `clay` (`#C6613F`) on the novel/key component only. Reserve brick red (`#A23E3E`) strictly for failure/loss/eviction. Never give every module its own color, and never fall back to a black-and-white wireframe.
 4. **Strict typography & math separation:** Sans-serif for module/zone labels; Typst math mode (`$x, theta, cal(L)$`) only for mathematical variables and operators (`$plus.o$`, `$times.o$`, `$dot.o$`, or `$+$` inside a `circle` node). Never use LaTeX backslashes inside Typst math.
-5. **Icon discipline:** Use minimal monochrome/muted CeTZ vector badges only when they carry conventional meaning (snowflake = frozen, spark = trainable). Avoid noisy emojis or clip-art.
+5. **Icon discipline:** Use small CeTZ vector badges in the hue of their box only when they carry conventional meaning (snowflake = frozen, spark = trainable). Avoid noisy emojis or clip-art.
 
 **Output (`<work>/styled_spec.md`):** The finalized blueprint enriched with exact Typst declarations:
 - Page size & margins (`width`, `height`, `margin`, `fill: white`)
 - Font family (verified via `--check-env`), base size, and header/label hierarchy
-- Exact hex color table (`zone-*`, `active-*`, `frozen-*`, `highlight-*`, `ink`, `muted`)
+- Exact hex color table (`ink`, `ink-soft`, `muted`, `line`, `sand`, `paper`, `clay`, and each role hue with its `-fill` and stated meaning)
 - Node helper definitions (`corner-radius`, `stroke`, `inset`, fixed vs. elastic `width`/`height`)
 - Edge stroke weights, arrowhead styles (`-|>`, `--|>`), and `spacing: (col-gap, row-gap)`
 

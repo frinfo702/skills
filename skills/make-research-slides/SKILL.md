@@ -48,7 +48,7 @@ The last slide of the talk restates the takeaway; it stays on screen during ques
 - **Distracted-viewer test.** Someone who looks up for three seconds knows what the figure is from the title and the lead, and sees the point in the highlighted part of the figure.
 - **Numbers stay where they are.** Data values live in the figure or table; no annotations or highlighted numbers are added to the image, and slide text does not read them back.
 - **Text.** Title about 30 pt, lead line 24 pt, nothing below 18 pt. A slide with a figure has no text besides the title and the lead line, or at most three short bullets instead of a figure.
-- **Calm color.** Black text and white, black-outlined boxes for everything that is not the point (not gray fills), one focus color (deep blue) for ours or the new thing, and the same meanings in figures, tables and text (palette in make-research-figure `references/specs.md`). No red for emphasis: next to blue or green it reads as "the bad one"; red means something bad.
+- **Calm warm color.** Anthropic-inspired: warm near-black text, sand-filled boxes for what is not the point, clay for ours or the new thing, soft sky / olive / ochre for other roles, and the same meanings in figures, tables and text (palette in make-research-figure `references/specs.md`). Neither loud nor monochrome. No red for emphasis: red means something bad.
 - **References as numbers.** Cite papers, code, datasets and other sources in the text as `[n]`, numbered in order of first appearance, and list them all on one references slide at the very end of the deck, in that order. Do not write author names, years or URLs in the slide text or in figures; the number is enough on the slide, and the audience can look it up at the end. One source keeps one number throughout. The references slide is titled "References" (参考文献); it is the one slide allowed a bare label as its title, and it has no lead.
 - **Practical.** 16:9, slide numbers, high contrast, the deck's font covers the talk's language (Latin font first, then a Japanese font).
 
@@ -79,7 +79,7 @@ Render the slides and read them. Report:
 - [ ] Every slide with a figure: a noun-phrase lead saying what the figure is, without repeating the figure's labels; slides without a figure have no lead
 - [ ] One idea and one piece of evidence per slide
 - [ ] No numbers read back from the figure; explanations in slide text or speech, without label prefixes or parenthetical asides; figures and tables are English and hold no titles, captions or notes
-- [ ] Calm palette: black on white plus one focus color with fixed meanings; no gray fills; no red emphasis
+- [ ] Calm warm palette: warm neutrals, clay focus, muted role hues with fixed meanings; not monochrome, not rainbow; no red emphasis
 - [ ] Figures placed at 100% of the slot; nothing below 18 pt
 - [ ] Every slide rendered and checked; nothing overflows onto an extra page
 - [ ] Backup slides for expected questions

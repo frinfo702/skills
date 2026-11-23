@@ -6,15 +6,19 @@ Versions as of 2026-11; check for newer ones (SKILL.md) and keep cetz in step wi
 
 ```typst
 // Shared look for every figure in one talk or paper. Change here, not per figure.
-// Calm palette with fixed meanings (make-research-figure references/specs.md).
-#let ink = rgb("#22272E")       // text, lines
-#let muted = rgb("#8B929A")     // secondary text, axes
-#let faint = rgb("#E3E6EA")     // grids, inactive borders
-#let focus = rgb("#004488")     // ours / the new thing / the change: one per figure
-#let second = rgb("#DDAA33")    // the second series / a second thing to track
-#let third = rgb("#44AA99")     // further series that must be told apart
-// Neutral parts are white boxes with ink outlines; gray (muted) only for axes, grids, secondary text, at most one series.
-#let problem = rgb("#BB5566")   // only for something bad: failure, overflow, removed
+// Calm warm palette with fixed meanings (make-research-figure references/specs.md).
+#let ink = rgb("#2B2A27")       // text, lines (warm near-black)
+#let ink-soft = rgb("#5E5D59")  // outlines of neutral boxes, secondary labels
+#let muted = rgb("#8F8D86")     // secondary text, axes
+#let faint = rgb("#E8E6DC")     // grids, inactive borders
+#let sand = rgb("#F0EEE6")      // fill of neutral boxes
+#let paper = rgb("#FAF9F5")     // background of groups / panels
+#let focus = rgb("#C6613F")     // clay: ours / the new thing / the change: one per figure
+#let second = rgb("#4F7FAE")    // sky: the second series / a second role to track
+#let third = rgb("#6B7F4E")     // olive: further series or roles that must be told apart
+#let fourth = rgb("#B98A3E")    // ochre
+// Neutral parts are sand boxes with ink-soft outlines; roles take their hue. Not black-and-white wireframes.
+#let problem = rgb("#A23E3E")   // brick: only for something bad (with dashed line or cross)
 #let tint(c) = c.lighten(85%)
 #let font = "Inter"           // check `typst fonts`; for papers use the paper's family
 
@@ -42,19 +46,19 @@ Versions as of 2026-11; check for newer ones (SKILL.md) and keep cetz in step wi
 #import "theme.typ": *
 #show: slide-fig
 
-#let box(pos, title, name, color: ink, fill: white) = node(
+#let box(pos, title, name, color: ink-soft, fill: sand) = node(
   pos, title, name: name,
   width: 6.6cm, height: 1.7cm, fill: fill, stroke: 1.4pt + color, corner-radius: 6pt)
-#let group(a, b) = node(enclose: (a, b), inset: 12pt,
+#let group(a, b) = node(enclose: (a, b), inset: 12pt, fill: paper, layer: -1,
   stroke: (paint: muted, dash: "dashed", thickness: 1pt), corner-radius: 10pt)
 
 #diagram(
   spacing: (1.6cm, 1.3cm),
-  edge-stroke: 1.6pt + ink,
-  box((0, 0), [Frontend], <fe>),
+  edge-stroke: 1.6pt + ink-soft,
+  box((0, 0), [Frontend], <fe>, color: second, fill: tint(second)),
   box((0, 1), [Output], <out>),
   box((1, 0), [Scheduler], <sched>, color: focus, fill: tint(focus)),
-  box((1, 1), [Executor], <exec>),
+  box((1, 1), [Executor], <exec>, color: third, fill: tint(third)),
   group(<fe>, <out>),
   group(<sched>, <exec>),
   node((0, -0.68), text(fill: muted)[Process A]),
@@ -75,7 +79,7 @@ Versions as of 2026-11; check for newer ones (SKILL.md) and keep cetz in step wi
 #cetz.canvas(length: 1cm, {
   import cetz.draw: *
   let (w, gap) = (6.7, 0.9)
-  let step(i, y, title, color: ink, fill: white, dash: none) = {
+  let step(i, y, title, color: ink-soft, fill: sand, dash: none) = {
     let x = i * (w + gap)
     rect((x, y - 0.75), (x + w, y + 0.75), radius: 0.15, fill: fill,
       stroke: (paint: color, thickness: 1.4pt, dash: dash))
@@ -84,11 +88,11 @@ Versions as of 2026-11; check for newer ones (SKILL.md) and keep cetz in step wi
       mark: (end: "stealth", fill: ink, scale: 0.6)) }
   }
   content((0, 3.0), anchor: "south-west", text(weight: "bold")[Before])
-  step(0, 1.9, [Old step], color: muted, dash: "dashed")
-  step(1, 1.9, [Shared step])
+  step(0, 1.9, [Old step], color: muted, fill: faint.lighten(40%), dash: "dashed")
+  step(1, 1.9, [Shared step], color: second, fill: tint(second))
   content((0, 0.0), anchor: "south-west", text(weight: "bold", fill: focus)[After])
   step(0, -1.1, [New step], color: focus, fill: tint(focus))
-  step(1, -1.1, [Shared step])
+  step(1, -1.1, [Shared step], color: second, fill: tint(second))
 })
 ```
 

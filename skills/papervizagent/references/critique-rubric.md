@@ -42,7 +42,7 @@ Does the diagram meet top-tier conference visual polish (visual hierarchy, harmo
 
 **Veto Rules:**
 1. **Rendering Artifacts:** Clipped borders, broken/unaligned group boxes, missing font fallbacks, or multi-page overflow.
-2. **Over-Coloring / Color Disharmony:** Jarring neon colors, red-vs-green pairs, **or rainbow over-coloring** where neutral boxes and background zones each use competing hues (blue + amber + purple + teal + red in one diagram) instead of calm white/ink neutrals + one focus color (`#004488`) and at most 1–2 muted accents where strictly needed.
+2. **Over-Coloring / Color Disharmony:** Jarring neon colors, red-vs-green pairs, **rainbow over-coloring** where boxes get hues with no meaning behind them, **or a monochrome wireframe** (white boxes, black outlines, one accent). Expected: warm neutrals, one muted hue per role, `clay` (`#C6613F`) on the contribution.
 3. **Amateurish Styling:** Heavy pure-black outlines on harsh PowerPoint defaults, inconsistent corner radii across identical node types, or gratuitous clip-art.
 4. **Inconsistent Typography:** Mixing unrelated font families (e.g., serif module names alongside sans-serif ones) or hyphenated broken words inside boxes.
 5. **Black Background:** Unprofessional dark canvas for print venues.
@@ -55,7 +55,8 @@ When inspecting `round_<r>-1.png` (and `round_<r>_debug-1.png` when needed), **e
 
 | Visual Symptom in Render | Likely Cause in `.typ` | Exact Surgical Patch |
 |---|---|---|
-| Diagram looks too colorful / "rainbow" boxes competing for attention | Decorative hues assigned to neutral modules and zone backgrounds | Reset neutral boxes to `fill: white, stroke: 0.95pt + rgb("#22272E")`, set `enclose` zones to `fill: rgb("#F8F9FA")` + muted dashed stroke, and reserve `rgb("#004488")` (`#EDF3F9` fill) strictly for the novel/key component |
+| Diagram looks too colorful / "rainbow" boxes competing for attention | Decorative hues not tied to roles; saturated zone backgrounds | Map hues to roles (same role → same hue), set generic boxes to `fill: rgb("#F0EEE6"), stroke: 0.9pt + rgb("#5E5D59")`, set zones to `fill: rgb("#FAF9F5")` + dashed `#CFCCC2`, keep `rgb("#C6613F")` (`#F6E4DC` fill) only on the key component |
+| Diagram looks monochrome / like an unfinished wireframe | White boxes with black outlines, no role hues | Give each role its palette hue + light tint fill (`sky`, `olive`, `ochre`), generic boxes `sand`, zones `paper`, the contribution `clay`; soften pure-black strokes to `ink-soft` |
 | Edge label touches or crosses a dashed `enclose` zone border | `spacing` or `enclose` `inset` too tight near zone perimeter | Widen `spacing` or `enclose` `inset`, shift label to `label-side: right`/`left` inside/outside the zone, shorten to 1 compact line, or add `label-fill: white` |
 | Wide zone/panel title pushes diagram past `5.5in`/`6.75in` page edge | Wide title `node((col, y), [...])` inflates Fletcher column `col` | Replace with zero-footprint `floating-title(...)` / `stage-pill(...)` from `fletcher-guide.md` |
 | Text wraps awkwardly onto 2–3 narrow lines inside a box | Fixed `width:` too narrow for bold label | Increase `width:` on that helper/node, omit `width:` (use `inset: 7pt`), or shorten label + add explicit `\ ` line break |

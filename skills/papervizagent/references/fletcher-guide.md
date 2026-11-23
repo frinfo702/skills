@@ -18,7 +18,7 @@ Run `compile_fletcher.py --check-env` first to discover the cached `@preview/fle
 1. **Tight auto-sized vector (default when venue width is unspecified):**
    ```typst
    #set page(width: auto, height: auto, margin: 8pt, fill: white)
-   #set text(font: "Inter", size: 9pt, fill: rgb("#1F2937"), hyphenate: false)
+   #set text(font: "Inter", size: 9pt, fill: rgb("#2B2A27"), hyphenate: false)
    ```
    Ideal for clean standalone vector figures: zero wasted margins, guaranteed compact rectangular bounding box.
 
@@ -34,7 +34,7 @@ Run `compile_fletcher.py --check-env` first to discover the cached `@preview/fle
 
    ```typst
    #set page(width: 5.5in, height: auto, margin: (x: 4pt, y: 6pt), fill: white)
-   #set text(font: "Inter", size: 8.5pt, fill: rgb("#1F2937"), hyphenate: false)
+   #set text(font: "Inter", size: 8.5pt, fill: rgb("#2B2A27"), hyphenate: false)
    #set align(center)
    ```
    Use `height: auto` with fixed `width` so vertical height hugs the diagram cleanly while horizontal width matches `\linewidth` (and `compile_fletcher.py` verifies `page_count == 1`).
@@ -57,8 +57,8 @@ node(
   name: <enc>,
   width: 2.6cm,          // optional: omit for auto-fit with inset
   inset: 7pt,            // MUST be a single length (NOT a dict!)
-  fill: rgb("#F1F5F9"),
-  stroke: 1pt + rgb("#64748B"),
+  fill: rgb("#F0EEE6"),
+  stroke: 1pt + rgb("#5E5D59"),
   corner-radius: 5pt,
   shape: rect,           // rect, circle, ellipse, pill, diamond, hexagon, cylinder, trapezium
   extrude: (0, 2.5),     // optional: double border / stacked tensor feel
@@ -78,8 +78,8 @@ Put zones on `layer: -1` so they sit cleanly behind nodes and edges. **Always pu
   inset: 0pt, stroke: none, fill: none,
 )
 
-// Neutral pill-shaped zone header (calm academic restraint; override colors only for a focus breakout)
-#let stage-pill(pos, label, fill: white, stroke: rgb("#CBD5E1"), text-color: rgb("#374151"), width: 7cm) = floating-title(
+// Pill-shaped zone header; pass the zone's tint/hue (defaults are the warm neutral)
+#let stage-pill(pos, label, fill: rgb("#F0EEE6"), stroke: rgb("#CFCCC2"), text-color: rgb("#2B2A27"), width: 7cm) = floating-title(
   pos,
   box(inset: (x: 6pt, y: 2pt), radius: 99pt, fill: fill, stroke: 0.75pt + stroke,
     text(size: 7.5pt, weight: "bold", fill: text-color)[#label]),
@@ -90,8 +90,8 @@ node(
   enclose: (<n1>, <n2>),
   name: <zone1>,
   inset: 10pt,
-  fill: rgb("#F8F9FA"),
-  stroke: (paint: rgb("#94A3B8"), thickness: 0.85pt, dash: "dashed"),
+  fill: rgb("#FAF9F5"),
+  stroke: (paint: rgb("#CFCCC2"), thickness: 0.85pt, dash: "dashed"),
   corner-radius: 8pt,
   layer: -1,
 )
@@ -128,38 +128,47 @@ Fletcher supports `debug: 1`, `debug: 2`, or `debug: 3` inside `#diagram(...)` t
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #set page(width: auto, height: auto, margin: 10pt, fill: white)
-#set text(font: "Inter", size: 8.5pt, fill: rgb("#22272E"), hyphenate: false)
+#set text(font: "Inter", size: 8.5pt, fill: rgb("#2B2A27"), hyphenate: false)
 
-#let ink = rgb("#22272E")
-#let muted = rgb("#8B929A")
-#let focus = rgb("#004488")
-#let focus-fill = rgb("#EDF3F9")
-#let zone-bg = rgb("#F8F9FA")
+#let ink = rgb("#2B2A27")
+#let ink-soft = rgb("#5E5D59")
+#let muted = rgb("#8F8D86")
+#let line-c = rgb("#CFCCC2")
+#let sand = rgb("#F0EEE6")
+#let paper = rgb("#FAF9F5")
+#let clay = rgb("#C6613F")
+#let clay-fill = rgb("#F6E4DC")
+#let sky = rgb("#4F7FAE")
+#let sky-fill = rgb("#E2EBF4")
+#let olive = rgb("#6B7F4E")
+#let olive-fill = rgb("#E8EDE0")
+#let ochre = rgb("#B98A3E")
+#let ochre-fill = rgb("#F5ECDA")
 
-#let proc(pos, body, name, stroke: ink, fill: white) = node(
+#let proc(pos, body, name, stroke: ink-soft, fill: sand) = node(
   pos, body, name: name, shape: fletcher.shapes.rect,
   inset: 7pt, corner-radius: 5pt, fill: fill, stroke: 1pt + stroke,
 )
 #let data-node(pos, body, name) = node(
   pos, body, name: name, shape: fletcher.shapes.rect,
-  inset: 6pt, corner-radius: 2pt, fill: white, stroke: 0.9pt + ink,
+  inset: 6pt, corner-radius: 2pt, fill: olive-fill, stroke: 0.9pt + olive,
 )
 #let zone(nodes, name: none) = node(
   enclose: nodes, name: name, inset: 11pt, corner-radius: 8pt,
-  fill: zone-bg, stroke: (paint: muted, thickness: 0.85pt, dash: "dashed"), layer: -1,
+  fill: paper, stroke: (paint: line-c, thickness: 0.85pt, dash: "dashed"), layer: -1,
 )
 
 #diagram(
   spacing: (1.2cm, 0.9cm),
-  edge-stroke: 1pt + ink,
+  edge-stroke: 1pt + ink-soft,
   data-node((0, 0), [Raw Input $x$], <in>),
-  proc((1, 0), [Tokenizer], <tok>, stroke: rgb("#4B5563"), fill: white),
-  proc((2, 0), [*Proposed Backbone* \ $f_theta$], <enc>, stroke: focus, fill: focus-fill),
-  proc((3, 0), [Task Head], <head>, stroke: ink, fill: white),
+  proc((1, 0), [Tokenizer], <tok>, stroke: sky, fill: sky-fill),
+  proc((2, 0), [*Proposed Backbone* \ $f_theta$], <enc>, stroke: clay, fill: clay-fill),
+  proc((3, 0), [Task Head], <head>, stroke: ochre, fill: ochre-fill),
   data-node((4, 0), [Prediction $hat(y)$], <out>),
 
   zone((<tok>, <enc>)),
-  node((1.5, -0.78), text(size: 7.5pt, weight: "bold", fill: rgb("#4B5563"))[Feature Extraction]),
+  node((1.5, -0.78), text(size: 7.5pt, weight: "bold", fill: ink)[Feature Extraction]),
 
   edge(<in>, <tok>, "-|>"),
   edge(<tok>, <enc>, "-|>"),
@@ -174,35 +183,45 @@ Fletcher supports `debug: 1`, `debug: 2`, or `debug: 3` inside `#diagram(...)` t
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #set page(width: auto, height: auto, margin: 10pt, fill: white)
-#set text(font: "Inter", size: 8.5pt, fill: rgb("#22272E"), hyphenate: false)
+#set text(font: "Inter", size: 8.5pt, fill: rgb("#2B2A27"), hyphenate: false)
 
-#let ink = rgb("#22272E")
-#let muted = rgb("#8B929A")
-#let focus = rgb("#004488")
-#let focus-fill = rgb("#EDF3F9")
-#let box-node(pos, body, name, stroke: ink, fill: white) = node(
+#let ink = rgb("#2B2A27")
+#let ink-soft = rgb("#5E5D59")
+#let muted = rgb("#8F8D86")
+#let line-c = rgb("#CFCCC2")
+#let sand = rgb("#F0EEE6")
+#let paper = rgb("#FAF9F5")
+#let clay = rgb("#C6613F")
+#let clay-fill = rgb("#F6E4DC")
+#let sky = rgb("#4F7FAE")
+#let sky-fill = rgb("#E2EBF4")
+#let olive = rgb("#6B7F4E")
+#let olive-fill = rgb("#E8EDE0")
+#let ochre = rgb("#B98A3E")
+#let ochre-fill = rgb("#F5ECDA")
+#let box-node(pos, body, name, stroke: ink-soft, fill: sand) = node(
   pos, body, name: name, shape: fletcher.shapes.rect,
   inset: 7pt, corner-radius: 5pt, fill: fill, stroke: 1pt + stroke,
 )
 
 #diagram(
   spacing: (1.65cm, 1.0cm),
-  edge-stroke: 1pt + ink,
-  box-node((0, 0), [Planner], <plan>),
-  box-node((1, 0), [Stylist], <style>),
-  box-node((2, 0), [*Visualizer* \ (Fletcher)], <vis>, stroke: focus, fill: focus-fill),
-  box-node((3, 0), [*Critic* \ (Veto Audit)], <crit>, stroke: focus, fill: focus-fill),
-  box-node((4, 0), [Vector \ PDF / SVG], <out>),
+  edge-stroke: 1pt + ink-soft,
+  box-node((0, 0), [Planner], <plan>, stroke: ochre, fill: ochre-fill),
+  box-node((1, 0), [Stylist], <style>, stroke: ochre, fill: ochre-fill),
+  box-node((2, 0), [*Visualizer* \ (Fletcher)], <vis>, stroke: clay, fill: clay-fill),
+  box-node((3, 0), [*Critic* \ (Veto Audit)], <crit>, stroke: clay, fill: clay-fill),
+  box-node((4, 0), [Vector \ PDF / SVG], <out>, stroke: olive, fill: olive-fill),
 
   node(enclose: (<vis>, <crit>), inset: 12pt, corner-radius: 8pt,
-    fill: rgb("#F8F9FA"), stroke: (paint: muted, dash: "dashed", thickness: 0.85pt), layer: -1),
-  node((2.5, -0.78), text(size: 7.5pt, weight: "bold", fill: focus)[Refinement Loop ($<= 3$ rounds)]),
+    fill: paper, stroke: (paint: line-c, dash: "dashed", thickness: 0.85pt), layer: -1),
+  node((2.5, -0.78), text(size: 7.5pt, weight: "bold", fill: clay)[Refinement Loop ($<= 3$ rounds)]),
 
   edge(<plan>, <style>, "-|>"),
   edge(<style>, <vis>, "-|>"),
   edge(<vis>, <crit>, "-|>", label: [PNG + `.typ`], label-size: 7pt, label-side: left),
   edge(<crit>, <vis>, "--|>", bend: 45deg,
-    stroke: (paint: focus, thickness: 1pt, dash: "dashed"),
+    stroke: (paint: clay, thickness: 1pt, dash: "dashed"),
     label: [Surgical patch], label-size: 7pt, label-side: left, label-fill: white),
   edge(<crit>, <out>, "-|>", label: [Pass], label-size: 7pt, label-side: left),
 )
@@ -214,21 +233,24 @@ Fletcher supports `debug: 1`, `debug: 2`, or `debug: 3` inside `#diagram(...)` t
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 #import fletcher.shapes: circle, rect
 
-#let ink = rgb("#22272E")
-#let focus = rgb("#004488")
+#let ink-soft = rgb("#5E5D59")
+#let sand = rgb("#F0EEE6")
+#let clay = rgb("#C6613F")
+#let sky = rgb("#4F7FAE")
+#let ochre = rgb("#B98A3E")
 #let op(pos, sym, name) = node(
   pos, sym, name: name, shape: circle, inset: 2.5pt,
-  fill: white, stroke: 0.9pt + ink,
+  fill: white, stroke: 0.9pt + ink-soft,
 )
 
 #diagram(
   spacing: (1.2cm, 0.75cm),
-  edge-stroke: 1pt + ink,
-  node((0, 0.5), [Input $X$], name: <x>, shape: rect, inset: 6pt, stroke: 0.9pt + ink, corner-radius: 2pt),
-  node((1, 0), [Vision Branch], name: <v>, shape: rect, inset: 7pt, fill: white, stroke: 1pt + ink, corner-radius: 5pt),
-  node((1, 1), [Text Branch], name: <t>, shape: rect, inset: 7pt, fill: white, stroke: 1pt + ink, corner-radius: 5pt),
+  edge-stroke: 1pt + ink-soft,
+  node((0, 0.5), [Input $X$], name: <x>, shape: rect, inset: 6pt, fill: sand, stroke: 0.9pt + ink-soft, corner-radius: 2pt),
+  node((1, 0), [Vision Branch], name: <v>, shape: rect, inset: 7pt, fill: rgb("#E2EBF4"), stroke: 1pt + sky, corner-radius: 5pt),
+  node((1, 1), [Text Branch], name: <t>, shape: rect, inset: 7pt, fill: rgb("#F5ECDA"), stroke: 1pt + ochre, corner-radius: 5pt),
   op((2, 0.5), [$+$], <fuse>),
-  node((3, 0.5), [*Fusion Decoder*], name: <dec>, shape: rect, inset: 7pt, fill: rgb("#EDF3F9"), stroke: 1.15pt + focus, corner-radius: 5pt),
+  node((3, 0.5), [*Fusion Decoder*], name: <dec>, shape: rect, inset: 7pt, fill: rgb("#F6E4DC"), stroke: 1.15pt + clay, corner-radius: 5pt),
 
   edge(<x>, (0.5, 0.5), (0.5, 0), <v>, "-|>"),
   edge(<x>, (0.5, 0.5), (0.5, 1), <t>, "-|>"),
@@ -245,7 +267,7 @@ Use a left-hand system overview (`col 0..2`) and a right-hand zoomed-in containe
 When a diagram needs a small tensor stack, attention matrix, or token strip inside a node, embed a compact `box(...)` containing Typst grids/blocks or a mini CeTZ canvas right as the node's content — Fletcher routes arrows cleanly to its outer boundary!
 
 ```typst
-#let token-strip(labels, fill: rgb("#EDF3F9"), stroke: rgb("#004488")) = stack(
+#let token-strip(labels, fill: rgb("#F6E4DC"), stroke: rgb("#C6613F")) = stack(
   dir: ltr, spacing: 2pt,
   ..labels.map(t => box(inset: (x: 4pt, y: 3pt), radius: 2pt, fill: fill, stroke: 0.7pt + stroke, text(size: 7pt)[#t]))
 )

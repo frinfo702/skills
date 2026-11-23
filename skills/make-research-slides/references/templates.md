@@ -5,9 +5,9 @@
 Every content slide is a title (noun phrase), a lead (noun phrase: what the figure is) and the evidence. Figures are compiled separately (draw-typst-figure) at the slot size, 12.33 × 4.9 in, and placed as PDFs. Titles and leads stay here, editable.
 
 ```typst
-#let ink = rgb("#22272E")
-#let muted = rgb("#8B929A")
-#let focus = rgb("#004488")    // the one emphasis color; same meaning as in the figures
+#let ink = rgb("#2B2A27")      // warm near-black
+#let muted = rgb("#8F8D86")    // warm gray
+#let focus = rgb("#C6613F")    // clay: the emphasis color; same meaning as in the figures
 #let slide-font = ("Inter", "Hiragino Kaku Gothic ProN")   // Latin first, then Japanese; check `typst fonts`
 
 #set page(width: 13.333in, height: 7.5in, margin: (x: 0.5in, top: 0.35in, bottom: 0.45in),

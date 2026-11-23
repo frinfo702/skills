@@ -36,22 +36,22 @@ To verify exact canvas width before locking coordinates, compile once with `widt
 
   // Background zone (draw behind foreground using on-layer(-1, ...))
   on-layer(-1, {
-    rect((0, 0), (6, 3), radius: 0.18, fill: rgb("#F8F9FA"),
-      stroke: (paint: rgb("#8B929A"), thickness: 0.85pt, dash: "dashed"))
+    rect((0, 0), (6, 3), radius: 0.18, fill: rgb("#FAF9F5"),
+      stroke: (paint: rgb("#8F8D86"), thickness: 0.85pt, dash: "dashed"))
   })
 
-  // Rounded box + anchored label (focus color reserved for the key/novel block)
-  rect((0.4, 0.8), (2.8, 2.0), radius: 0.14, fill: rgb("#EDF3F9"), stroke: 1.1pt + rgb("#004488"))
+  // Rounded box + anchored label (clay reserved for the key/novel block)
+  rect((0.4, 0.8), (2.8, 2.0), radius: 0.14, fill: rgb("#F6E4DC"), stroke: 1.1pt + rgb("#C6613F"))
   content((1.6, 1.4), [*Encoder*])
 
   // Arrow with stealth tip
-  line((2.85, 1.4), (4.15, 1.4), stroke: 1pt + rgb("#22272E"),
-    mark: (end: "stealth", fill: rgb("#22272E"), scale: 0.55))
+  line((2.85, 1.4), (4.15, 1.4), stroke: 1pt + rgb("#2B2A27"),
+    mark: (end: "stealth", fill: rgb("#2B2A27"), scale: 0.55))
 
   // Smooth curve (for manifolds, distributions, curved arcs)
   bezier((4.2, 0.8), (5.8, 2.2), (4.8, 2.3), (5.2, 0.7),
-    stroke: (paint: rgb("#004488"), thickness: 1.1pt, dash: "dashed"),
-    mark: (end: "stealth", fill: rgb("#004488"), scale: 0.5))
+    stroke: (paint: rgb("#C6613F"), thickness: 1.1pt, dash: "dashed"),
+    mark: (end: "stealth", fill: rgb("#C6613F"), scale: 0.5))
 
   // Anchored text (avoid overlapping shapes using north/south/east/west)
   content((3.5, 1.55), anchor: "south", text(size: 7.5pt)[$H_v$])
@@ -72,7 +72,7 @@ Ideal for systems, long-context LLM, pruning, speculative decoding, and quantiza
 #import "@preview/cetz:0.3.4"
 
 #set page(width: 5.5in, height: auto, margin: (x: 5pt, y: 6pt), fill: white)
-#set text(font: "Inter", size: 8pt, fill: rgb("#1F2937"), hyphenate: false)
+#set text(font: "Inter", size: 8pt, fill: rgb("#2B2A27"), hyphenate: false)
 
 #cetz.canvas(length: 1cm, {
   import cetz.draw: *
@@ -88,9 +88,9 @@ Ideal for systems, long-context LLM, pruning, speculative decoding, and quantiza
     }
   }
 
-  let keep = (rgb("#EDF3F9"), rgb("#004488"), none)
-  let sink = (rgb("#FBF5E8"), rgb("#C28A2E"), none)
-  let drop = (rgb("#F8F9FA"), rgb("#CBD5E1"), "dashed")
+  let keep = (rgb("#F6E4DC"), rgb("#C6613F"), none)
+  let sink = (rgb("#F5ECDA"), rgb("#B98A3E"), none)
+  let drop = (rgb("#FAF9F5"), rgb("#CFCCC2"), "dashed")
 
   draw-strip(2.0,
     ([$t_0$], [$t_1$], [$t_2$], [$t_3$], [$t_4$], [$t_5$], [$t_6$], [$t_7$]),
@@ -110,7 +110,7 @@ Ideal for vision, diffusion, 3D geometry, and volumetric feature representations
 
 ```typst
 #let tensor-stack(x, y, w: 1.1, h: 1.4, depth: 3, dx: 0.14, dy: 0.14,
-                  fill: rgb("#EDF3F9"), stroke: rgb("#004488"), label: none) = {
+                  fill: rgb("#F6E4DC"), stroke: rgb("#C6613F"), label: none) = {
   import cetz.draw: *
   for k in range(depth).rev() {
     let ox = x + k * dx
@@ -129,19 +129,19 @@ Ideal for vision, diffusion, 3D geometry, and volumetric feature representations
 Ideal for visualizing sparse attention patterns, block masks, or similarity matrices inside a figure.
 
 ```typst
-#let attn-grid(x, y, matrix, cell: 0.38, accent: rgb("#004488")) = {
+#let attn-grid(x, y, matrix, cell: 0.38, accent: rgb("#C6613F")) = {
   import cetz.draw: *
   let n = matrix.len()
   for r in range(n) {
     for c in range(matrix.at(r).len()) {
       let v = matrix.at(r).at(c) // 0.0 .. 1.0
-      let fill-c = if v <= 0.05 { rgb("#F8F9FA") } else { accent.lighten(int((1 - v) * 85) * 1%) }
+      let fill-c = if v <= 0.05 { rgb("#FAF9F5") } else { accent.lighten(int((1 - v) * 85) * 1%) }
       let cy = y + (n - 1 - r) * cell
       rect((x + c * cell, cy), (x + (c + 1) * cell, cy + cell),
-        fill: fill-c, stroke: 0.45pt + rgb("#CBD5E1"))
+        fill: fill-c, stroke: 0.45pt + rgb("#CFCCC2"))
     }
   }
-  rect((x, y), (x + n * cell, y + n * cell), fill: none, stroke: 0.9pt + rgb("#22272E"))
+  rect((x, y), (x + n * cell, y + n * cell), fill: none, stroke: 0.9pt + rgb("#2B2A27"))
 }
 ```
 
@@ -152,10 +152,10 @@ Because Fletcher runs on Typst + CeTZ, you can drop crisp miniature CeTZ drawing
 ```typst
 #import "@preview/cetz:0.3.4"
 
-// Minimal vector snowflake (Frozen, muted slate) and spark (Trainable, focus blue) badges
+// Minimal vector snowflake (Frozen, ink-soft) and spark (Trainable, clay) badges; pass the box's hue to match it
 #let frozen-badge() = box(baseline: 15%, cetz.canvas(length: 1pt, {
   import cetz.draw: *
-  let c = rgb("#64748B")
+  let c = rgb("#5E5D59")
   for a in (0deg, 60deg, 120deg) {
     line((calc.cos(a) * -3.5, calc.sin(a) * -3.5), (calc.cos(a) * 3.5, calc.sin(a) * 3.5),
       stroke: 0.85pt + c)
@@ -164,13 +164,13 @@ Because Fletcher runs on Typst + CeTZ, you can drop crisp miniature CeTZ drawing
 
 #let trainable-badge() = box(baseline: 15%, cetz.canvas(length: 1pt, {
   import cetz.draw: *
-  let c = rgb("#004488")
+  let c = rgb("#C6613F")
   line((0, 4), (1.4, 1.1), (4, 0), (1.4, -1.1), (0, -4), (-1.4, -1.1), (-4, 0), (-1.4, 1.1),
     close: true, fill: c, stroke: none)
 }))
 
 // Subtle status tag ready for any Fletcher node body
-#let status-pill(icon, label, fill: rgb("#F1F5F9"), text-color: rgb("#4B5563")) = box(
+#let status-pill(icon, label, fill: rgb("#F0EEE6"), text-color: rgb("#5E5D59")) = box(
   inset: (x: 4pt, y: 1.5pt), radius: 99pt, fill: fill,
   text(size: 6.5pt, weight: "semibold", fill: text-color)[#icon #h(1.5pt) #label]
 )
